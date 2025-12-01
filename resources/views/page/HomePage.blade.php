@@ -3,9 +3,10 @@
 @section('title', 'Home')
 
 @section('content')
+  <div class="">
+    <x-postCard :isProfilePage="$isProfilePage" />
 
-    <x-postCard />
-    <x-postCard />
-    <x-postCard />
+   
+    </div>
 
 @endsection

@@ -1,13 +1,18 @@
-<div class="flex justify-center">
+@props(['isProfilePage' => false])
 
-    <div class="bg-[#182b3cd5] py-3 w-[90%] max-w-[36em] rounded-lg">
-        <div class="flex px-3 gap-3 items-center mb-3">
-            <div class="w-11 h-11 "><img class="w-full h-full rounded-full object-cover"
-                    src="{{ asset('img/yaoyapo.jpg') }}" alt=""></div>
-            <div class="">
-                <p class="font-normal text-sm text-white">James Paul Silayan</p>
-                <p class="font-light text-[#ffffffa4] text-xs">November 20, 2025 <span>•</span> Broken Road </p>
-            </div>
+<div class="{{ $isProfilePage ? '' : 'flex items-center md:items-start justify-center lg:items-center' }}">
+
+    <div class="bg-[#182b3cd5] py-3 w-[85%] max-w-[45em] lg:max-w-[50em] rounded-lg">
+        <div class="flex px-3 gap-3 items-center justify-between mb-3">
+           <div class="space-x-3 flex items-center">
+             <div class="w-11 h-11 "><img class="w-full h-full rounded-full object-cover"
+                     src="{{ asset('img/yaoyapo.jpg') }}" alt=""></div>
+             <div class="">
+                 <p class="font-normal text-sm text-white">James Paul Silayan</p>
+                 <p class="font-light text-[#ffffffa4] text-xs">November 20, 2025 <span>•</span> Broken Road </p>
+             </div>
+           </div>
+           <div class=""><p class="text-sm bg-amber-400 rounded-2xl px-1">Active</p></div>
         </div>
         <div class="">
             <p class="px-3 text-xs font-light line-clamp-2 text-white pb-2"><span>"</span>Free massage ang inyong likod
