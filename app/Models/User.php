@@ -18,9 +18,17 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
+        'username',
         'password',
+        'role',
+        'address',
+        'barangay_id',
+        'profile_photo',
+        'department_id',
+
     ];
 
     /**
@@ -45,4 +53,36 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function barangay()
+    {
+        return $this->belongsTo(Baranggay::class);
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function reactions()
+    {
+        return $this->hasMany(Reaction::class);
+    }
+
+    public function postImages()
+    {
+        return $this->hasMany(PostImages::class);
+    }
+
+    
 }

@@ -13,8 +13,9 @@
             <input type="text" placeholder="Search..."
                 class="bg-[#122333] w-full text-white rounded-md pl-9 pr-2 py-2 focus:outline-none" />
         </div>
-
-    <button class="bg-[#31a87100] border-[1px] py-1 px-4 text-white rounded-sm font-light">Login</button>
+    @if (!auth()->check())
+    <button id = "openLogin" class="bg-[#31a87100] border-[1px] py-1 px-4 text-white rounded-sm font-light">Login</button>
+    @endif
     <div id="profilemenu" class="w-10 h-10 cursor-pointer">
         <img class="w-full h-full rounded-full object-cover" src="{{ asset('img/ninogprofile.jpg') }}" alt="">
     </div>
@@ -366,5 +367,17 @@ document.addEventListener('DOMContentLoaded', function() {
             recentPostModal.classList.remove('flex');
         });
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const openLoginBtn = document.getElementById('openLogin');
+    const loginModal = document.getElementById('loginModal');
+    
+    if (openLoginBtn && loginModal) {
+        openLoginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            loginModal.classList.remove('hidden');
+        });
+    }
+});
     </script>
     
