@@ -18,7 +18,7 @@
     @include('components.navbar')
 
     {{-- Login Modal --}}
-    @include('components.login')
+    <livewire:login-form />
 
     <livewire:signup-form />
 

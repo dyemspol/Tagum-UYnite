@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Baranggay;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 class AuthServices
 {
     public function register(array $data)
@@ -94,5 +95,45 @@ class AuthServices
             ];
         }
         
+    }
+
+    public function validateLogin(array $data)
+    {
+        return Validator::make($data, [
+            'username' => 'required|string|max:255',
+            'password' => 'required|string|min:8',
+        ], 
+        [
+            'username.required' => 'The username field is required.',
+            'username.string' => 'The username field must be a string.',
+            'username.max' => 'The username field must be less than 255 characters.',
+        ]);
+    }
+
+    public function login(array $data)
+    {
+        $validator = $this->validateLogin($data);
+
+        if($validator->fails()) {
+            return [
+                'success' => false,
+                'errors' => $validator->errors(),
+            ];
+        }
+
+        if(Auth::attempt($data)) {
+            Log::info('Login successful');
+            session()->regenerate();
+            return [
+                'success' => true,
+                'message' => 'Login successful',
+                'user' => Auth::user(),
+            ];
+        }else{
+            return [
+                'success' => false,
+                'message' => 'Invalid credentials',
+            ];
+        }
     }
 }
