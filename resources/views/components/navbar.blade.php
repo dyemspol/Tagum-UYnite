@@ -1,10 +1,10 @@
 <nav class="bg-[#182B3C] fixed top-0 left-0 w-full">
-    <div class="flex h-15 justify-between w-full items-center mx-auto sm:px-10 py-2 shadow-md px-5">
+    <div class="flex h-16 justify-between w-full items-center mx-auto sm:px-10 py-2 shadow-md px-5">
         <div class="flex justify-center items-center">
             <div id="menuicon" class="lg:hidden cursor-pointer"><i class="fa-solid fa-bars text-white text-xl"></i></div>
-            <div class="w-11 h-auto lg:block hidden"><img class="w-full h-full" src="{{ asset('img/LOGO.png') }}"
-                    alt="">
-            </div>
+             <a href="/"> <div class="w-11 h-auto lg:block hidden"><img class="w-full h-full" src="{{ asset('img/LOGO.png') }}"
+                    alt="logo">
+            </div></a>
         </div>
         <div class="relative w-120 hidden sm:flex">
             <x-heroicon-o-magnifying-glass
@@ -13,9 +13,13 @@
             <input type="text" placeholder="Search..."
                 class="bg-[#122333] w-full text-white rounded-md pl-9 pr-2 py-2 focus:outline-none" />
         </div>
+
+
+
     @if (!auth()->check())
     <button id = "openLogin" class="bg-[#31a87100] border-[1px] py-1 px-4 text-white rounded-sm font-light">Login</button>
     @endif
+
     <div id="profilemenu" class="w-10 h-10 cursor-pointer">
         <img class="w-full h-full rounded-full object-cover" src="{{ asset('img/ninogprofile.jpg') }}" alt="">
     </div>
@@ -26,11 +30,10 @@
 
 
 
-
 {{-- mobile version leftsidebar --}}
 
 <div id="mobileSidebar"
-    class="fixed lg:hidden left-0 top-15 w-full h-full bg-[#0c0c0cb2] opacity-0 pointer-events-none transition-all duration-300 z-40">
+    class="fixed lg:hidden mt-16 left-0 h-16 w-full h-full bg-[#0c0c0cb2] opacity-0 pointer-events-none transition-all duration-300 z-40">
 
     <div class="w-[14em] bg-[#182b3c] p-5 rounded-br-md transform -translate-x-full transition-all duration-300"
         id="sidebarPanel">
@@ -133,19 +136,20 @@
 <div id="profilesidebar" class="fixed right-2 top-16 w-48 bg-[#182b3c] rounded-md shadow-lg overflow-hidden hidden transition-all duration-300 z-50">
     <div class="w-[14em] bg-[#182b3c] p-5 rounded-br-md">
         <div class="flex flex-col space-y-6">
-            <a href="#" class="flex items-center space-x-3">
+            <a href="/profile" class="flex items-center space-x-3">
                 <div class="w-9 h-9">
                     <img class="w-full h-full rounded-full object-cover" src="{{ asset('img/ninogprofile.jpg') }}" alt="">
                 </div>
                 <p class="text-white text-sm">View Profile</p>
+               
             </a>
 
-            <a href="#" id="recentpostlink" class="flex md:hidden items-center space-x-3 py-2 px-1 rounded-sm hover:bg-[#31A871] transition duration-150 cursor-pointer">
+            <a href="#" id="recentpostlink" class="flex lg:hidden items-center space-x-3 py-2 px-1 rounded-sm hover:bg-[#31A871] transition duration-150 cursor-pointer">
                 <i class="fa-solid fa-clock text-[#31A871]"></i>
                 <span class="text-white text-sm">Recent Post</span>
             </a>
 
-            <a href="#" class="flex items-center space-x-3 py-2 px-1 rounded-sm hover:bg-[#31A871] transition duration-150 cursor-pointer">
+            <a href="/login" class="flex items-center space-x-3 py-2 px-1 rounded-sm hover:bg-[#31A871] transition duration-150 cursor-pointer">
                 <i class="fa-solid fa-sign-out text-[#31A871]"></i>
                 <span class="text-white text-sm">Sign out</span>
             </a>
@@ -282,10 +286,29 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // --- MOBILE SIDEBAR ---
+        const loginBtn = document.getElementById('loginBt');
+        const loginModal = document.getElementById('loginModal');
         const menuIcon = document.getElementById('menuicon');
         const mobileSidebar = document.getElementById('mobileSidebar');
         const sidebarPanel = document.getElementById('sidebarPanel');
-    
+        
+
+
+        loginBtn.addEventListener('click', function() {
+            loginModal.classList.remove('hidden');
+            loginModal.classList.add('flex');
+        });
+        
+        loginModal.addEventListener('click', function(e) {
+    // If the click target is the overlay itself, close the modal
+        if (e.target === loginModal) {
+            loginModal.classList.remove('flex');
+            loginModal.classList.add('hidden');
+        }
+    });
+        
+
+
         menuIcon.addEventListener('click', function() {
             mobileSidebar.classList.toggle('opacity-0');
             mobileSidebar.classList.toggle('pointer-events-none');

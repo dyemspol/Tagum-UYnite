@@ -1,7 +1,7 @@
-<div class="fixed top-24 w-[16rem] lg:w-[18rem] right-5 sm:right-10 z-0">
-
+<div class="fixed">
+    {{-- fixed top-24 w-[16rem] lg:w-[18rem] right-5 sm:right-10 z-0 --}}
    
-      <div class="bg-[#182b3cd5] p-5 rounded-lg text-white w-full h-[52em] hide-scrollbar overflow-auto">
+      <div class="bg-[#182b3cd5] p-5 rounded-lg text-white max-w-[17em] h-[52em] hide-scrollbar overflow-auto">
           <p class="text-">Recent Post</p>
       
           <div class="mt-2 space-y-4">
