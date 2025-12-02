@@ -1,4 +1,4 @@
-<div id="loginModal" class="fixed  inset-0 w-full h-screen z-50 bg-[#070707b6] backdrop-blur-sm flex justify-center items-center">
+<div id="loginModal" class="fixed hidden inset-0 w-full h-screen z-50 bg-[#070707b6] backdrop-blur-sm flex justify-center items-center">
     <div class="bg-gradient-to-b from-[#1F486C] to-[#0F1F2C] w-[90%] p-6 max-w-[29em] rounded-xl">
         <div class="w-15 h-auto mx-auto">
             <img src="{{ asset('img/LOGO.png') }}" alt="">

@@ -35,6 +35,48 @@
                         d="m9 12.75 3 3m0 0 3-3m-3 3v-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
                 </svg><span class="text-white text-sm">5</span></div>
         </div>
+
+        {{-- Comment Section --}}
+        <div class="mt-3 px-3 pb-2">
+            <p class="text-xs font-semibold text-white mb-2">Comments</p>
+
+            {{-- Existing comments (static for now) --}}
+            <div class="space-y-2 max-h-40 overflow-y-auto pr-1">
+                <div class="flex items-start gap-2">
+                    <div class="w-7 h-7">
+                        <img class="w-full h-full rounded-full object-cover" src="{{ asset('img/yaoyapo.jpg') }}" alt="user">
+                    </div>
+                    <div class="bg-[#101b27] rounded-lg px-3 py-2 w-full">
+                        <p class="text-[11px] font-semibold text-white">Juan Dela Cruz</p>
+                        <p class="text-[11px] text-[#ffffffa4]">Grabe kaayo ni nga dalan oy, salamat sa pag-share.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-2">
+                    <div class="w-7 h-7">
+                        <img class="w-full h-full rounded-full object-cover" src="{{ asset('img/ninogprofile.jpg') }}" alt="user">
+                    </div>
+                    <div class="bg-[#101b27] rounded-lg px-3 py-2 w-full">
+                        <p class="text-[11px] font-semibold text-white">Maria Santos</p>
+                        <p class="text-[11px] text-[#ffffffa4]">Unsa kahay plano sa LGU ani? Kinahanglan gyud ni og action.</p>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Add comment --}}
+            <form class="mt-3 flex items-center gap-2">
+                <input
+                    type="text"
+                    placeholder="Write a comment..."
+                    class="flex-1 bg-[#101b27] border border-[#243447] text-[11px] text-white rounded-full px-3 py-2 focus:outline-none focus:ring-1 focus:ring-[#31A871]"
+                >
+                <button
+                    type="submit"
+                    class="text-[11px] font-semibold text-white bg-[#31A871] hover:bg-[#279060] px-3 py-1.5 rounded-full transition-colors duration-150"
+                >
+                    Post
+                </button>
+            </form>
+        </div>
     </div>
     
 
