@@ -1,5 +1,8 @@
-<div id="loginModal" class="fixed hidden inset-0 w-full h-screen z-50 bg-[#070707b6] backdrop-blur-sm flex justify-center items-center">
+<div class="@if(!$showLoginModal) hidden @endif fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    
     <div class="bg-gradient-to-b from-[#1F486C] to-[#0F1F2C] w-[90%] p-6 max-w-[29em] rounded-xl">
+        <button wire:click="closeLoginModal" class="float-right text-2xl font-light">✕</button>
+        
         <div class="w-15 h-auto mx-auto">
             <img src="{{ asset('img/LOGO.png') }}" alt="">
         </div>
@@ -23,14 +26,8 @@
                 <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
             @enderror
         </form>
-            <p class="text-white text-center text-xs mt-5 opacity-70">No Account Yet? <a id="openSignup" href="#" class="text-[#31A871]">Register Now</a></p>
+            <p class="text-white text-center text-xs mt-5 opacity-70">No Account Yet? <a id="openSignup" href="{{ route('signup') }}" class="text-[#31A871]">Register Now</a></p>
     </div>
 </div>
 
-<script>
-    document.getElementById('openSignup').addEventListener('click', function(e) {
-        e.preventDefault();
-        document.getElementById('loginModal').classList.add('hidden');
-        document.getElementById('signupModal').classList.remove('hidden');
-    });
-</script>
+

@@ -2,26 +2,20 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Homepage\HomepageController;
+use App\Livewire\LoginForm;
 use App\Livewire\SignupForm;
+use Illuminate\Auth\Events\Login;
 
+Route::get('/', [HomepageController::class, 'index'])->name('homepage');
 
-
-
-Route::get('/', function () {
-    return view('page/HomePage', ['isProfilePage' => false]);
-});
 
 Route::get('/profile', function () {
     return view('page/profilePage', ['isProfilePage' => true]);
 });
-Route::get('/login', function () {
-    return view('page/loginPage', ['isProfilePage' => true]);
-});
+Route::get('/login-form', LoginForm::class)->name('login-form');
 
-Route::get('/signup', function () {
-    return view('page/signupPage', ['isProfilePage' => true]);
-});
+Route::get('/signup', [AuthController::class, 'showRegisterForm'])->name('signup');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
-
-Route::get('/register', SignupForm::class)->name('register');
 

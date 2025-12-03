@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
     {
-
+        public function showRegisterForm()
+        {
+            return view('page.signupPage');
+        }
         
+        public function showLoginForm()
+        {
+            return view('page.loginPage');
+        }
     }

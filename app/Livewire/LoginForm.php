@@ -9,12 +9,16 @@ class LoginForm extends Component
 {
     public $username;
     public $password;
+    public $showLoginModal = false;
 
     public function render()
     {
-        return view('components.login');
+        return view('livewire.login-form');
     }
-
+    public function mount()
+    {
+        $this->showLoginModal = true;
+    }
     public function submit(AuthServices $authServices)
     {
         $data = [
@@ -39,6 +43,19 @@ class LoginForm extends Component
         }else{
             $this->addError('error_message', $result['message']);
         }
+
+        if(isset($result['errors'])) {
+            $this->reset('username', 'password');
+        }
+    }
+
+    public function openLoginModal()
+    {
+        $this->showLoginModal = true;
+    }
+    public function closeLoginModal()
+    {
+        $this->showLoginModal = false;
     }
 
     

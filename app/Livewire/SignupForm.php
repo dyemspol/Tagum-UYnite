@@ -6,6 +6,9 @@ use Livewire\Component;
 use App\Services\AuthServices;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\Layout;
+
+
 class SignupForm extends Component
 {
     public $firstname;
@@ -18,8 +21,9 @@ class SignupForm extends Component
     public $barangay_id = '';
     public $department_id;
 
+    public $showError = false; 
     
-    
+  
 
     public function submit(AuthServices $authServices)
     {   
@@ -39,29 +43,33 @@ class SignupForm extends Component
         if($result['success']) {
             Auth::login($result['user']);
             session()->flash('success', $result['message']);
-            $this->reset('firstname', 'lastname', 'username', 'password', 'confirm_password', 'Street_Purok', 'barangay_id', 'department_id');
+            
             return redirect('/');
         }
         
+            $this->showError = true;
+        
+        
 
-        if(isset($result['errors'])) {
-            foreach($result['errors']->messages() as $field => $messages) {
-                $this->addError($field, $messages[0]);
-            }
-            $this->reset('firstname', 'lastname', 'username', 'password', 'confirm_password', 'Street_Purok', 'barangay_id', 'department_id');
-        }else{
-            session()->flash('error', $result['message']);
-            $this->reset('firstname', 'lastname', 'username', 'password', 'confirm_password', 'Street_Purok', 'barangay_id', 'department_id');
-        }
+        // if(isset($result['errors'])) {
+        //     foreach($result['errors']->messages() as $field => $messages) {
+        //         $this->addError($field, $messages[0]);
+        //     }
+        //     $this->reset('firstname', 'lastname', 'username', 'password', 'confirm_password', 'Street_Purok', 'barangay_id', 'department_id');
+        // }else{
+        //     session()->flash('error', $result['message']);
+        //     $this->reset('firstname', 'lastname', 'username', 'password', 'confirm_password', 'Street_Purok', 'barangay_id', 'department_id');
+        // }
 
         
+
 
        
     }
     public function render()
     {
-    return view('components.signup', [
-        'barangays' => \App\Models\Baranggay::all()
-    ]);
+        return view('livewire.signup-form', [
+            'barangays' => \App\Models\Baranggay::all(),
+        ]);
     }
 }
