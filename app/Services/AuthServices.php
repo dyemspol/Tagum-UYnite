@@ -130,14 +130,9 @@ class AuthServices
                 'user' => Auth::user(),
             ];
         }else{
-            $user = User::where('username', $data['username'])
-                        ->orWhere('email', $data['username'])
-                        ->first();
-            $field = $user ? 'password' : 'username';
             return [
                 'success' => false,
                 'message' => 'Invalid credentials',
-                'field' => $field,
             ];
         }
     }

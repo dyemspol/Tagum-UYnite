@@ -63,7 +63,7 @@
                 <span class="text-white text-sm group-hover:text-white">All</span>
             </div>
 
-            <div id="createPostBtnMobile" class="flex cursor-pointer items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group">
+            <div id="createPostBtnMobile" class="flex cursor-pointer items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group" >
                 <i class="fa-solid fa-plus text-[#31A871] group-hover:text-white"></i>
                 <span  class="text-white text-sm group-hover:text-white">Create Post</span>
             </div>
@@ -286,121 +286,84 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // --- MOBILE SIDEBAR ---
-        const loginBtn = document.getElementById('loginBt');
-        const loginModal = document.getElementById('loginModal');
         const menuIcon = document.getElementById('menuicon');
         const mobileSidebar = document.getElementById('mobileSidebar');
         const sidebarPanel = document.getElementById('sidebarPanel');
-        
 
+        if (menuIcon && mobileSidebar && sidebarPanel) {
+            menuIcon.addEventListener('click', function() {
+                mobileSidebar.classList.toggle('opacity-0');
+                mobileSidebar.classList.toggle('pointer-events-none');
+                sidebarPanel.classList.toggle('-translate-x-full');
+            });
 
-        loginBtn.addEventListener('click', function() {
-            loginModal.classList.remove('hidden');
-            loginModal.classList.add('flex');
-        });
-        
-        loginModal.addEventListener('click', function(e) {
-    // If the click target is the overlay itself, close the modal
-        if (e.target === loginModal) {
-            loginModal.classList.remove('flex');
-            loginModal.classList.add('hidden');
+            // Close mobile sidebar if click outside panel
+            mobileSidebar.addEventListener('click', function(e) {
+                if (e.target === mobileSidebar) {
+                    mobileSidebar.classList.add('opacity-0', 'pointer-events-none');
+                    sidebarPanel.classList.add('-translate-x-full');
+                }
+            });
         }
-    });
-        
 
-
-        menuIcon.addEventListener('click', function() {
-            mobileSidebar.classList.toggle('opacity-0');
-            mobileSidebar.classList.toggle('pointer-events-none');
-            sidebarPanel.classList.toggle('-translate-x-full');
-        });
-    
-        // Close mobile sidebar if click outside panel
-        mobileSidebar.addEventListener('click', function(e) {
-            if (e.target === mobileSidebar) {
-                mobileSidebar.classList.add('opacity-0', 'pointer-events-none');
-                sidebarPanel.classList.add('-translate-x-full');
-            }
-        });
-    
         // --- PROFILE SIDEBAR ---
-       // Wait until DOM is loaded
+        const profileBtn = document.getElementById('profilemenu');
+        const profileSidebar = document.getElementById('profilesidebar');
 
-});
+        if (profileBtn && profileSidebar) {
+            profileBtn.addEventListener('click', function() {
+                profileSidebar.classList.toggle('hidden');
+            });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const profileBtn = document.getElementById('profilemenu');
-    const profileSidebar = document.getElementById('profilesidebar');
+            // Optional: close sidebar when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!profileSidebar.contains(e.target) && !profileBtn.contains(e.target)) {
+                    profileSidebar.classList.add('hidden');
+                }
+            });
+        }
 
-    // Toggle the sidebar
-    profileBtn.addEventListener('click', function() {
-        profileSidebar.classList.toggle('hidden');
-    });
-
-    // Optional: close sidebar when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!profileSidebar.contains(e.target) && !profileBtn.contains(e.target)) {
-            profileSidebar.classList.add('hidden');
-        }
-    });
-        // --- CREATE POST MODAL ---
-        const createPostBtnMobile = document.getElementById('createPostBtnMobile');
-        const createPostBtnDesktop = document.getElementById('createPostBt');
-        const createPostModal = document.getElementById('createPostModal');
-        const createPostClose = document.getElementById('createPostModalX');
-    
-        // Function to open create post modal
-        function openCreatePostModal() {
-            createPostModal.classList.remove('hidden');
-            createPostModal.classList.add('flex');
-            // Hide mobile sidebar when modal opens
-            if (mobileSidebar) {
-                mobileSidebar.classList.add('opacity-0', 'pointer-events-none');
-                sidebarPanel.classList.add('-translate-x-full');
-            }
-        }
-    
-        // Add event listeners for both mobile and desktop buttons
-        if (createPostBtnMobile) {
-            createPostBtnMobile.addEventListener('click', openCreatePostModal);
-        }
-        if (createPostBtnDesktop) {
-            createPostBtnDesktop.addEventListener('click', openCreatePostModal);
-        }
-    
-        createPostClose.addEventListener('click', function() {
-            createPostModal.classList.add('hidden');
-            createPostModal.classList.remove('flex');
-        });
-    
         // --- RECENT POST MODAL ---
         const recentPostBtn = document.getElementById('recentpostlink');
         const recentPostModal = document.getElementById('recentpostcontainer');
         const recentPostClose = document.getElementById('recentpostX');
-    
-        recentPostBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            recentPostModal.classList.remove('hidden');
-            recentPostModal.classList.add('flex');
-            profileSidebar.classList.add('max-h-0'); // hide profile sidebar
-        });
-    
-        recentPostClose.addEventListener('click', function() {
-            recentPostModal.classList.add('hidden');
-            recentPostModal.classList.remove('flex');
-        });
-    });
 
-    document.addEventListener('DOMContentLoaded', function() {
-    const openLoginBtn = document.getElementById('openLogin');
-    const loginModal = document.getElementById('loginModal');
-    
-    if (openLoginBtn && loginModal) {
-        openLoginBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            loginModal.classList.remove('hidden');
-        });
-    }
-});
-    </script>
+        if (recentPostBtn && recentPostModal && recentPostClose) {
+            recentPostBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                recentPostModal.classList.remove('hidden');
+                recentPostModal.classList.add('flex');
+                if (profileSidebar) {
+                    profileSidebar.classList.add('max-h-0');
+                }
+            });
+
+            recentPostClose.addEventListener('click', function() {
+                recentPostModal.classList.add('hidden');
+                recentPostModal.classList.remove('flex');
+            });
+        }
+
+        // --- CREATE POST MODAL (mobile) ---
+        console.log('Navbar JS: DOMContentLoaded fired');
+        const btn = document.getElementById('createPostBtnMobile');
+        if (btn) {
+            console.log('Navbar JS: found #createPostBtnMobile');
+            btn.addEventListener('click', () => {
+                const modal = document.getElementById('createPostModal');
+                if (!modal) {
+                    console.warn('Navbar JS: #createPostModal not found on click');
+                    return;
+                }
+
+                console.log('Navbar JS: opening create post modal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                window.dispatchEvent(new Event('openCreatePostModal')); // init map
+            });
+        } else {
+            console.warn('Navbar JS: #createPostBtnMobile not found');
+        }
+    });
+</script>
     

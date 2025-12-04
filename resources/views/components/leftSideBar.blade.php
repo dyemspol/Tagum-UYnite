@@ -24,7 +24,7 @@
                 <span class="text-white text-sm group-hover:text-white">All</span>
             </div>
 
-            <div id="createPostBt" class="flex cursor-pointer items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group cursor-pointer">
+            <div id="createPostBt" class="flex cursor-pointer items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group" @click="$dispatch('openCreatePost')">
                 <i class="fa-solid fa-plus text-[#31A871] group-hover:text-white"></i>
                 <span  class="text-white text-sm group-hover:text-white">Create Post</span>
             </div>

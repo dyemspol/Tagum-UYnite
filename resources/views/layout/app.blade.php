@@ -17,14 +17,15 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     @livewireStyles
 
 </head>
 
 <body class="bg-[#122333] min-h-screen">
 
-    {{-- Navbar --}}
+
     @include('components.navbar')
 
     {{-- Login Modal --}}
@@ -34,7 +35,7 @@
 
     
 
-    @include('components.createPostModal')
+    <livewire:create-post />
     <div class="pt-20">
 
         {{-- MAIN GRID WITH SIDE BARS --}}
@@ -74,7 +75,10 @@
     </div>
     @vite('resources/js/postPreview.js')
     @vite('resources/js/autocompleteLocation.js')
-
+@stack('scripts')
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+crossorigin=""></script>
     @livewireScripts
 
 </body>
