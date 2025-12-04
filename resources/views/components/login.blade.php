@@ -1,4 +1,4 @@
-<div class="@if(!$showLoginModal) hidden @endif fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+<div id="loginModal" class="@if(!$showLoginModal) hidden @endif fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     
     <div class="bg-gradient-to-b from-[#1F486C] to-[#0F1F2C] w-[90%] p-6 max-w-[29em] rounded-xl">
         <button wire:click="closeLoginModal" class="float-right text-2xl font-light">✕</button>

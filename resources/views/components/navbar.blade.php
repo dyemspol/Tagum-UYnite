@@ -17,7 +17,7 @@
 
 
     @if (!auth()->check())
-    <button id = "openLogin" class="bg-[#31a87100] border-[1px] py-1 px-4 text-white rounded-sm font-light">Login</button>
+    <button id = "loginBt" class="bg-[#31a87100] border-[1px] py-1 px-4 text-white rounded-sm font-light">Login</button>
     @endif
 
     <div id="profilemenu" class="w-10 h-10 cursor-pointer">
@@ -286,84 +286,122 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // --- MOBILE SIDEBAR ---
+        const loginBtn = document.getElementById('loginBt');
+        const loginModal = document.getElementById('loginModal');
         const menuIcon = document.getElementById('menuicon');
         const mobileSidebar = document.getElementById('mobileSidebar');
         const sidebarPanel = document.getElementById('sidebarPanel');
+        
 
-        if (menuIcon && mobileSidebar && sidebarPanel) {
-            menuIcon.addEventListener('click', function() {
-                mobileSidebar.classList.toggle('opacity-0');
-                mobileSidebar.classList.toggle('pointer-events-none');
-                sidebarPanel.classList.toggle('-translate-x-full');
-            });
 
-            // Close mobile sidebar if click outside panel
-            mobileSidebar.addEventListener('click', function(e) {
-                if (e.target === mobileSidebar) {
-                    mobileSidebar.classList.add('opacity-0', 'pointer-events-none');
-                    sidebarPanel.classList.add('-translate-x-full');
-                }
-            });
+        loginBtn.addEventListener('click', function() {
+            loginModal.classList.remove('hidden');
+            loginModal.classList.add('flex');   
+        });
+        
+        loginModal.addEventListener('click', function(e) {
+    // If the click target is the overlay itself, close the modal
+        if (e.target === loginModal) {
+            loginModal.classList.remove('flex');
+            loginModal.classList.add('hidden');
         }
+    });
+        
 
+
+        menuIcon.addEventListener('click', function() {
+            mobileSidebar.classList.toggle('opacity-0');
+            mobileSidebar.classList.toggle('pointer-events-none');
+            sidebarPanel.classList.toggle('-translate-x-full');
+        });
+    
+        // Close mobile sidebar if click outside panel
+        mobileSidebar.addEventListener('click', function(e) {
+            if (e.target === mobileSidebar) {
+                mobileSidebar.classList.add('opacity-0', 'pointer-events-none');
+                sidebarPanel.classList.add('-translate-x-full');
+            }
+        });
+    
         // --- PROFILE SIDEBAR ---
-        const profileBtn = document.getElementById('profilemenu');
-        const profileSidebar = document.getElementById('profilesidebar');
+       // Wait until DOM is loaded
 
-        if (profileBtn && profileSidebar) {
-            profileBtn.addEventListener('click', function() {
-                profileSidebar.classList.toggle('hidden');
-            });
+});
 
-            // Optional: close sidebar when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!profileSidebar.contains(e.target) && !profileBtn.contains(e.target)) {
-                    profileSidebar.classList.add('hidden');
-                }
-            });
+document.addEventListener('DOMContentLoaded', function() {
+    const profileBtn = document.getElementById('profilemenu');
+    const profileSidebar = document.getElementById('profilesidebar');
+
+    // Toggle the sidebar
+    profileBtn.addEventListener('click', function() {
+        profileSidebar.classList.toggle('hidden');
+    });
+
+    // Optional: close sidebar when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!profileSidebar.contains(e.target) && !profileBtn.contains(e.target)) {
+            profileSidebar.classList.add('hidden');
         }
-
+    });
+        // --- CREATE POST MODAL ---
+        const createPostBtnMobile = document.getElementById('createPostBtnMobile');
+        const createPostBtnDesktop = document.getElementById('createPostBt');
+        const createPostModal = document.getElementById('createPostModal');
+        const createPostClose = document.getElementById('createPostModalX');
+    
+        // Function to open create post modal
+        function openCreatePostModal() {
+            createPostModal.classList.remove('hidden');
+            createPostModal.classList.add('flex');
+            // Hide mobile sidebar when modal opens
+            if (mobileSidebar) {
+                mobileSidebar.classList.add('opacity-0', 'pointer-events-none');
+                sidebarPanel.classList.add('-translate-x-full');
+            }
+            window.dispatchEvent(new Event('openCreatePostModal'));
+        }
+    
+        // Add event listeners for both mobile and desktop buttons
+        if (createPostBtnMobile) {
+            createPostBtnMobile.addEventListener('click', openCreatePostModal);
+        }
+        if (createPostBtnDesktop) {
+            createPostBtnDesktop.addEventListener('click', openCreatePostModal);
+        }
+    
+        createPostClose.addEventListener('click', function() {
+            createPostModal.classList.add('hidden');
+            createPostModal.classList.remove('flex');
+        });
+    
         // --- RECENT POST MODAL ---
         const recentPostBtn = document.getElementById('recentpostlink');
         const recentPostModal = document.getElementById('recentpostcontainer');
         const recentPostClose = document.getElementById('recentpostX');
-
-        if (recentPostBtn && recentPostModal && recentPostClose) {
-            recentPostBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                recentPostModal.classList.remove('hidden');
-                recentPostModal.classList.add('flex');
-                if (profileSidebar) {
-                    profileSidebar.classList.add('max-h-0');
-                }
-            });
-
-            recentPostClose.addEventListener('click', function() {
-                recentPostModal.classList.add('hidden');
-                recentPostModal.classList.remove('flex');
-            });
-        }
-
-        // --- CREATE POST MODAL (mobile) ---
-        console.log('Navbar JS: DOMContentLoaded fired');
-        const btn = document.getElementById('createPostBtnMobile');
-        if (btn) {
-            console.log('Navbar JS: found #createPostBtnMobile');
-            btn.addEventListener('click', () => {
-                const modal = document.getElementById('createPostModal');
-                if (!modal) {
-                    console.warn('Navbar JS: #createPostModal not found on click');
-                    return;
-                }
-
-                console.log('Navbar JS: opening create post modal');
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
-                window.dispatchEvent(new Event('openCreatePostModal')); // init map
-            });
-        } else {
-            console.warn('Navbar JS: #createPostBtnMobile not found');
-        }
-    });
-</script>
     
+        recentPostBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            recentPostModal.classList.remove('hidden');
+            recentPostModal.classList.add('flex');
+            profileSidebar.classList.add('max-h-0'); // hide profile sidebar
+        });
+    
+        recentPostClose.addEventListener('click', function() {
+            recentPostModal.classList.add('hidden');
+            recentPostModal.classList.remove('flex');
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const openLoginBtn = document.getElementById('openLogin');
+    const loginModal = document.getElementById('loginModal');
+    
+    if (openLoginBtn && loginModal) {
+        openLoginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            loginModal.classList.remove('hidden');
+        });
+    }
+});
+    </script>
+

@@ -75,6 +75,7 @@
     
         const modal = document.getElementById('createPostModal');
         const openBtn = document.getElementById('createPostBtnMobile');
+        const modalClose = document.getElementById('createPostModalX');
     
         let map, marker;
     
