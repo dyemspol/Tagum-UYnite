@@ -47,39 +47,11 @@ class CreatePost extends Component
 
     public function resetCreatePostModal()
     {
-        $this->reset(['title','description','barangay_id','department_id','Street_Purok','landmark','latitude','longitude','media']);
+        $this->reset(['title','content','barangay_id','department_id','Street_Purok','landmark','latitude','longitude']);
     }
 
     public function submit(CreatePostServices $createPostServices, CloudinaryServices $cloudinaryServices)
     {
-            
-            $data = [
-            'title' => $this->title,
-            'description' => $this->description,
-            'barangay_id' => $this->barangay_id,
-            'department_id' => $this->department_id,
-            'Street_Purok' => $this->Street_Purok,
-            'landmark' => $this->landmark,
-            'latitude' => $this->latitude,
-            'longitude' => $this->longitude,
-        ];
-
-        $result = $createPostServices->createPost($data, $this->media, $cloudinaryServices);
-
-        if ($result['success']) {
-            session()->flash('success', $result['message']);
-            $this->resetCreatePostModal();
-            $this->emit('postCreated');
-        } else {
-            if (isset($result['errors'])) {
-                foreach ($result['errors']->messages() as $field => $messages) {
-                    $this->addError($field, $messages[0]);
-                }
-                $this->showError = true;
-            } else {
-                session()->flash('error', $result['message']);
-                $this->showError = true;
-            }
-        }
+        dd($this->title, $this->content, $this->department_id, $this->barangay_id, $this->latitude, $this->longitude);
     }
 }
