@@ -18,13 +18,41 @@
             <p class="px-3 text-xs font-light line-clamp-2 text-white pb-2"><span>"</span>Free massage ang inyong likod
                 ani. Palihog, hinay-hinay lang! 😂<span>"</span></p>
         </div>
-        <div class="grid grid-cols-3 grid-rows-1">
-            <div class="w-full h-auto"><img src="{{ asset('img/ninogprofile.jpg') }}" alt=""></div>
-            <div class="w-full h-auto"><img src="{{ asset('img/ninogprofile.jpg') }}" alt=""></div>
-            <div class="w-full h-auto "><img src="{{ asset('img/ninogprofile.jpg') }}" alt=""></div>
+        <!-- Carousel Container -->
+        <div class="relative w-full carousel-container">
+            <div class="carousel-wrapper overflow-hidden relative">
+                <div class="carousel-track flex transition-transform duration-300 ease-in-out" style="transform: translateX(0%)">
+                    <!-- Carousel Items -->
+                    <div class="carousel-slide w-full flex-shrink-0">
+                        <img src="{{ asset('img/ninogprofile.jpg') }}" alt="Slide 1" class="w-full h-auto object-cover">
+                    </div>
+                    <div class="carousel-slide w-full flex-shrink-0">
+                        <img src="{{ asset('img/ninogprofile.jpg') }}" alt="Slide 2" class="w-full h-auto object-cover">
+                    </div>
+                    <div class="carousel-slide w-full flex-shrink-0">
+                        <img src="{{ asset('img/ninogprofile.jpg') }}" alt="Slide 3" class="w-full h-auto object-cover">
+                    </div>
+                </div>
+            </div>
             
-
-
+            <!-- Navigation Arrows -->
+            <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white rounded-full p-2 z-10 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+            <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white rounded-full p-2 z-10 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+            
+            <!-- Dots Indicator -->
+            <div class="carousel-dots flex justify-center gap-2 mt-2 pb-2">
+                <button class="carousel-dot w-2 h-2 rounded-full bg-[#31A871] transition-all" data-slide="0"></button>
+                <button class="carousel-dot w-2 h-2 rounded-full bg-gray-600 transition-all" data-slide="1"></button>
+                <button class="carousel-dot w-2 h-2 rounded-full bg-gray-600 transition-all" data-slide="2"></button>
+            </div>
         </div>
        
 
@@ -123,6 +151,64 @@
         btn.addEventListener('click', () => {
             commentSection.classList.toggle('hidden');
         });
+    });
+
+    // Carousel functionality
+    document.querySelectorAll('.carousel-container').forEach((container) => {
+        const track = container.querySelector('.carousel-track');
+        const slides = container.querySelectorAll('.carousel-slide');
+        const prevBtn = container.querySelector('.carousel-prev');
+        const nextBtn = container.querySelector('.carousel-next');
+        const dots = container.querySelectorAll('.carousel-dot');
+        
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        function updateCarousel() {
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.classList.remove('bg-gray-600');
+                    dot.classList.add('bg-[#31A871]');
+                } else {
+                    dot.classList.remove('bg-[#31A871]');
+                    dot.classList.add('bg-gray-600');
+                }
+            });
+
+            // Show/hide arrows
+            if (prevBtn) prevBtn.style.opacity = currentSlide === 0 ? '0.5' : '1';
+            if (nextBtn) nextBtn.style.opacity = currentSlide === totalSlides - 1 ? '0.5' : '1';
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateCarousel();
+                }
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                if (currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                    updateCarousel();
+                }
+            });
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateCarousel();
+            });
+        });
+
+        updateCarousel();
     });
 </script>
 

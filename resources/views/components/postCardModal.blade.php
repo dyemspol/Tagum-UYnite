@@ -37,15 +37,30 @@
                 </p>
             </div>
 
-            <!-- Single media -->
-            <div id="previewMainImage" class="w-full max-h-[32rem] rounded-lg overflow-hidden bg-[#0f1f2c]">
-                <img id="previewMainImg" src="" alt="Preview" class="w-full h-full object-cover">
-                <video id="previewMainVideo" src="" controls class="w-full h-full object-cover hidden"></video>
-            </div>
-
-            <!-- Collage for multiple -->
-            <div id="previewCollage" class="hidden grid gap-1 rounded-lg overflow-hidden bg-[#0f1f2c]">
-                <!-- injected via JS -->
+            <!-- Carousel Container -->
+            <div class="relative w-full carousel-container-modal">
+                <div class="carousel-wrapper-modal overflow-hidden relative rounded-lg bg-[#0f1f2c]">
+                    <div id="previewCarouselTrack" class="carousel-track-modal flex transition-transform duration-300 ease-in-out" style="transform: translateX(0%)">
+                        <!-- Carousel items will be injected via JS -->
+                    </div>
+                </div>
+                
+                <!-- Navigation Arrows -->
+                <button id="previewCarouselPrev" class="carousel-prev-modal absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white rounded-full p-2 z-10 transition-all hidden">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                <button id="previewCarouselNext" class="carousel-next-modal absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white rounded-full p-2 z-10 transition-all hidden">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                
+                <!-- Dots Indicator -->
+                <div id="previewCarouselDots" class="carousel-dots-modal flex justify-center gap-2 mt-2 pb-2 hidden">
+                    <!-- Dots will be injected via JS -->
+                </div>
             </div>
 
             <!-- Vote / Comment Row -->
@@ -93,14 +108,17 @@
     document.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById('postCardModal');
         const modalClose = document.getElementById('postCardModalX');
-        const previewMainImg = document.getElementById('previewMainImg');
-        const previewMainVideo = document.getElementById('previewMainVideo');
-        const previewMainImage = document.getElementById('previewMainImage');
-        const previewCollage = document.getElementById('previewCollage');
+        const previewCarouselTrack = document.getElementById('previewCarouselTrack');
+        const previewCarouselPrev = document.getElementById('previewCarouselPrev');
+        const previewCarouselNext = document.getElementById('previewCarouselNext');
+        const previewCarouselDots = document.getElementById('previewCarouselDots');
         const previewBarangay = document.getElementById('previewBarangay');
         const previewStatus = document.getElementById('previewStatus');
         const previewDate = document.getElementById('previewDate');
         const previewDescription = document.getElementById('previewDescription');
+        
+        let currentCarouselSlide = 0;
+        let carouselSlides = [];
 
         // Close Modal
         if (modalClose) {
@@ -120,72 +138,103 @@
             });
         }
 
+        // Function to update carousel
+        function updateCarousel() {
+            if (!previewCarouselTrack || carouselSlides.length === 0) return;
+            
+            previewCarouselTrack.style.transform = `translateX(-${currentCarouselSlide * 100}%)`;
+            
+            // Update dots
+            const dots = previewCarouselDots.querySelectorAll('.carousel-dot-modal');
+            dots.forEach((dot, index) => {
+                if (index === currentCarouselSlide) {
+                    dot.classList.remove('bg-gray-600');
+                    dot.classList.add('bg-[#31A871]');
+                } else {
+                    dot.classList.remove('bg-[#31A871]');
+                    dot.classList.add('bg-gray-600');
+                }
+            });
+
+            // Show/hide arrows
+            if (previewCarouselPrev) {
+                previewCarouselPrev.style.opacity = currentCarouselSlide === 0 ? '0.5' : '1';
+                previewCarouselPrev.disabled = currentCarouselSlide === 0;
+            }
+            if (previewCarouselNext) {
+                previewCarouselNext.style.opacity = currentCarouselSlide === carouselSlides.length - 1 ? '0.5' : '1';
+                previewCarouselNext.disabled = currentCarouselSlide === carouselSlides.length - 1;
+            }
+        }
+
         // Function to update preview with uploaded images
         function updatePreview(files) {
             if (!files || files.length === 0) return;
 
-            const firstFile = files[0];
-            const isVideo = firstFile.type.startsWith('video/');
-            const isSingle = files.length === 1;
+            // Clear existing slides
+            previewCarouselTrack.innerHTML = '';
+            previewCarouselDots.innerHTML = '';
+            carouselSlides = [];
+            currentCarouselSlide = 0;
 
-            previewMainImage.classList.toggle('hidden', !isSingle);
-            previewCollage.classList.toggle('hidden', isSingle);
-
-            if (isSingle) {
-                if (isVideo) {
-                    previewMainVideo.src = URL.createObjectURL(firstFile);
-                    previewMainVideo.classList.remove('hidden');
-                    previewMainImg.classList.add('hidden');
-                } else {
-                    previewMainImg.src = URL.createObjectURL(firstFile);
-                    previewMainImg.classList.remove('hidden');
-                    previewMainVideo.classList.add('hidden');
-                }
-                previewCollage.innerHTML = '';
-                return;
-            }
-
-            // Collage view
-            previewMainVideo.classList.add('hidden');
-            previewMainImg.classList.add('hidden');
-            previewCollage.innerHTML = '';
-
-            // Set dynamic columns based on count
-            const cols = files.length === 4 ? 2 : Math.min(files.length, 4);
-            previewCollage.classList.remove('grid-cols-1', 'grid-cols-2', 'grid-cols-3', 'grid-cols-4');
-            previewCollage.classList.add(`grid-cols-${cols}`);
-
-            const maxTiles = 5;
-            files.slice(0, maxTiles).forEach((file, idx) => {
-                const cell = document.createElement('div');
-                cell.className = 'relative w-full h-36 md:h-48 bg-[#0f1f2c] overflow-hidden';
+            // Create carousel slides
+            files.forEach((file, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'carousel-slide-modal w-full flex-shrink-0 max-h-[32rem] bg-[#0f1f2c]';
 
                 if (file.type.startsWith('video/')) {
                     const vid = document.createElement('video');
                     vid.src = URL.createObjectURL(file);
-                    vid.autoplay = true;
-                    vid.loop = true;
-                    vid.muted = true;
-                    vid.playsInline = true;
+                    vid.controls = true;
                     vid.className = 'w-full h-full object-cover';
-                    cell.appendChild(vid);
+                    slide.appendChild(vid);
                 } else {
                     const img = document.createElement('img');
                     img.src = URL.createObjectURL(file);
-                    img.alt = `Media ${idx + 1}`;
+                    img.alt = `Slide ${index + 1}`;
                     img.className = 'w-full h-full object-cover';
-                    cell.appendChild(img);
+                    slide.appendChild(img);
                 }
 
-                const isOverlay = idx === maxTiles - 1 && files.length > maxTiles;
-                if (isOverlay) {
-                    const overlay = document.createElement('div');
-                    overlay.className = 'absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white text-xl font-semibold';
-                    overlay.textContent = `+${files.length - (maxTiles - 1)}`;
-                    cell.appendChild(overlay);
-                }
+                previewCarouselTrack.appendChild(slide);
+                carouselSlides.push(slide);
 
-                previewCollage.appendChild(cell);
+                // Create dot
+                const dot = document.createElement('button');
+                dot.className = `carousel-dot-modal w-2 h-2 rounded-full transition-all ${index === 0 ? 'bg-[#31A871]' : 'bg-gray-600'}`;
+                dot.setAttribute('data-slide', index);
+                dot.addEventListener('click', () => {
+                    currentCarouselSlide = index;
+                    updateCarousel();
+                });
+                previewCarouselDots.appendChild(dot);
+            });
+
+            // Show/hide navigation based on slide count
+            const hasMultiple = files.length > 1;
+            if (previewCarouselPrev) previewCarouselPrev.classList.toggle('hidden', !hasMultiple);
+            if (previewCarouselNext) previewCarouselNext.classList.toggle('hidden', !hasMultiple);
+            previewCarouselDots.classList.toggle('hidden', !hasMultiple);
+
+            updateCarousel();
+        }
+
+        // Carousel navigation
+        if (previewCarouselPrev) {
+            previewCarouselPrev.addEventListener('click', () => {
+                if (currentCarouselSlide > 0) {
+                    currentCarouselSlide--;
+                    updateCarousel();
+                }
+            });
+        }
+
+        if (previewCarouselNext) {
+            previewCarouselNext.addEventListener('click', () => {
+                if (currentCarouselSlide < carouselSlides.length - 1) {
+                    currentCarouselSlide++;
+                    updateCarousel();
+                }
             });
         }
 
