@@ -1,7 +1,7 @@
 <div id="loginModal" class="@if(!isset($showLoginModal) || !$showLoginModal) hidden @endif fixed inset-0 bg-[#000000a0] bg-opacity-50 flex items-center justify-center z-50">
     
     <div class="bg-gradient-to-b from-[#1F486C] to-[#0F1F2C] w-[90%] p-6 max-w-[29em] rounded-xl">
-        <button wire:click="closeLoginModal" class="float-right text-2xl font-light">✕</button>
+        <button wire:click="closeLoginModal" class="float-right text-sm text-2xl font-light cursor-pointer text-white">✕</button>
         
         <div class="w-15 h-auto mx-auto">
             <img src="{{ asset('img/LOGO.png') }}" alt="">

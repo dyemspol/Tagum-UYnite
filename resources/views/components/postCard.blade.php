@@ -18,7 +18,15 @@
             <p class="px-3 text-xs font-light line-clamp-2 text-white pb-2"><span>"</span>Free massage ang inyong likod
                 ani. Palihog, hinay-hinay lang! 😂<span>"</span></p>
         </div>
-        <div class="w-full h-auto"><img src="{{ asset('img/ninogprofile.jpg') }}" alt=""></div>
+        <div class="grid grid-cols-3 grid-rows-1">
+            <div class="w-full h-auto"><img src="{{ asset('img/ninogprofile.jpg') }}" alt=""></div>
+            <div class="w-full h-auto"><img src="{{ asset('img/ninogprofile.jpg') }}" alt=""></div>
+            <div class="w-full h-auto "><img src="{{ asset('img/ninogprofile.jpg') }}" alt=""></div>
+            
+
+
+        </div>
+       
 
         <div class="my-2 pl-3 flex space-x-1 items-center">
             <div id="voteBtn" class="flex space-x-0.5 items-center bg-[#354a5c00] rounded-xl px-2 py-1 cursor-pointer hover:bg-[#354a5c] transition-all duration-150"> <svg class="w-6 h-6 text-[#31A871]" data-slot="icon"

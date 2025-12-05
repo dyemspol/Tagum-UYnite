@@ -1,7 +1,7 @@
 <div id="createPostModal"
-     class="hidden fixed inset-0 w-full h-screen z-50 bg-[#070707b6] backdrop-blur-sm justify-center items-center">
+     class="hidden fixed inset-0 w-full h-screen z-50 bg-[#070707b6] backdrop-blur-sm justify-center items-center overflow-y-auto">
 
-    <div class="bg-gradient-to-b from-[#1F486C] to-[#0F1F2C] w-[90%] max-w-[29em] rounded-xl px-5 py-5">
+    <div class=" bg-linear-to-b from-[#1F486C] to-[#0F1F2C] w-[90%] max-w-[29em] rounded-xl px-5 py-5">
 
         <div class="my-2 flex justify-between items-center">
             <div>
@@ -22,6 +22,13 @@
                 <input wire:model="title" required
                        class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm"
                        type="text" placeholder="Ex: Potholes on Main Street">
+            </div>
+
+            <div>
+                <label class="text-white text-sm">Description</label>
+                <textarea wire:model="content" required
+                          class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm h-20 resize-none"
+                          placeholder="Describe the issue in detail"></textarea>
             </div>
 
             <select wire:model="department_id" required
@@ -55,12 +62,35 @@
                        class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm"
                        type="text" placeholder="Ex: Near the school">
             </div>
+            
+            <div class="flex flex-col gap-2 my-3">
+                <div class="flex justify-between items-center">
+                    <label class="text-white text-sm">Upload Images or Video</label>
+                    <button id="previewMediaBtn" type="button" class="text-white text-xs bg-green-700 rounded-md py-1 px-2">
+                        Preview
+                    </button>
+                </div>
+
+                <input id="createPostMedia" type="file" accept="image/*,video/*" multiple class="hidden" wire:model="media">
+                <label for="createPostMedia" class="border border-dashed border-[#5e7186] text-[#97a7b5] rounded-md w-full h-10 flex items-center justify-center cursor-pointer hover:border-[#31A871] hover:text-white transition-colors">
+                    Click to Upload
+                </label>
+
+                <div id="mediaPreviewGrid" class="hidden gap-2 pt-1">
+                    <!-- thumbnails injected via JS -->
+                </div>
+            </div>
+
+
+
             <!-- MAP -->
             <div class="mt-3">
                 <p class="text-white text-sm mb-2">Pin Location</p>
-                <div id="createPostMap" class="w-full h-56 rounded-md"></div>
+                <div id="createPostMap" class="w-full h-45 rounded-md"></div>
             </div>
-            
+
+           
+
             <button
                 class="w-full bg-[#31A871] text-white py-2 rounded-sm mt-3">
                 Submit
@@ -72,11 +102,63 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        const mediaInput = document.getElementById('createPostMedia');
+        const mediaPreviewGrid = document.getElementById('mediaPreviewGrid');
+        const previewMediaBtn = document.getElementById('previewMediaBtn');
     
         const modal = document.getElementById('createPostModal');
+        const postCardModal = document.getElementById('postCardModal');
         const openBtn = document.getElementById('createPostBtnMobile');
         const modalClose = document.getElementById('createPostModalX');
+        const titleInput = document.querySelector('input[wire\\:model="title"]');
+        const descriptionInput = document.querySelector('textarea[wire\\:model="content"]');
+        const deptSelect = document.querySelector('select[wire\\:model="department_id"]');
+        const barangaySelect = document.querySelector('select[wire\\:model="barangay_id"]');
+        const streetInput = document.querySelector('input[wire\\:model="Street_Purok"]');
+        const landmarkInput = document.querySelector('input[wire\\:model="landmark"]');
+        // Media preview (small grid)
+        const renderMediaGrid = (files) => {
+            if (!mediaPreviewGrid || !files || files.length === 0) {
+                if (mediaPreviewGrid) {
+                    mediaPreviewGrid.classList.add('hidden');
+                    mediaPreviewGrid.classList.remove('grid', 'grid-cols-4');
+                }
+                return;
+            }
     
+            mediaPreviewGrid.innerHTML = '';
+            Array.from(files).forEach((file) => {
+                const isVideo = file.type.startsWith('video/');
+                const thumb = document.createElement('div');
+                thumb.className = 'w-14 h-14 rounded-md overflow-hidden border border-[#2e4257] bg-[#0f1f2c] flex items-center justify-center';
+                if (isVideo) {
+                    thumb.innerHTML = `
+                        <div class="w-full h-full flex items-center justify-center bg-[#0f1f2c] text-white text-xs">VID</div>
+                    `;
+                } else {
+                    const img = document.createElement('img');
+                    img.src = URL.createObjectURL(file);
+                    img.className = 'w-full h-full object-cover';
+                    thumb.appendChild(img);
+                }
+                mediaPreviewGrid.appendChild(thumb);
+            });
+            mediaPreviewGrid.classList.remove('hidden');
+            mediaPreviewGrid.classList.add('grid', 'grid-cols-6');
+        };
+    
+        if (mediaInput) {
+            mediaInput.addEventListener('change', (e) => {
+                const files = e.target.files;
+                window.uploadedFilesForPreview = Array.from(files || []);
+                renderMediaGrid(files);
+    
+                // also update big preview when ready
+                window.dispatchEvent(new CustomEvent('updatePostPreview', { detail: { files: window.uploadedFilesForPreview } }));
+            });
+        }
+    
+        
         let map, marker;
     
 
@@ -115,6 +197,31 @@
                 }, 300);
             }
         });
+
+        // Open media preview modal with current form data (vanilla JS)
+        if (previewMediaBtn) {
+            previewMediaBtn.addEventListener('click', () => {
+                const departmentText = deptSelect?.options[deptSelect.selectedIndex]?.textContent?.trim();
+                const barangayText = barangaySelect?.options[barangaySelect.selectedIndex]?.textContent?.trim();
+                window.dispatchEvent(new CustomEvent('openPostCardPreview', {
+                    detail: {
+                        title: titleInput?.value || '',
+                        description: descriptionInput?.value || '',
+                        department: deptSelect?.value ? departmentText : '',
+                        barangay: barangaySelect?.value ? barangayText : '',
+                        street: streetInput?.value || '',
+                        landmark: landmarkInput?.value || '',
+                        files: window.uploadedFilesForPreview || []
+                    }
+                }));
+
+                // Hide create post modal while the preview is shown
+                if (modal) {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }
+            });
+        }
     
     });
     </script>
