@@ -42,7 +42,7 @@
                 <input class="bg-transparent border-[0.5px] border-black rounded-sm w-full text-black py-2 px-2 text-sm" type="password" placeholder="Confirm Password" wire:model="confirm_password" required>
                 <input class="bg-none bg-[#2C5982] hover:bg-[#346a9d] cursor-pointer rounded-sm w-full text-white font-normal py-1 px-1 mt-3" type="submit" value="Register">
                 @if($showError)
-                    <p class="text-red-400 text-xs mt-1">Please enter valid credentials</p>
+                    <p class="text-red-400 text-xs mt-1">Please input all the fields correctly</p>
                 @endif
                 </form>
                 <p class="text-black text-center text-xs mt-5 opacity-70">Already registered? <a href="/login" class="text-[#31A871]">Login</a></p>

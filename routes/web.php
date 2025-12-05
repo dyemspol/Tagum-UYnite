@@ -18,6 +18,9 @@ Route::get('/login-form', LoginForm::class)->name('login-form');
 
 Route::get('/signup', [AuthController::class, 'showRegisterForm'])->name('signup');
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::middleware(['auth', 'custom:user' , 'PreventBackHistory'])->group(function () {
+    Route::get('/create-post', CreatePost::class)->name('create-post');
+});
 
-Route::get('/create-post', CreatePost::class)->name('create-post');
 

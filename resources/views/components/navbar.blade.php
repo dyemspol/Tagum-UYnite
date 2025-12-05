@@ -63,10 +63,20 @@
                 <span class="text-white text-sm group-hover:text-white">All</span>
             </div>
 
-            <div id="createPostBtnMobile" class="flex cursor-pointer items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group" >
-                <i class="fa-solid fa-plus text-[#31A871] group-hover:text-white"></i>
-                <span  class="text-white text-sm group-hover:text-white">Create Post</span>
+            @auth
+            <div id="createPostBtn" class="cursor-pointer block px-4 py-2 bg-blue-600 text-white rounded">
+                Create Post
             </div>
+            @endauth
+
+            @guest
+            <div id="createPostBtnGuest" class="cursor-pointer block px-4 py-2 bg-gray-600 text-white rounded">
+                Create Post
+            </div>
+            @endguest
+
+
+
 
         </div>
 
@@ -403,5 +413,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+document.addEventListener('DOMContentLoaded', function () {
+    const authBtn = document.getElementById('createPostBtn');
+    const guestBtn = document.getElementById('createPostBtnGuest');
+
+    if (authBtn) {
+        authBtn.addEventListener('click', () => {
+            Livewire.dispatch('openCreatePostModal');
+        });
+    }
+
+    if (guestBtn) {
+        guestBtn.addEventListener('click', () => {
+            window.location.href = "/login";
+        });
+    }
+});
+
+
     </script>
 

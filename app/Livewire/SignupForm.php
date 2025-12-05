@@ -20,6 +20,7 @@ class SignupForm extends Component
     public $Street_Purok;
     public $barangay_id = '';
     public $department_id;
+    public $showError = false;
 
     
   
@@ -37,7 +38,7 @@ class SignupForm extends Component
             'barangay_id' => $this->barangay_id
         ];
         $result = $authServices->createUser($data);
-        
+        Log::info('Signup result received.', ['success' => $result['success'] ?? false, 'message' => $result['message'] ?? '']);
         Log::info($result);
         if($result['success']) {
             Auth::login($result['user']);
@@ -50,11 +51,13 @@ class SignupForm extends Component
         if(isset($result['errors'])) {
             foreach($result['errors']->messages() as $field => $messages) {
                 $this->addError($field, $messages[0]);
+                
             }
             $this->reset('firstname', 'lastname', 'username', 'password', 'confirm_password', 'Street_Purok', 'barangay_id', 'department_id');
         }else{
             session()->flash('error', $result['message']);
             $this->reset('firstname', 'lastname', 'username', 'password', 'confirm_password', 'Street_Purok', 'barangay_id', 'department_id');
+            $this->showError = true;
         }
 
         
@@ -63,7 +66,7 @@ class SignupForm extends Component
     }
     public function render()
     {
-        return view('page.signupPage', [
+        return view('livewire.signup-form', [
             'barangays' => \App\Models\Baranggay::all(),
         ]);
     }

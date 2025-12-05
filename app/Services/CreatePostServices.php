@@ -10,6 +10,9 @@ use App\Models\Baranggay;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\Report;
+use Illuminate\Foundation\Cloud;
+use App\Services\CloudinaryServices;
 
 class CreatePostServices
 {
@@ -32,5 +35,57 @@ class CreatePostServices
             'department_id.required' => 'The department field is required.',
             'department_id.exists' => 'The selected department is invalid.',
         ]);
+    }
+
+    public function createPost(array $data, array $media, CloudinaryServices $cloudinaryServices)
+    {
+        $validator = $this->validatePost($data);
+        if ($validator->fails()) {
+            return [
+                'success' => false,
+                'message' => 'Validation failed.',
+                'errors' => $validator->errors(),
+            ];
+        }
+        try {
+            DB::beginTransaction();
+
+           $post = Report::create([
+                'title' => $data['title'],
+                'content' => $data['description'],
+                'barangay_id' => $data['barangay_id'],
+                'department_id' => $data['department_id'],
+                'Street_Purok' => $data['Street_Purok'] ?? null,
+                'address_details' => $data['landmark'] ?? null,
+                'latitude' => $data['latitude'] ?? null,
+                'longitude' => $data['longitude'] ?? null,
+                'report_status' => 'pending',
+                'post_status' => 'pending',
+                'rejection_reason' => null,
+                'priority_level' => 'low',
+                'reviewed_by' => null,
+
+            ]);
+            if (!empty($media)) {
+                
+                $cloudinaryServices->uploadPostMedia($media, $post->id);
+            }
+
+            DB::commit();
+
+            return [
+                'success' => true,
+                'message' => 'Post created successfully.',
+                'post' => $post,
+            ];
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error creating post: ' . $e->getMessage());
+
+            return [
+                'success' => false,
+                'message' => 'An error occurred while creating the post.',
+            ];
+        }
     }
 }

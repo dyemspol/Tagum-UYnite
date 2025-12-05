@@ -1,5 +1,5 @@
 <div id="createPostModal"
-     class="hidden fixed inset-0 w-full h-screen z-50 bg-[#070707b6] backdrop-blur-sm justify-center items-center overflow-y-auto">
+     wire:ignore class="hidden fixed inset-0 w-full h-screen z-50 bg-[#070707b6] backdrop-blur-sm justify-center items-center">
 
     <div class=" bg-linear-to-b from-[#1F486C] to-[#0F1F2C] w-[90%] max-w-[29em] rounded-xl px-5 py-5">
 
@@ -24,11 +24,11 @@
                        type="text" placeholder="Ex: Potholes on Main Street">
             </div>
 
-            <div>
+             <div>
                 <label class="text-white text-sm">Description</label>
-                <textarea wire:model="content" required
-                          class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm h-20 resize-none"
-                          placeholder="Describe the issue in detail"></textarea>
+                <input wire:model="description" required
+                       class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm"
+                       type="text" placeholder="Ex: There are several potholes on Main Street that need to be fixed.">
             </div>
 
             <select wire:model="department_id" required
@@ -88,9 +88,9 @@
                 <p class="text-white text-sm mb-2">Pin Location</p>
                 <div id="createPostMap" class="w-full h-45 rounded-md"></div>
             </div>
-
-           
-
+            @if($showError)
+                <p class="text-red-400 text-xs mt-1">Please fill in all required fields correctly.</p>
+            @endif
             <button
                 class="w-full bg-[#31A871] text-white py-2 rounded-sm mt-3">
                 Submit
@@ -111,7 +111,7 @@
         const openBtn = document.getElementById('createPostBtnMobile');
         const modalClose = document.getElementById('createPostModalX');
         const titleInput = document.querySelector('input[wire\\:model="title"]');
-        const descriptionInput = document.querySelector('textarea[wire\\:model="content"]');
+        const descriptionInput = document.querySelector('input[wire\\:model="description"]');
         const deptSelect = document.querySelector('select[wire\\:model="department_id"]');
         const barangaySelect = document.querySelector('select[wire\\:model="barangay_id"]');
         const streetInput = document.querySelector('input[wire\\:model="Street_Purok"]');
@@ -224,5 +224,7 @@
         }
     
     });
+
+
     </script>
     @endpush

@@ -4,21 +4,33 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Baranggay;
+use Livewire\WithFileUploads;
 use App\Models\Department;
+use GuzzleHttp\Promise\Create;
+use App\Services\CreatePostServices;
+use App\Services\CloudinaryServices;
+use Illuminate\Auth\Access\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class CreatePost extends Component
 {
+    use WithFileUploads;
+
+
     public $title;
-    public $content;
+    public $description;
     public $barangay_id = '';
     public $department_id = '';
     public $Street_Purok;
     public $landmark;
     public $latitude;
     public $longitude;
+    public $media = [];
+
+    public $showError = false;
 
     protected $listeners = ['setLatLng', 'resetCreatePostModal'];
-
+   
     public function render()
     {
         return view('livewire.create-post', [
@@ -26,7 +38,7 @@ class CreatePost extends Component
             'departments' => Department::all(),
         ]);
     }
-
+ 
     public function setLatLng($lat, $lng)
     {
         $this->latitude = $lat;
@@ -35,11 +47,39 @@ class CreatePost extends Component
 
     public function resetCreatePostModal()
     {
-        $this->reset(['title','content','barangay_id','department_id','Street_Purok','landmark','latitude','longitude']);
+        $this->reset(['title','description','barangay_id','department_id','Street_Purok','landmark','latitude','longitude','media']);
     }
 
-    public function submit()
+    public function submit(CreatePostServices $createPostServices, CloudinaryServices $cloudinaryServices)
     {
-        dd($this->title, $this->content, $this->department_id, $this->barangay_id, $this->latitude, $this->longitude);
+            
+            $data = [
+            'title' => $this->title,
+            'description' => $this->description,
+            'barangay_id' => $this->barangay_id,
+            'department_id' => $this->department_id,
+            'Street_Purok' => $this->Street_Purok,
+            'landmark' => $this->landmark,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
+        ];
+
+        $result = $createPostServices->createPost($data, $this->media, $cloudinaryServices);
+
+        if ($result['success']) {
+            session()->flash('success', $result['message']);
+            $this->resetCreatePostModal();
+            $this->emit('postCreated');
+        } else {
+            if (isset($result['errors'])) {
+                foreach ($result['errors']->messages() as $field => $messages) {
+                    $this->addError($field, $messages[0]);
+                }
+                $this->showError = true;
+            } else {
+                session()->flash('error', $result['message']);
+                $this->showError = true;
+            }
+        }
     }
 }
