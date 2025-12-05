@@ -79,6 +79,8 @@
                             </div>
                             <p class="text-white text-base">Free massage ang inyong likod ani. Palihog, hinay-hinay lang! 😂</p>
                         </div>
+                         </div>
+
                     </div>
 
 
@@ -91,7 +93,7 @@
 
         </div>
 
-    </div>
+   
     @vite('resources/js/postPreview.js')
     <script>
         const postsTab = document.getElementById('postsTab');

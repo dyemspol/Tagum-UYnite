@@ -1,4 +1,4 @@
-<nav class="bg-[#182B3C] fixed top-0 left-0 w-full">
+<nav class="bg-[#182B3C] fixed top-0 left-0 w-full z-30">
     <div class="flex h-16 justify-between w-full items-center mx-auto sm:px-10 py-2 shadow-md px-5">
         <div class="flex justify-center items-center">
             <div id="menuicon" class="lg:hidden cursor-pointer"><i class="fa-solid fa-bars text-white text-xl"></i></div>
