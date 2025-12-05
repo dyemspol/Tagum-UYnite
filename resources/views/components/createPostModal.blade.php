@@ -27,7 +27,7 @@
             <select wire:model="department_id" required
                     class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm">
                 <option value="" disabled>Select Category</option>
-                @foreach($departments as $department)
+                @foreach(($departments ?? []) as $department)
                     <option value="{{ $department->id }}" class="text-black">
                         {{ $department->category }}
                     </option>
@@ -37,7 +37,7 @@
             <select wire:model="barangay_id" required
                     class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm">
                 <option value="" disabled>Select Barangay</option>
-                @foreach($barangays as $barangay)
+                @foreach(($barangays ?? []) as $barangay)
                     <option value="{{ $barangay->id }}" class="text-black">
                         {{ $barangay->barangay_name }}
                     </option>

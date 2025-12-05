@@ -34,10 +34,16 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="m9 12.75 3 3m0 0 3-3m-3 3v-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
                 </svg><span class="text-white text-sm">5</span></div>
+
+            <button type="button" class="comment-toggle-btn flex items-center space-x-1 text-[#31A871] hover:text-white transition-colors px-2 py-1 rounded-xl" aria-label="Toggle comments">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 10h10M7 14h5m-9 3.5V6.8c0-1.01.82-1.8 1.84-1.8h12.32C18.18 5 19 5.79 19 6.8v8.4c0 1.01-.82 1.8-1.84 1.8H9.2L5.5 17.5Z"/>
+                </svg>
+            </button>
         </div>
 
         {{-- Comment Section --}}
-        <div class="mt-3 px-3 pb-2">
+        <div class="mt-3 px-3 pb-2 hidden comment-section">
             <p class="text-xs font-semibold text-white mb-2">Comments</p>
 
             {{-- Existing comments (static for now) --}}
@@ -82,29 +88,33 @@
 
 </div>
 <script>
-    const upvoteBtn = document.getElementById("voteBtn");
-    const downvoteBtn = document.getElementById("downvoteBtn");
+    document.querySelectorAll('[id="voteBtn"]').forEach((upvoteBtn, index) => {
+        const downvoteBtn = document.querySelectorAll('[id="downvoteBtn"]')[index];
 
-    upvoteBtn.addEventListener("click", () => {
-        if (upvoteBtn.classList.contains("bg-[#354a5c]")) {
-            // If already active, deactivate
-            upvoteBtn.classList.remove("bg-[#354a5c]");
-        } else {
-            // Activate upvote, deactivate downvote
-            upvoteBtn.classList.add("bg-[#354a5c]");
-            downvoteBtn.classList.remove("bg-[#354a5c]");
-        }
+        upvoteBtn.addEventListener("click", () => {
+            if (upvoteBtn.classList.contains("bg-[#354a5c]")) {
+                upvoteBtn.classList.remove("bg-[#354a5c]");
+            } else {
+                upvoteBtn.classList.add("bg-[#354a5c]");
+                downvoteBtn.classList.remove("bg-[#354a5c]");
+            }
+        });
+
+        downvoteBtn.addEventListener("click", () => {
+            if (downvoteBtn.classList.contains("bg-[#354a5c]")) {
+                downvoteBtn.classList.remove("bg-[#354a5c]");
+            } else {
+                downvoteBtn.classList.add("bg-[#354a5c]");
+                upvoteBtn.classList.remove("bg-[#354a5c]");
+            }
+        });
     });
 
-    downvoteBtn.addEventListener("click", () => {
-        if (downvoteBtn.classList.contains("bg-[#354a5c]")) {
-            // If already active, deactivate
-            downvoteBtn.classList.remove("bg-[#354a5c]");
-        } else {
-            // Activate downvote, deactivate upvote
-            downvoteBtn.classList.add("bg-[#354a5c]");
-            upvoteBtn.classList.remove("bg-[#354a5c]");
-        }
+    document.querySelectorAll('.comment-toggle-btn').forEach((btn, index) => {
+        const commentSection = document.querySelectorAll('.comment-section')[index];
+        btn.addEventListener('click', () => {
+            commentSection.classList.toggle('hidden');
+        });
     });
 </script>
 

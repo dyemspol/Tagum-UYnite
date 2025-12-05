@@ -18,7 +18,7 @@
     @include('components.login')
 
 
-    @include('components.signup')
+  
 
     @include('components.createPostModal')
   <div class="pt-[140px]">
@@ -53,15 +53,32 @@
 
 
                     <div class="flex gap-12 my-3">
-                        <p>Posts</p>
-                        <p>Track issue</p>
+                        <p class="cursor-pointer" id="postsTab">Posts</p>
+                        <p class="cursor-pointer" id="trackIssueTab">Track issue</p>
 
                     </div>
                     <hr class="mb-7 opacity-60 z-10 ">
-                    <div class="space-y-3 max-w-[650px] mx-auto w-full">
+                    <div id="postsSection" class=" space-y-3 max-w-[650px] mx-auto w-full">
                         <x-postCard/>
                         <x-postCard/>
                         <x-postCard/>
+                    </div>
+                    <div id="trackIssueSection" class="flex justify-center">
+                        <div class="bg-[#0f1f2f] border border-[#1e3246] px-3 py-3 rounded-lg w-full max-w-[50em]">
+                            <div class="flex items-center justify-between gap-3 mb-2">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10">
+                                        <img class="w-full h-full rounded-full object-cover" src="{{ asset('img/yaoyapo.jpg') }}" alt="profile">
+                                    </div>
+                                    <div class="leading-tight">
+                                        <p class="text-white text-sm">Khristian Jay Malavar</p>
+                                        <p class="text-xs text-[#9fb1c5]">November 4, 2025 <span class="mx-1">•</span> Broken Road</p>
+                                    </div>
+                                </div>
+                                <span class="text-sm bg-lime-500 text-[#122333] px-3 py-1 rounded-2xl">Pending</span>
+                            </div>
+                            <p class="text-white text-base">Free massage ang inyong likod ani. Palihog, hinay-hinay lang! 😂</p>
+                        </div>
                     </div>
 
 
@@ -76,6 +93,22 @@
 
     </div>
     @vite('resources/js/postPreview.js')
+    <script>
+        const postsTab = document.getElementById('postsTab');
+        const trackIssueTab = document.getElementById('trackIssueTab');
+        const postsSection = document.getElementById('postsSection');
+        const trackIssueSection = document.getElementById('trackIssueSection');
+
+        postsTab.addEventListener('click', () => {
+            postsSection.classList.remove('hidden');
+            trackIssueSection.classList.add('hidden');
+        });
+
+        trackIssueTab.addEventListener('click', () => {
+            postsSection.classList.add('hidden');
+            trackIssueSection.classList.remove('hidden');
+        });
+    </script>
 </body>
 
 
