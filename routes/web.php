@@ -23,4 +23,10 @@ Route::middleware(['auth', 'custom:user' , 'PreventBackHistory'])->group(functio
     Route::get('/create-post', CreatePost::class)->name('create-post');
 });
 
+Route::get('/latest', function () {
+    return view('page/latestPage', ['isProfilePage' => false]);
+})->name('latest');
 
+Route::get('/popular', function () {
+    return view('page/popularPage', ['isProfilePage' => false]);
+})->name('popular');

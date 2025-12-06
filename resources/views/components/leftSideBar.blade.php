@@ -2,27 +2,27 @@
 
     <div class="w-full bg-[#182b3cd5] h-full  p-5 rounded-md">
         <div class="flex flex-col space-y-6">
-            <div
-                class="flex items-center space-x-3 hover:bg-[#31A871] transition duration-150 py-3 px-1 rounded-sm group">
-                <i class="fa-solid fa-house text-[#31A871] text-normal group-hover:text-white"></i>
-                <span class="text-white text-sm group-hover:text-white">Home</span>
-            </div>
+            <a href="/"
+                class="flex items-center space-x-3 transition duration-150 py-3 px-1 rounded-sm group {{ request()->routeIs('homepage') ? 'bg-[#31A871]' : 'hover:bg-[#31A871]' }}">
+                <i class="fa-solid fa-house {{ request()->routeIs('homepage') ? 'text-white' : 'text-[#31A871] group-hover:text-white' }} text-normal"></i>
+                <span class="text-white text-sm">Home</span>
+        </a>
 
 
-            <div class="flex items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group cursor-pointer">
-                <i class="fa-solid fa-fire-flame-curved text-[#31A871] group-hover:text-white"></i>
-                <span class="text-white text-sm group-hover:text-white">Latest</span>
-            </div>
+            <a href="/latest" class="flex items-center space-x-4 py-2 px-1 rounded-sm group cursor-pointer {{ request()->routeIs('latest') ? 'bg-[#31A871]' : 'hover:bg-[#31A871]' }}">
+                <i class="fa-solid fa-fire-flame-curved {{ request()->routeIs('latest') ? 'text-white' : 'text-[#31A871] group-hover:text-white' }}"></i>
+                <span class="text-white text-sm">Latest</span>
+            </a>
 
-            <div class="flex items-center space-x-3 py-2 px-1 rounded-sm hover:bg-[#31A871] group cursor-pointer">
-                <i class="fa-solid fa-house text-[#31A871] group-hover:text-white"></i>
-                <span class="text-white text-sm group-hover:text-white">Popular</span>
-            </div>
+            <a href="/popular" class="flex items-center space-x-3 py-2 px-1 rounded-sm group cursor-pointer {{ request()->routeIs('popular') ? 'bg-[#31A871]' : 'hover:bg-[#31A871]' }}">
+                <i class="fa-solid fa-house {{ request()->routeIs('popular') ? 'text-white' : 'text-[#31A871] group-hover:text-white' }}"></i>
+                <span class="text-white text-sm">Popular</span>
+            </a>
 
-            <div class="flex items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group cursor-pointer">
+            {{-- <div class="flex items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group cursor-pointer">
                 <i class="fa-solid fa-earth-asia text-[#31A871] group-hover:text-white"></i>
                 <span class="text-white text-sm group-hover:text-white">All</span>
-            </div>
+            </div> --}}
 
             @auth
                <div id="createPostBt" class="flex cursor-pointer items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group" @click="$dispatch('openCreatePost')">
