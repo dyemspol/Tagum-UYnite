@@ -18,7 +18,7 @@ class Custom
     {
         $user = Auth::user();
       
-        if ($user->role === 'super_admin' || $user->role === 'branch_owner') {
+        if ($user->role === 'user' ) {
             return $next($request);
         } else {
             return redirect('/')->with('error', 'You do not have access to this page.');

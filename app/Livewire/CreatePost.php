@@ -52,6 +52,33 @@ class CreatePost extends Component
 
     public function submit(CreatePostServices $createPostServices, CloudinaryServices $cloudinaryServices)
     {
-        dd($this->title, $this->content, $this->department_id, $this->barangay_id, $this->latitude, $this->longitude);
+        $userId = Auth::id();
+        $data   = [
+            'title' => 'required',
+            'description' => 'required',
+            'barangay_id' => 'required',
+            'department_id' => 'required',
+            'Street_Purok' => 'required',
+            'landmark' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
+        ];
+
+        $createPostServices->createPost($userId, $data, $this->media, $cloudinaryServices) ;
+
+        if($result['success']) {
+
+            session()->flash('success', $result['message']);
+
+            $this->reset('username', 'password');
+            
+            return redirect('/');
+        }
+
+        if (isset($result['errors'])) {
+            $this->showError = true;
+        }else{
+            $this->showError = true;
+        }
     }
 }
