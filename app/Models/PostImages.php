@@ -8,7 +8,9 @@ class PostImages extends Model
 {
     protected $fillable = [
         'report_id',
-        'image_path',
+        'cdn_url',
+        'public_id',
+        'mime_type',
     ];
 
     public function report()

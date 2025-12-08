@@ -6,6 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Report extends Model
 {
+    protected $fillable = [
+        'user_id',
+        'title',
+        'content',
+        'barangay_id',
+        'department_id',
+        'Street_Purok',
+        'address_details',
+        'latitude',
+        'longitude',
+        'report_status',
+        'post_status',
+        'rejection_reason',
+        'priority_level',
+        'reviewed_by',
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);

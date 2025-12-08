@@ -27,7 +27,8 @@ return new class extends Migration
             $table->foreignId('reviewed_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamp('reviewed_at')->nullable();
 
-            $table->foreignId('barangay')->nullable()->constrained('baranggays');
+            $table->foreignId('department_id')->nullable()->constrained('departments');
+            $table->foreignId('barangay')->nullable()->constrained('barangays');
             $table->string('street_purok');
             $table->text('address_details')->nullable(); 
             $table->decimal('latitude', 10, 8)->nullable();

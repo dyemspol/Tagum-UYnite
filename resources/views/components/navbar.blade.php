@@ -304,18 +304,22 @@
         
 
 
-        loginBtn.addEventListener('click', function() {
-            loginModal.classList.remove('hidden');
-            loginModal.classList.add('flex');   
-        });
-        
-        loginModal.addEventListener('click', function(e) {
-    // If the click target is the overlay itself, close the modal
-        if (e.target === loginModal) {
-            loginModal.classList.remove('flex');
-            loginModal.classList.add('hidden');
+        if (loginBtn) {
+            loginBtn.addEventListener('click', function() {
+                loginModal.classList.remove('hidden');
+                loginModal.classList.add('flex');
+            });
         }
-    });
+        
+        if (loginModal) {
+            loginModal.addEventListener('click', function(e) {
+                // If the click target is the overlay itself, close the modal
+                if (e.target === loginModal) {
+                    loginModal.classList.remove('flex');
+                    loginModal.classList.add('hidden');
+                }
+            });
+        }
         
 
 

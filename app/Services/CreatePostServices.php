@@ -20,24 +20,37 @@ class CreatePostServices
     {
         return Validator::make($data, [
             'title' => 'required|string|max:255',
-            'content' => 'required|string',
+            'description' => 'required|string',
             'barangay_id' => 'required|exists:barangays,id',
             'department_id' => 'required|exists:departments,id',
+            'Street_Purok' => 'required|string',
+            'landmark' => 'required|string',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+
         ],
         [
             'title.required' => 'The title field is required.',
             'title.string' => 'The title field must be a string.',
             'title.max' => 'The title field must be less than 255 characters.',
-            'content.required' => 'The content field is required.',
-            'content.string' => 'The content field must be a string.',
+            'description.required' => 'The description field is required.',
+            'description.string' => 'The description field must be a string.',
             'barangay_id.required' => 'The barangay field is required.',
             'barangay_id.exists' => 'The selected barangay is invalid.',
             'department_id.required' => 'The department field is required.',
             'department_id.exists' => 'The selected department is invalid.',
+            'Street_Purok.required' => 'The street/purok field is required.',
+            'Street_Purok.string' => 'The street/purok field must be a string.',
+            'landmark.required' => 'The landmark field is required.',
+            'landmark.string' => 'The landmark field must be a string.',
+            'latitude.required' => 'The latitude field is required.',
+            'latitude.numeric' => 'The latitude field must be a number.',
+            'longitude.required' => 'The longitude field is required.',
+            'longitude.numeric' => 'The longitude field must be a number.',
         ]);
     }
 
-    public function createPost(array $data, array $media, CloudinaryServices $cloudinaryServices)
+    public function createPost(int $id, array $data, array $media, CloudinaryServices $cloudinaryServices)
     {
         $validator = $this->validatePost($data);
         if ($validator->fails()) {
@@ -51,9 +64,10 @@ class CreatePostServices
             DB::beginTransaction();
 
            $post = Report::create([
+                'user_id' => $id,
                 'title' => $data['title'],
                 'content' => $data['description'],
-                'barangay_id' => $data['barangay_id'],
+                'barangay' => $data['barangay_id'],
                 'department_id' => $data['department_id'],
                 'Street_Purok' => $data['Street_Purok'] ?? null,
                 'address_details' => $data['landmark'] ?? null,

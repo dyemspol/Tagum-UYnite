@@ -8,7 +8,7 @@ use App\Livewire\LoginForm;
 use App\Livewire\SignupForm;
 use Illuminate\Auth\Events\Login;
 use App\Livewire\Navbar;
-Route::get('/', [HomepageController::class, 'index'])->name('homepage');
+Route::get('/', [HomepageController::class, 'index', 'departments' => \App\Models\Department::all()])->name('homepage');
 
 
 Route::get('/profile', function () {

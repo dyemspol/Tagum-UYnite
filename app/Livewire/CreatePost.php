@@ -47,38 +47,39 @@ class CreatePost extends Component
 
     public function resetCreatePostModal()
     {
-        $this->reset(['title','content','barangay_id','department_id','Street_Purok','landmark','latitude','longitude']);
+        $this->reset(['title','description','barangay_id','department_id','Street_Purok','landmark','latitude','longitude']);
     }
 
     public function submit(CreatePostServices $createPostServices, CloudinaryServices $cloudinaryServices)
     {
         $userId = Auth::id();
-        $data   = [
-            'title' => 'required',
-            'description' => 'required',
-            'barangay_id' => 'required',
-            'department_id' => 'required',
-            'Street_Purok' => 'required',
-            'landmark' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required',
+        $data =[
+            'title' => $this->title,
+            'description' => $this->description,
+            'barangay_id' => $this->barangay_id,
+            'department_id' => $this->department_id,
+            'Street_Purok' => $this->Street_Purok,
+            'landmark' => $this->landmark,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
         ];
-
-        $createPostServices->createPost($userId, $data, $this->media, $cloudinaryServices) ;
+        $result = $createPostServices->createPost($userId, $data, $this->media, $cloudinaryServices) ;
 
         if($result['success']) {
 
             session()->flash('success', $result['message']);
 
-            $this->reset('username', 'password');
+            $this->resetCreatePostModal();
             
             return redirect('/');
         }
 
         if (isset($result['errors'])) {
-            $this->showError = true;
+            foreach ($result['errors']->messages() as $field => $messages) {
+                $this->addError($field, $messages[0]);
+            }
         }else{
-            $this->showError = true;
+            $this->addError('error_message', $result['message']);
         }
     }
 }
