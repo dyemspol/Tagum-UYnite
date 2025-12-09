@@ -41,4 +41,12 @@ class Report extends Model
     {
         return $this->hasMany(PostImages::class);
     }
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+    public function barangay()
+    {
+        return $this->belongsTo(Baranggay::class);
+    }
 }

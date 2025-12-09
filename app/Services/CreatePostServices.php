@@ -57,7 +57,7 @@ class CreatePostServices
             return [
                 'success' => false,
                 'message' => 'Validation failed.',
-                'errors' => $validator->errors(),
+                'errors' => $validato   r->errors(),
             ];
         }
         try {

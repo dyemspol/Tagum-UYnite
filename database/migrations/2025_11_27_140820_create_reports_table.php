@@ -28,7 +28,7 @@ return new class extends Migration
             $table->timestamp('reviewed_at')->nullable();
 
             $table->foreignId('department_id')->nullable()->constrained('departments');
-            $table->foreignId('barangay')->nullable()->constrained('barangays');
+            $table->foreignId('barangay_id')->nullable()->constrained('barangays');
             $table->string('street_purok');
             $table->text('address_details')->nullable(); 
             $table->decimal('latitude', 10, 8)->nullable();
@@ -38,7 +38,7 @@ return new class extends Migration
             $table->index('id');
             $table->index('user_id');
             $table->index('reviewed_by');
-            $table->index('barangay');
+            $table->index('barangay_id');
             $table->index('street_purok');
             $table->index('created_at');
             $table->index('updated_at');

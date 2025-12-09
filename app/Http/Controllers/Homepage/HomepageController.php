@@ -11,6 +11,17 @@ class HomepageController extends Controller
 {
     public function index()
     {
-        return view('page.HomePage', ['isProfilePage' => false]);
+        // Fetch all posts with their relationships, ordered by newest first
+        $posts = \App\Models\Report::with(['user', 'postImages', 'department', 'barangay'])
+                    ->latest()
+                    ->get();
+
+        return view('page.HomePage', [
+            'isProfilePage' => false,
+            'posts' => $posts
+        ]);
     }
+
+    
+
 }

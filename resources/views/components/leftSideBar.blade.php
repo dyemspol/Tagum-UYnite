@@ -55,39 +55,16 @@
          </div>
        </div>
             
-            
+            @foreach($departments as $department)
            <div class="space-y-2">
             <div class="flex justify-between items-center">
-              <p class="text-white font-light text-sm">Land Slide</p>
+              <p class="text-white font-light text-sm">{{ $department->category }}</p>
               <div class="bg-[#122333] rounded-full w-6 h-6 flex justify-center items-center">
-                 <p class="text-white">5</p>
-              </div>
-            </div>
-             <div class="flex justify-between items-center">
-              <p class="text-white font-light text-sm">Water Leaks</p>
-              <div class="bg-[#122333] rounded-full w-6 h-6 flex justify-center items-center">
-                 <p class="text-white">2</p>
-              </div>
-            </div>
-             <div class="flex justify-between items-center">
-              <p class="text-white font-light text-sm">Broken Road</p>
-              <div class="bg-[#122333] rounded-full w-6 h-6 flex justify-center items-center">
-                 <p class="text-white">1</p>
-              </div>
-            </div>
-             <div class="flex justify-between items-center">
-              <p class="text-white font-light text-sm">Electric Outage</p>
-              <div class="bg-[#122333] rounded-full w-6 h-6 flex justify-center items-center">
-                 <p class="text-white">4</p>
-              </div>
-            </div>
-             <div class="flex justify-between items-center">
-              <p class="text-white font-light text-sm">Land Slide</p>
-              <div class="bg-[#122333] rounded-full w-6 h-6 flex justify-center items-center">
-                 <p class="text-white">2</p>
+                 <p class="text-white"></p>
               </div>
             </div>
            </div>
+            @endforeach
             
             
         
