@@ -41,5 +41,9 @@ class HomepageController extends Controller
             return redirect('/login')->with('success', 'You have successfully logged out!');
     }
     
-
+    public function profile()
+    {
+        $users = User::all();
+        return view('page.profilePage', compact('users'));
+    }
 }

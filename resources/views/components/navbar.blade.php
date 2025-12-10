@@ -143,6 +143,7 @@
 
 {{-- profilesidebar --}}
 {{-- right-[-40%] --}}
+@auth
 <div x-data="{ open: false }" 
      @toggle-profile-sidebar.window="open = !open"
      @click.outside="open = false"
@@ -172,6 +173,7 @@
         </div>
     </div>
 </div>
+@endauth
 
 <div id="recentpostcontainer" class="fixed justify-center items-center w-full h-screen hidden md:hidden z-60 bg-[#1f1f1f46] "> 
       <div class="bg-[#182b3c] shadow-lg p-5 rounded-lg text-white w-[27em]  h-[50em] hide-scrollbar overflow-auto">
