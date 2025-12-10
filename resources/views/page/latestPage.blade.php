@@ -4,8 +4,9 @@
 
 @section('content')
   <div class="">
-    <x-postCard :isProfilePage="$isProfilePage" />
-
+    @foreach($posts as $post)
+    <livewire:latest-post :post="$post" :key="$post->id"/>
+    @endforeach
    
     </div>
 

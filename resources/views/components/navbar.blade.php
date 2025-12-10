@@ -20,7 +20,7 @@
     <button id = "loginBt" class="bg-[#31a87100] border-[1px] py-1 px-4 text-white rounded-sm font-light">Login</button>
     @endif
 
-    <div id="profilemenu" class="w-10 h-10 cursor-pointer">
+    <div id="profilemenu" class="w-10 h-10 cursor-pointer" @click="$dispatch('toggle-profile-sidebar')">
         <img class="w-full h-full rounded-full object-cover" src="{{ asset('img/ninogprofile.jpg') }}" alt="">
     </div>
        
@@ -143,7 +143,12 @@
 
 {{-- profilesidebar --}}
 {{-- right-[-40%] --}}
-<div id="profilesidebar" class="fixed right-2 top-16 w-48 bg-[#182b3c] rounded-md shadow-lg overflow-hidden hidden transition-all duration-300 z-50">
+<div x-data="{ open: false }" 
+     @toggle-profile-sidebar.window="open = !open"
+     @click.outside="open = false"
+     :class="open ? 'block' : 'hidden'"
+     id="profilesidebar" 
+     class="fixed right-2 top-16 w-48 bg-[#182b3c] rounded-md shadow-lg overflow-hidden transition-all duration-300 z-50">
     <div class="w-[14em] bg-[#182b3c] p-5 rounded-br-md">
         <div class="flex flex-col space-y-6">
             <a href="/profile" class="flex items-center space-x-3">
@@ -159,10 +164,11 @@
                 <span class="text-white text-sm">Recent Post</span>
             </a>
 
-            <a href="/login" class="flex items-center space-x-3 py-2 px-1 rounded-sm hover:bg-[#31A871] transition duration-150 cursor-pointer">
+            <form action="{{ route('logout') }}" method="POST" class="flex items-center space-x-3 py-2 px-1 rounded-sm hover:bg-[#31A871] transition duration-150 cursor-pointer">
+                @csrf
                 <i class="fa-solid fa-sign-out text-[#31A871]"></i>
                 <span class="text-white text-sm">Sign out</span>
-            </a>
+            </form>
         </div>
     </div>
 </div>
@@ -342,21 +348,12 @@
 
 });
 
+
 document.addEventListener('DOMContentLoaded', function() {
-    const profileBtn = document.getElementById('profilemenu');
-    const profileSidebar = document.getElementById('profilesidebar');
+        
+        const mobileSidebar = document.getElementById('mobileSidebar');
+        const sidebarPanel = document.getElementById('sidebarPanel');
 
-    // Toggle the sidebar
-    profileBtn.addEventListener('click', function() {
-        profileSidebar.classList.toggle('hidden');
-    });
-
-    // Optional: close sidebar when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!profileSidebar.contains(e.target) && !profileBtn.contains(e.target)) {
-            profileSidebar.classList.add('hidden');
-        }
-    });
         // --- CREATE POST MODAL ---
         const createPostBtnMobile = document.getElementById('createPostBtnMobile');
         const createPostBtnDesktop = document.getElementById('createPostBt');

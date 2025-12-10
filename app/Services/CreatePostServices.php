@@ -57,7 +57,7 @@ class CreatePostServices
             return [
                 'success' => false,
                 'message' => 'Validation failed.',
-                'errors' => $validato   r->errors(),
+                'errors' => $validator->errors(),
             ];
         }
         try {
@@ -67,7 +67,7 @@ class CreatePostServices
                 'user_id' => $id,
                 'title' => $data['title'],
                 'content' => $data['description'],
-                'barangay' => $data['barangay_id'],
+                'barangay_id' => $data['barangay_id'],
                 'department_id' => $data['department_id'],
                 'Street_Purok' => $data['Street_Purok'] ?? null,
                 'address_details' => $data['landmark'] ?? null,

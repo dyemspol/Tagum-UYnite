@@ -99,6 +99,7 @@ class AuthServices
 
     public function validateLogin(array $data)
     {
+        Log::info('kaabot ni diri');
         return Validator::make($data, [
             'username' => 'required|string|max:255',
             'password' => 'required|string|min:8',
@@ -113,7 +114,7 @@ class AuthServices
     public function login(array $data)
     {
         $validator = $this->validateLogin($data);
-
+        Log::info('kaabot pod ni diri');
         if($validator->fails()) {
             return [
                 'success' => false,
