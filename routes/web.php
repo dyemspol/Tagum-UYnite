@@ -22,6 +22,8 @@ Route::middleware(['auth', 'custom:user' ,'preventbackhistory'])->group(function
 
     Route::get('/latest', [HomepageController::class, 'latestpost'])->name('latest');
 
+    Route::get('/popular', [HomepageController::class, 'popularpost'])->name('popular');
+
     Route::get('/profile', [HomepageController::class, 'profile'])->name('profile');
    
 });

@@ -5,7 +5,7 @@
 @section('content')
   <div class="">
     @foreach($posts as $post)
-    <livewire:latest-post :post="$post" :key="$post->id"/>
+    <livewire:latest-post :post="$post" :key="$post->id" :likes="$likes" :dislikes="$dislikes"/>
     @endforeach
    
     </div>

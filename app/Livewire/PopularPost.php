@@ -5,45 +5,36 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Reaction;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
-class PostCard extends Component
+class PopularPost extends Component
 {
     public $post;
-    public $isProfilePage;
     public $likes = 0;
     public $dislikes = 0;
-    public $userReaction = null;
-
-
+    public $userReaction;
     public function render()
     {
-        return view('livewire.post-card', ['isProfilePage' => false]);
+        return view('livewire.popular-post', [
+            
+            'isProfilePage' => false
+        ]);
     }
-
     public function mount()
     {
-        Log::info('yaoyao');
         $this->loadReactionCounts();
-
           if(Auth::check()){
             $reaction = Reaction::where('report_id', $this->post->id)->where('user_id', Auth::id())->first();
             $this->userReaction = $reaction ? $reaction->reaction_type : null;
         }
     }
-    public function loadreactionCounts()
+    public function loadReactionCounts()
     {
-         $this->post->load('reactions');
+         $this->post->load('reactions'); 
         $this->likes = $this->post->reactions->where('reaction_type', 'like')->count();
         $this->dislikes = $this->post->reactions->where('reaction_type', 'dislike')->count();
-        
-
-      
     }
-
     public function toggleReaction($type)
     {
-        Log::info('kaabot napod dere');
         $user = Auth::user();
         $reaction = Reaction::where('report_id', $this->post->id)->where('user_id', $user->id)->first();
         
@@ -59,7 +50,7 @@ class PostCard extends Component
             
             Reaction::create([
                 'report_id' => $this->post->id,
-                'user_id' => $user->id,
+                'user_id' => Auth::id(),
                 'reaction_type' => $type
             ]);
             $this->userReaction = $type;

@@ -49,4 +49,12 @@ class Report extends Model
     {
         return $this->belongsTo(Baranggay::class);
     }
+    public function scopePopular($query)
+{
+    return $query->withCount([
+        'reactions as likes_count' => function ($query) {
+            $query->where('reaction_type', 'like');
+        }
+    ])->orderByDesc('likes_count');
+}
 }

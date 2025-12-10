@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Homepage;
 
 use App\Http\Controllers\Controller;
-use App\Services\AuthServices;
+use App\Services\HomepageServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -10,12 +10,14 @@ use App\Models\Report;
 
 class HomepageController extends Controller
 {
+    public function __construct(HomepageServices $HomepageServices)
+    {
+        $this->HomepageServices = $HomepageServices;
+    }
     public function index()
     {
         // Fetch all posts with their relationships, ordered by newest first
-        $posts = Report::with(['user', 'postImages', 'department', 'barangay'])
-                    ->get();
-
+        $posts = $this->HomepageServices->getPosts();
         return view('page.HomePage', [
             'isProfilePage' => false,
             'posts' => $posts
@@ -24,10 +26,7 @@ class HomepageController extends Controller
 
     public function latestpost()
     {
-        $posts = Report::with(['user', 'postImages', 'department', 'barangay'])
-                    ->latest()
-                    ->get();
-
+        $posts = $this->HomepageServices->getLatestPosts();
         return view('page.LatestPage', [
             'isProfilePage' => false,
             'posts' => $posts
@@ -45,5 +44,15 @@ class HomepageController extends Controller
     {
         $users = User::all();
         return view('page.profilePage', compact('users'));
+    }
+
+    public function popularPOST()
+    {
+        $posts = $this->HomepageServices->getPopularPosts();
+
+        return view('page.PopularPage', [
+            'isProfilePage' => false,
+            'posts' => $posts   
+        ]);
     }
 }

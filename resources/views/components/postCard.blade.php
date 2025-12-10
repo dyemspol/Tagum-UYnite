@@ -1,4 +1,4 @@
-@props(['isProfilePage' => false, 'post'])
+@props(['isProfilePage' => false, 'post', 'likes' => 0, 'dislikes' => 0, 'userReaction' => null])
 
 <div class="{{ $isProfilePage ? '' : 'flex items-center md:items-start justify-center lg:items-center' }} my-4">
 
@@ -74,22 +74,60 @@
         @endif
        
 
-        <div class="my-2 pl-3 flex space-x-1 items-center">
-            <div class="flex space-x-0.5 items-center bg-[#354a5c00] rounded-xl px-2 py-1 cursor-pointer hover:bg-[#354a5c] transition-all duration-150"> 
-                <svg class="w-6 h-6 text-[#31A871]" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="my-2 pl-3 flex space-x-1 items-center" 
+                x-data="{ 
+                reaction: @js($userReaction), 
+                likes: @js($likes), 
+                dislikes: @js($dislikes),
+                update(type) {
+                    // 1. If clicking the same reaction, remove it (Toggle Off)
+                    if (this.reaction === type) {
+                        this.reaction = null;
+                        if (type === 'like') this.likes--;
+                        else this.dislikes--;
+                    } 
+                    // 2. If clicking a new reaction (Switch or Add)
+                    else {
+                        // Remove old reaction counts first
+                        if (this.reaction === 'like') this.likes--;
+                        if (this.reaction === 'dislike') this.dislikes--;
+                        
+                        // Apply new reaction
+                        this.reaction = type;
+                        if (type === 'like') this.likes++;
+                        else this.dislikes++;
+                    }
+                }
+            }">
+             <button 
+                @click="update('like'); $wire.toggleReaction('like')"
+                class="flex space-x-0.5 items-center rounded-xl px-2 py-1 cursor-pointer transition-all duration-150"
+                :class="reaction === 'like' ? 'bg-[#31A871] bg-opacity-20' : 'bg-[#354a5c00] hover:bg-[#354a5c]'"> 
+            
+                <svg class="w-6 h-6" 
+                    :class="reaction === 'like' ? 'text-[#31A871]' : 'text-[#31A871]'"
+                    :fill="reaction === 'like' ? 'currentColor' : 'none'" 
+                    stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m15 11.25-3-3m0 0-3 3m3-3v7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
                 </svg>
-                <span class="text-white text-sm">0</span>
-            </div>
-
-            <div class="flex space-x-0.5 items-center bg-[#354a5c00] rounded-xl px-2 py-1 cursor-pointer hover:bg-[#354a5c] transition-all duration-150"> 
-                <svg class="w-6 h-6 text-[#31A871]" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24">
+                <span class="text-white text-sm" x-text="likes"></span>
+            </button>
+            <!-- Dislike Button -->
+            <button 
+                @click="update('dislike'); $wire.toggleReaction('dislike')"
+                class="flex space-x-0.5 items-center rounded-xl px-2 py-1 cursor-pointer transition-all duration-150"
+                :class="reaction === 'dislike' ? 'bg-red-900 bg-opacity-20' : 'bg-[#354a5c00] hover:bg-[#354a5c]'"> 
+        
+                <svg class="w-6 h-6" 
+                    :class="reaction === 'dislike' ? 'text-red-500' : 'text-[#31A871]'"
+                    :fill="reaction === 'dislike' ? 'currentColor' : 'none'" 
+                    stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m9 12.75 3 3m0 0 3-3m-3 3v-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
                 </svg>
-                <span class="text-white text-sm">0</span>
-            </div>
-
-            <button type="button" class="flex items-center space-x-1 text-[#31A871] hover:text-white transition-colors px-2 py-1 rounded-xl">
+                <span class="text-white text-sm" x-text="dislikes"></span>
+            </button>
+            <button type="button" class="flex items-center space-x-1 text-[#31A871] hover:text-white transition-colors px-2 py-1 rounded-xl"
+            @click="update('like')">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M7 10h10M7 14h5m-9 3.5V6.8c0-1.01.82-1.8 1.84-1.8h12.32C18.18 5 19 5.79 19 6.8v8.4c0 1.01-.82 1.8-1.84 1.8H9.2L5.5 17.5Z"/>
                 </svg>

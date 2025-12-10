@@ -74,7 +74,7 @@ class CreatePostServices
                 'latitude' => $data['latitude'] ?? null,
                 'longitude' => $data['longitude'] ?? null,
                 'report_status' => 'pending',
-                'post_status' => 'pending',
+                'post_status' => 'approved',
                 'rejection_reason' => null,
                 'priority_level' => 'low',
                 'reviewed_by' => null,
