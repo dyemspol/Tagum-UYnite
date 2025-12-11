@@ -28,6 +28,7 @@
 
     @include('components.navbar')
     @include('components.postCardModal')
+    @include('components.editprofile')
     {{-- Login Modal --}}
     @if(!Auth::check())
     <livewire:login-form />
@@ -45,10 +46,10 @@
         @endphp
 
        <div class="grid 
-    grid-cols-1 
-    md:grid-cols-[16rem_minmax(1fr,1.1fr)] 
-    lg:{{ $hasRightSidebar ? 'grid-cols-[18rem_minmax(400px,1.1fr)_18rem]' : 'grid-cols-[18rem_minmax(1fr,1.1fr)]' }} 
-    gap-4 px-5 sm:px-10">
+        grid-cols-1 
+        md:grid-cols-[16rem_minmax(1fr,1.1fr)] 
+        lg:{{ $hasRightSidebar ? 'grid-cols-[18rem_minmax(400px,1.1fr)_18rem]' : 'grid-cols-[18rem_minmax(1fr,1.1fr)]' }} 
+        gap-4 px-5 sm:px-10">
 
 
             {{-- LEFT SIDEBAR --}}
@@ -79,6 +80,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         @livewireScripts
     @guest
     @vite('resources/js/Homepage.js')

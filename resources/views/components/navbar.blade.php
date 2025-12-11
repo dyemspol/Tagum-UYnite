@@ -20,9 +20,12 @@
     <button id = "loginBt" class="bg-[#31a87100] border-[1px] py-1 px-4 text-white rounded-sm font-light">Login</button>
     @endif
 
-    <div id="profilemenu" class="w-10 h-10 cursor-pointer" @click="$dispatch('toggle-profile-sidebar')">
-        <img class="w-full h-full rounded-full object-cover" src="{{ asset('img/ninogprofile.jpg') }}" alt="">
+    <div id="profilemenu" class="w-10 h-10 cursor-pointer">
+        <img class="w-full h-full rounded-full object-cover" 
+             src="{{ asset('img/ninogprofile.jpg') }}" 
+             alt="Profile">
     </div>
+    
        
      
     </div>
@@ -144,36 +147,40 @@
 {{-- profilesidebar --}}
 {{-- right-[-40%] --}}
 @auth
-<div x-data="{ open: false }" 
-     @toggle-profile-sidebar.window="open = !open"
-     @click.outside="open = false"
-     :class="open ? 'block' : 'hidden'"
-     id="profilesidebar" 
-     class="fixed right-2 top-16 w-48 bg-[#182b3c] rounded-md shadow-lg overflow-hidden transition-all duration-300 z-50">
-    <div class="w-[14em] bg-[#182b3c] p-5 rounded-br-md">
+{{-- <div id="profilesidebar" class="fixed inset-0 flex justify-center items-center  bg-black/50 hidden"> --}}
+    <div id="profilesidebar"  class="w-[14em] fixed hidden right-10 top-18 bg-[#182b3c] p-5 rounded-br-md z-55 rounded-md shadow-md">
         <div class="flex flex-col space-y-6">
+            
+            <!-- View Profile -->
             <a href="/profile" class="flex items-center space-x-3">
                 <div class="w-9 h-9">
-                    <img class="w-full h-full rounded-full object-cover" src="{{ asset('img/ninogprofile.jpg') }}" alt="">
+                    <img class="w-full h-full rounded-full object-cover" 
+                         src="{{ asset('img/ninogprofile.jpg') }}" 
+                         alt="">
                 </div>
                 <p class="text-white text-sm">View Profile</p>
-               
             </a>
 
-            <a href="#" id="recentpostlink" class="flex lg:hidden items-center space-x-3 py-2 px-1 rounded-sm hover:bg-[#31A871] transition duration-150 cursor-pointer">
+            <!-- Recent Post (for mobile) -->
+            <a href="#" id="recentpostlink" 
+               class="flex lg:hidden items-center space-x-3 py-2 px-1 rounded-sm hover:bg-[#31A871] transition duration-150 cursor-pointer">
                 <i class="fa-solid fa-clock text-[#31A871]"></i>
                 <span class="text-white text-sm">Recent Post</span>
             </a>
 
-            <form action="{{ route('logout') }}" method="POST" class="flex items-center space-x-3 py-2 px-1 rounded-sm hover:bg-[#31A871] transition duration-150 cursor-pointer">
+            <!-- Logout -->
+            <form action="{{ route('logout') }}" method="POST" 
+                  class="flex items-center space-x-3 py-2 px-1 rounded-sm hover:bg-[#31A871] transition duration-150 cursor-pointer">
                 @csrf
-                <i class="fa-solid fa-sign-out text-[#31A871]"></i>
+                <i class="fa-solid fa-sign-out text-[#31A871] hover:text-white"></i>
                 <span class="text-white text-sm">Sign out</span>
             </form>
+
         </div>
     </div>
 </div>
 @endauth
+
 
 <div id="recentpostcontainer" class="fixed justify-center items-center w-full h-screen hidden md:hidden z-60 bg-[#1f1f1f46] "> 
       <div class="bg-[#182b3c] shadow-lg p-5 rounded-lg text-white w-[27em]  h-[50em] hide-scrollbar overflow-auto">
@@ -296,9 +303,25 @@
       
     </div>
     </div>
-<script>
+    <script>
+        // Get elements
+        const profileMenu = document.getElementById('profilemenu');
+        const profileSidebar = document.getElementById('profilesidebar');
     
-</script>
+        // Toggle sidebar visibility
+        profileMenu.addEventListener('click', () => {
+            profileSidebar.classList.toggle('hidden');
+            profileContent.classList.remove('w-0');
+            profileContent.classList.add('w-56'); 
+        });
+    
+        // Close sidebar when clicking outside the inner div
+        // profileSidebar.addEventListener('click', (e) => {
+        //     if (e.target === profileSidebar) { // click only on overlay
+        //         profileSidebar.classList.add('hidden');
+        //     }
+        // });
+    </script>
 
 
 <script>
@@ -393,11 +416,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const recentPostClose = document.getElementById('recentpostX');
     
         recentPostBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            recentPostModal.classList.remove('hidden');
-            recentPostModal.classList.add('flex');
-            profileSidebar.classList.add('max-h-0'); // hide profile sidebar
-        });
+        e.preventDefault();
+        recentPostModal.classList.remove('hidden');
+        recentPostModal.classList.add('flex');
+        // Profile sidebar is now handled by Alpine.js
+    }); 
     
         recentPostClose.addEventListener('click', function() {
             recentPostModal.classList.add('hidden');

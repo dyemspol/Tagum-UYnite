@@ -32,7 +32,7 @@
                     <p class="text-red-400 text-xs mt-1">Please enter your correct redentials.</p>
                     @endif
                     <a href="#" class="" ><p class="text-right text-xs font-extralight text-black">Forgot Password?</p></a>
-                     <input class="bg-none  bg-[#2C5982] hover:bg-[#346a9d] cursor-pointer rounded-sm w-full text-white font-normal py-1 px-1 mt-3" type="submit" value="LOGIN">
+                     <input class="bg-none  bg-[#31A871] hover:bg-[#2bc57d] cursor-pointer rounded-sm w-full text-white font-normal py-1 px-1 mt-3" type="submit" value="LOGIN">
                 </form>
                     <p class="text-black text-center text-xs mt-5 opacity-70">No Account Yet? <a id="openSignup" href="/signup" class="text-[#31A871]">Register Now</a></p>
             </div>

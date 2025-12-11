@@ -40,7 +40,7 @@
                 <input class="bg-transparent border-[0.5px] border-black rounded-sm w-full text-black py-2 px-2 text-sm" type="text" placeholder="Username" wire:model="username" required>
                 <input class="bg-transparent border-[0.5px] border-black rounded-sm w-full text-black py-2 px-2 text-sm" type="password" placeholder="Password" wire:model="password" required>
                 <input class="bg-transparent border-[0.5px] border-black rounded-sm w-full text-black py-2 px-2 text-sm" type="password" placeholder="Confirm Password" wire:model="confirm_password" required>
-                <input class="bg-none bg-[#2C5982] hover:bg-[#346a9d] cursor-pointer rounded-sm w-full text-white font-normal py-1 px-1 mt-3" type="submit" value="Register">
+                <input class="bg-none  bg-[#31A871] hover:bg-[#2bc57d] cursor-pointer rounded-sm w-full text-white font-normal py-1 px-1 mt-3" type="submit" value="Register">
                 @if($showError)
                     <p class="text-red-400 text-xs mt-1">Please input all the fields correctly</p>
                 @endif
