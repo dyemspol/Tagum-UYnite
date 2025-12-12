@@ -12,6 +12,13 @@ use App\Livewire\Navbar;
 Route::get('/', [HomepageController::class, 'index', 'departments' => \App\Models\Department::all()])->middleware('preventbackhistory')->name('homepage');
 
 
+
+Route::get('/message', function () {
+    return view('page.messagePage'); // use dot notation, not slash
+})->name('message');
+
+
+
 Route::get('/login-form', LoginForm::class)->name('login-form');
 
 Route::get('/signup', [AuthController::class, 'showRegisterForm'])->name('signup');

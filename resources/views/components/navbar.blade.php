@@ -16,15 +16,26 @@
 
 
 
-    @if (!auth()->check())
-    <button id = "loginBt" class="bg-[#31a87100] border-[1px] py-1 px-4 text-white rounded-sm font-light">Login</button>
+        @if (!auth()->check())
+        <button id="loginBt" class="bg-[#31a87100] border-[1px] py-1 px-4 text-white rounded-sm font-light">
+            Login
+        </button>
     @endif
+   
+    @auth
 
-    <div id="profilemenu" class="w-10 h-10 cursor-pointer">
-        <img class="w-full h-full rounded-full object-cover" 
-             src="{{ asset('img/ninogprofile.jpg') }}" 
-             alt="Profile">
+    <div class="flex items-center gap-5">
+        <a href="{{ route('message') }}"><i class="fa-regular fa-message text-[#31A871] text-2xl group-hover:text-white cursor-pointer "></i></a>
+        
+        <i id="notifIcon" class="fa-regular fa-bell text-[#31A871] text-2xl text-normal group-hover:text-white cursor-pointer"></i>
+        <div id="profilemenu" class="w-10 h-10 cursor-pointer">
+            <img class="w-full h-full rounded-full object-cover" 
+                 src="{{ asset('img/ninogprofile.jpg') }}" 
+                 alt="Profile">
+        </div>
     </div>
+    @endauth
+    
     
        
      

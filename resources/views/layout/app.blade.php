@@ -29,6 +29,7 @@
     @include('components.navbar')
     @include('components.postCardModal')
     @include('components.editprofile')
+    @include('components.notification')
     {{-- Login Modal --}}
     @if(!Auth::check())
     <livewire:login-form />

@@ -55,18 +55,21 @@
          </div>
        </div>
             
-            @foreach($departments as $department)
-           <div class="space-y-2">
-            <div class="flex justify-between items-center">
-              <p class="text-white font-light text-sm">{{ $department->category }}</p>
-              <div class="bg-[#122333] rounded-full w-6 h-6 flex justify-center items-center">
-                 <p class="text-white"></p>
-              </div>
+             @foreach($departments as $department)
+              <div class="space-y-2">
+                <label class="flex justify-between items-center cursor-pointer">
+            
+                    <p class="text-white font-light text-sm">{{ $department->category }}</p>
+                    <input type="checkbox"
+                           class="w-4 h-  accent-[#31A871] rounded-xl cursor-pointer" />
+                </label>
             </div>
-           </div>
-            @endforeach
+            @endforeach 
             
-            
+
+
+
+           
         
     </div>
 
