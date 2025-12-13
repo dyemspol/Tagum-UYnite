@@ -29,7 +29,8 @@
     @include('components.navbar')
     @include('components.postCardModal')
     @include('components.editprofile')
-    @include('components.notification')
+    @include('components.notificationModal')
+
     {{-- Login Modal --}}
     @if(!Auth::check())
     <livewire:login-form />
@@ -75,6 +76,7 @@
 
 
     </div>
+    @vite('resources/js/notifModalToggle.js')
     @vite('resources/js/postPreview.js')
     @vite('resources/js/autocompleteLocation.js')
     @stack('scripts')

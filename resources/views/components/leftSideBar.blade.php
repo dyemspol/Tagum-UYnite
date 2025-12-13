@@ -1,6 +1,6 @@
 <div class="fixed">
-
-    <div class="w-full bg-[#182b3cd5] h-full  p-5 rounded-md">
+    {{-- originalwidth is w-full --}}
+    <div class="w-[17.5em] bg-[#182b3cd5] h-[40em]   p-5 rounded-md">
         <div class="flex flex-col space-y-6">
             <a href="/"
                 class="flex items-center space-x-3 transition duration-150 py-3 px-1 rounded-sm group {{ request()->routeIs('homepage') ? 'bg-[#31A871]' : 'hover:bg-[#31A871]' }}">
@@ -50,22 +50,27 @@
              <x-heroicon-o-magnifying-glass
                  class="absolute left-2 top-1/2 transform -translate-y-1/2 text-white w-4 h-4" />
         
-             <input type="text" placeholder="Search categories..."
-                 class="bg-[#122333] w-full text-white rounded-md pl-9 pr-2 py-1 focus:outline-none text-sm " />
+                 <input
+                 id="categorySearch"
+                 type="text"
+                 placeholder="Search categories..."
+                 class="bg-[#122333] w-full text-white rounded-md pl-9 pr-2 py-1 focus:outline-none text-sm"
+             />
          </div>
        </div>
-            
-             @foreach($departments as $department)
-              <div class="space-y-2">
-                <label class="flex justify-between items-center cursor-pointer">
-            
-                    <p class="text-white font-light text-sm">{{ $department->category }}</p>
-                    <input type="checkbox"
-                           class="w-4 h-  accent-[#31A871] rounded-xl cursor-pointer" />
-                </label>
+            <div class="overflow-y-scroll hide-scrollbar">
+       @foreach($departments as $department)
+       <div class="category-item space-y-2" data-category="{{ strtolower($department->category) }}">
+           <label class="flex justify-between items-center space-y-4 cursor-pointer">
+               <p class="text-white font-light text-sm">
+                   {{ $department->category }}
+               </p>
+               <input type="checkbox"
+                      class="w-4 h-4 accent-[#31A871] rounded cursor-pointer" />
+           </label>
+       </div>
+   @endforeach
             </div>
-            @endforeach 
-            
 
 
 
@@ -76,6 +81,29 @@
 
 
 </div>
+
+<script>
+    const searchInput = document.getElementById('categorySearch');
+    const categories = document.querySelectorAll('.category-item');
+
+    searchInput.addEventListener('input', function () {
+        const searchValue = this.value.toLowerCase();
+
+        categories.forEach(category => {
+            const text = category.dataset.category;
+
+            if (text.includes(searchValue)) {
+                category.classList.remove('hidden');
+            } else {
+                category.classList.add('hidden');
+            }
+        });
+    });
+</script>
+
+
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
     
