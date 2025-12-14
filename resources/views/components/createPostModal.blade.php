@@ -192,8 +192,7 @@
                     window.dispatchEvent(new CustomEvent('updatePostPreview', { detail: { files: window.uploadedFilesForPreview } }));
                 });
             }
-        
-            
+        // adfsafsa
             let map, marker;
         
 
