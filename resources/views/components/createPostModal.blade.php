@@ -136,14 +136,17 @@
     </div>
     @push('scripts')
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        // Use window properties to persist map instance across Livewire updates
+        // and avoid "Identifier has already been declared" errors if script is re-executed.
+        window.createPostMapInstance = window.createPostMapInstance || null;
+        window.createPostMarkerInstance = window.createPostMarkerInstance || null;
+
+        function initCreatePostModal() {
             const mediaInput = document.getElementById('createPostMedia');
             const mediaPreviewGrid = document.getElementById('mediaPreviewGrid');
             const previewMediaBtn = document.getElementById('previewMediaBtn');
         
             const modal = document.getElementById('createPostModal');
-            const postCardModal = document.getElementById('postCardModal');
-            const openBtn = document.getElementById('createPostBtnMobile');
             const modalClose = document.getElementById('createPostModalX');
             const titleInput = document.querySelector('input[wire\\:model="title"]');
             const descriptionInput = document.querySelector('input[wire\\:model="description"]');
@@ -151,6 +154,7 @@
             const barangaySelect = document.querySelector('select[wire\\:model="barangay_id"]');
             const streetInput = document.querySelector('input[wire\\:model="Street_Purok"]');
             const landmarkInput = document.querySelector('input[wire\\:model="landmark"]');
+
             // Media preview (small grid)
             const renderMediaGrid = (files) => {
                 if (!mediaPreviewGrid || !files || files.length === 0) {
@@ -183,58 +187,30 @@
             };
         
             if (mediaInput) {
-                mediaInput.addEventListener('change', (e) => {
+                // Remove old listener to avoid duplicates if element is reused (rare but possible)
+                mediaInput.onchange = (e) => {
                     const files = e.target.files;
                     window.uploadedFilesForPreview = Array.from(files || []);
                     renderMediaGrid(files);
-        
-                    // also update big preview when ready
                     window.dispatchEvent(new CustomEvent('updatePostPreview', { detail: { files: window.uploadedFilesForPreview } }));
-                });
+                };
             }
-        // adfsafsa
-            let map, marker;
-        
-
         
             // Close Modal
             if (modalClose) {
-                modalClose.addEventListener('click', () => {
-                    modal.classList.add('hidden');
-                    modal.classList.remove('flex');
-        
+                // Use onclick property to avoid duplicate listeners on re-init
+                modalClose.onclick = () => {
+                    if(modal) {
+                        modal.classList.add('hidden');
+                        modal.classList.remove('flex');
+                    }
                     Livewire.dispatch('resetCreatePostModal');
-                });
+                };
             }
-        
-            // Initialize Map
-            window.addEventListener('openCreatePostModal', () => {
-        
-                if (!map) {
-                    map = L.map('createPostMap').setView([7.4478,125.8094], 13);
-        
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        maxZoom: 19
-                    }).addTo(map);
-        
-                    marker = L.marker([7.4478,125.8094], { draggable:true }).addTo(map);
-        
-                    marker.on('dragend', function(e) {
-                        const lat = e.target.getLatLng().lat;
-                        const lng = e.target.getLatLng().lng;
-                        Livewire.dispatch('setLatLng', [lat, lng]);
-                    });
-        
-                } else {
-                    setTimeout(() => {
-                        map.invalidateSize();
-                    }, 300);
-                }
-            });
 
             // Open media preview modal with current form data (vanilla JS)
             if (previewMediaBtn) {
-                previewMediaBtn.addEventListener('click', () => {
+                 previewMediaBtn.onclick = () => {
                     const departmentText = deptSelect?.options[deptSelect.selectedIndex]?.textContent?.trim();
                     const barangayText = barangaySelect?.options[barangaySelect.selectedIndex]?.textContent?.trim();
                     window.dispatchEvent(new CustomEvent('openPostCardPreview', {
@@ -254,11 +230,51 @@
                         modal.classList.add('hidden');
                         modal.classList.remove('flex');
                     }
-                });
+                };
             }
+        }
+
+        // Initialize Map Handler
+        // We define this ONCE on window, but inside it we check for the *current* map element.
+        // If the map element is missing (navigated away), we do nothing.
+        // If the map element exists but instance is null or on old element, we create new.
         
-        });
+        window.createPostMapHandler = () => {
+             const mapDiv = document.getElementById('createPostMap');
+             if (!mapDiv) return;
 
+             // If map instance exists but container is different (or container emptied by Livewire morph), reset.
+             if (window.createPostMapInstance && window.createPostMapInstance.getContainer() !== mapDiv) {
+                 window.createPostMapInstance.remove();
+                 window.createPostMapInstance = null;
+             }
 
-        </script>
-        @endpush
+             if (!window.createPostMapInstance) {
+                window.createPostMapInstance = L.map(mapDiv).setView([7.4478,125.8094], 13);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19
+                }).addTo(window.createPostMapInstance);
+
+                window.createPostMarkerInstance = L.marker([7.4478,125.8094], { draggable:true }).addTo(window.createPostMapInstance);
+                window.createPostMarkerInstance.on('dragend', function(e) {
+                    const lat = e.target.getLatLng().lat;
+                    const lng = e.target.getLatLng().lng;
+                    Livewire.dispatch('setLatLng', [lat, lng]);
+                });
+             } else {
+                 setTimeout(() => {
+                    window.createPostMapInstance.invalidateSize();
+                 }, 300);
+             }
+        };
+
+        // Attach the window event listener only once if possible.
+        // To be safe against multiple attachments (if script re-runs), we remove first.
+        window.removeEventListener('openCreatePostModal', window.createPostMapHandler);
+        window.addEventListener('openCreatePostModal', window.createPostMapHandler);
+
+        document.addEventListener('DOMContentLoaded', initCreatePostModal);
+        document.addEventListener('livewire:navigated', initCreatePostModal);
+
+    </script>
+    @endpush

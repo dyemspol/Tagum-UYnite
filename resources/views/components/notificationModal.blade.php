@@ -16,7 +16,7 @@
         <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
           <div class="w-8 h-8 flex-shrink-0">
             <img class="w-full h-full rounded-full object-cover" 
-                 src="https://via.placeholder.com/150" 
+                 src="{{ asset('img/ninogprofile.jpg') }}" 
                  alt="User">
           </div>
           <div>
@@ -28,7 +28,7 @@
         <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
           <div class="w-8 h-8 flex-shrink-0">
             <img class="w-full h-full rounded-full object-cover" 
-                 src="https://via.placeholder.com/150" 
+                 src="{{ asset('img/ninogprofile.jpg') }}" 
                  alt="User">
           </div>
           <div>
@@ -40,7 +40,7 @@
         <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
           <div class="w-8 h-8 flex-shrink-0">
             <img class="w-full h-full rounded-full object-cover" 
-                 src="https://via.placeholder.com/150" 
+                 src="{{ asset('img/ninogprofile.jpg') }}" 
                  alt="User">
           </div>
           <div>
@@ -52,7 +52,7 @@
         <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
           <div class="w-8 h-8 flex-shrink-0">
             <img class="w-full h-full rounded-full object-cover" 
-                 src="https://via.placeholder.com/150" 
+                 src="{{ asset('img/ninogprofile.jpg') }}" 
                  alt="User">
           </div>
           <div>
@@ -64,7 +64,7 @@
         <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
           <div class="w-8 h-8 flex-shrink-0">
             <img class="w-full h-full rounded-full object-cover" 
-                 src="https://via.placeholder.com/150" 
+                 src="{{ asset('img/ninogprofile.jpg') }}" 
                  alt="User">
           </div>
           <div>
@@ -76,7 +76,7 @@
         <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
           <div class="w-8 h-8 flex-shrink-0">
             <img class="w-full h-full rounded-full object-cover" 
-                 src="https://via.placeholder.com/150" 
+                 src="{{ asset('img/ninogprofile.jpg') }}" 
                  alt="User">
           </div>
           <div>
@@ -88,7 +88,7 @@
         <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
           <div class="w-8 h-8 flex-shrink-0">
             <img class="w-full h-full rounded-full object-cover" 
-                 src="https://via.placeholder.com/150" 
+                 src="{{ asset('img/ninogprofile.jpg') }}" 
                  alt="User">
           </div>
           <div>
@@ -100,7 +100,7 @@
         <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
           <div class="w-8 h-8 flex-shrink-0">
             <img class="w-full h-full rounded-full object-cover" 
-                 src="https://via.placeholder.com/150" 
+                 src="{{ asset('img/ninogprofile.jpg') }}" 
                  alt="User">
           </div>
           <div>
@@ -112,7 +112,7 @@
         <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
           <div class="w-8 h-8 flex-shrink-0">
             <img class="w-full h-full rounded-full object-cover" 
-                 src="https://via.placeholder.com/150" 
+                 src="{{ asset('img/ninogprofile.jpg') }}" 
                  alt="User">
           </div>
           <div>

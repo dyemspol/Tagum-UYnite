@@ -6,9 +6,7 @@
   <div class="">
     
 
-    @foreach ($posts as $post)
-    <livewire:popular-post :post="$post" key="$post->id"/>
-    @endforeach
+    <livewire:post-feed type="popular" />
     
     </div>
 

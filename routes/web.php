@@ -33,5 +33,6 @@ Route::middleware(['auth', 'custom:user' ,'preventbackhistory'])->group(function
 
     Route::get('/profile', [HomepageController::class, 'profile'])->name('profile');
    
+    Route::get('/search', [HomepageController::class, 'searchPosts'])->name('search');
 });
 

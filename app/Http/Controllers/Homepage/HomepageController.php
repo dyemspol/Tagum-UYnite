@@ -7,29 +7,33 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Report;
+use App\Models\User;
+
 
 class HomepageController extends Controller
 {
-    public function __construct(HomepageServices $HomepageServices)
+    protected $HomepageServices;
+
+    public function __construct(HomepageServices $homepageServices)
     {
-        $this->HomepageServices = $HomepageServices;
+        $this->HomepageServices = $homepageServices;
     }
     public function index()
     {
         // Fetch all posts with their relationships, ordered by newest first
-        $posts = $this->HomepageServices->getPosts();
+        
         return view('page.HomePage', [
             'isProfilePage' => false,
-            'posts' => $posts
+            
         ]);
     }
 
     public function latestpost()
     {
-        $posts = $this->HomepageServices->getLatestPosts();
+        
         return view('page.LatestPage', [
             'isProfilePage' => false,
-            'posts' => $posts
+            
         ]);
     }
     public function logout(Request $request)
@@ -42,17 +46,33 @@ class HomepageController extends Controller
     
     public function profile()
     {
-        $users = User::all();
-        return view('page.profilePage', compact('users'));
+        
+        $user = Auth::user();
+        $post = Report::where('user_id', $user->id)->get();
+        
+        return view('page.profilePage', compact('user', 'post'));
     }
 
     public function popularPOST()
     {
-        $posts = $this->HomepageServices->getPopularPosts();
+        
 
         return view('page.PopularPage', [
             'isProfilePage' => false,
-            'posts' => $posts   
+            
+        ]);
+    }
+    public function searchPosts(Request $request)
+    {
+        $searchQuery = $request->input('search');
+        $posts = [];
+        if ($searchQuery) {
+            $posts = $this->HomepageServices->searchPosts($searchQuery);
+        }
+        return view('page.HomePage', [
+            'isProfilePage' => false,
+            'posts' => $posts,
+            'searchQuery' => $searchQuery
         ]);
     }
 }

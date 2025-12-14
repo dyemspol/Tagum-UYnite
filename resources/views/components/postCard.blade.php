@@ -13,8 +13,8 @@
              <div class="">
                  <p class="font-normal text-sm text-white">{{ $post->user->username ?? 'Unknown User' }}</p>
                  <p class="font-light text-[#ffffffa4] text-xs">
-                    {{ $post->created_at->format('F d, Y') }} <span>•</span> 
-                    {{ $post->barangay->barangay_name ?? 'Unknown Location' }}
+                    {{ $post->created_at->format('F d, Y') }}  at {{ $post->created_at->format('h:i A') }} <span>•</span> 
+                        {{ $post->barangay->barangay_name ?? 'Unknown Location' }}
                  </p>
              </div>
            </div>
@@ -136,7 +136,7 @@
         
         {{-- Comment Section (Placeholder for now) --}}
         <div class="mt-3 px-3 pb-2 hidden comment-section">
-             <!-- Comments would go here -->
+             
         </div>
 
     </div>

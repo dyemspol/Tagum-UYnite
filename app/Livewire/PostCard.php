@@ -33,7 +33,7 @@ class PostCard extends Component
     }
     public function loadreactionCounts()
     {
-         $this->post->load('reactions');
+        $this->post->load('reactions');
         $this->likes = $this->post->reactions->where('reaction_type', 'like')->count();
         $this->dislikes = $this->post->reactions->where('reaction_type', 'dislike')->count();
         

@@ -1,8 +1,8 @@
-<div class="fixed">
+<div class="fixed" x-data>
     {{-- originalwidth is w-full --}}
     <div class="w-[17.5em] bg-[#182b3cd5] h-[40em]   p-5 rounded-md">
         <div class="flex flex-col space-y-6">
-            <a href="/"
+            <a href="/" wire:navigate
                 class="flex items-center space-x-3 transition duration-150 py-3 px-1 rounded-sm group {{ request()->routeIs('homepage') ? 'bg-[#31A871]' : 'hover:bg-[#31A871]' }}">
                 <i class="fa-solid fa-house {{ request()->routeIs('homepage') ? 'text-white' : 'text-[#31A871] group-hover:text-white' }} text-normal"></i>
                 <span class="text-white text-sm">Home</span>
@@ -25,13 +25,13 @@
             </div> --}}
 
             @auth
-               <div id="createPostBt" class="flex cursor-pointer items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group" @click="$dispatch('openCreatePost')">
+               <div id="createPostBtDesktop" class="flex cursor-pointer items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group">
                 <i class="fa-solid fa-plus text-[#31A871] group-hover:text-white"></i>
                 <span  class="text-white text-sm group-hover:text-white">Create Post</span>
             </div> 
             @endauth
             @guest
-                <div id="createPostBtGuest" class="flex cursor-pointer items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group" @click="$dispatch('openCreatePost')">
+                <div id="createPostBtGuest" class="flex cursor-pointer items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group">
                 <i class="fa-solid fa-plus text-[#31A871] group-hover:text-white"></i>
                 <span  class="text-white text-sm group-hover:text-white">Create Post</span>
             </div>
@@ -50,78 +50,87 @@
              <x-heroicon-o-magnifying-glass
                  class="absolute left-2 top-1/2 transform -translate-y-1/2 text-white w-4 h-4" />
         
-                 <input
-                 id="categorySearch"
-                 type="text"
-                 placeholder="Search categories..."
-                 class="bg-[#122333] w-full text-white rounded-md pl-9 pr-2 py-1 focus:outline-none text-sm"
-             />
-         </div>
-       </div>
-            <div class="overflow-y-scroll hide-scrollbar">
-       @foreach($departments as $department)
-       <div class="category-item space-y-2" data-category="{{ strtolower($department->category) }}">
-           <label class="flex justify-between items-center space-y-4 cursor-pointer">
-               <p class="text-white font-light text-sm">
-                   {{ $department->category }}
-               </p>
-               <input type="checkbox"
-                      class="w-4 h-4 accent-[#31A871] rounded cursor-pointer" />
-           </label>
-       </div>
-   @endforeach
-            </div>
-
-
-
-           
-        
+            <input
+            id="categorySearchDesktop"
+            type="text"
+            placeholder="Search categories..."
+            class="bg-[#122333] w-full text-white rounded-md pl-9 pr-2 py-1 focus:outline-none text-sm"
+        />
     </div>
+  </div>
+        <div id="desktopCategoryList" class="overflow-y-scroll hide-scrollbar">
+   @foreach($departments as $department)
+   <div class="category-item space-y-2" data-category="{{ strtolower($department->category) }}">
+       <label class="flex justify-between items-center space-y-4 cursor-pointer">
+           <p class="text-white font-light text-sm">
+               {{ $department->category }}
+           </p>
+          <input type="checkbox"
+                                    value="{{ $department->id }}"
+                                   @change="$dispatch('toggle-category', { id: {{ $department->id }} })"
+                                    class="w-4 h-4 accent-[#31A871] rounded cursor-pointer" />
+       </label>
+   </div>
+@endforeach
+        </div>
+
+
+
+       
+    
+</div>
 
 
 
 </div>
 
 <script>
-    const searchInput = document.getElementById('categorySearch');
-    const categories = document.querySelectorAll('.category-item');
+    function initDesktopSidebar() {
+        // --- Create Post Button Logic ---
+        const authBtn = document.getElementById('createPostBtDesktop');
+        const guestBtn = document.getElementById('createPostBtGuest');
 
-    searchInput.addEventListener('input', function () {
-        const searchValue = this.value.toLowerCase();
+        if (authBtn) {
+            authBtn.addEventListener('click', () => {
+                const modal = document.getElementById('createPostModal');
+                if(modal) {
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                }
+                window.dispatchEvent(new Event('openCreatePostModal'));
+            });
+        }
 
-        categories.forEach(category => {
-            const text = category.dataset.category;
+        if (guestBtn) {
+            guestBtn.addEventListener('click', () => {
+                window.location.href = "/login";
+            });
+        }
 
-            if (text.includes(searchValue)) {
-                category.classList.remove('hidden');
-            } else {
-                category.classList.add('hidden');
-            }
-        });
-    });
-</script>
+        // --- Category Search Logic ---
+        const searchInputDesktop = document.getElementById('categorySearchDesktop');
+        const desktopCategoriesContainer = document.getElementById('desktopCategoryList');
+        
+        if (searchInputDesktop && desktopCategoriesContainer) {
+            // Only query items within this specific container
+            const desktopCategories = desktopCategoriesContainer.querySelectorAll('.category-item');
 
+            searchInputDesktop.addEventListener('input', function () {
+                const searchValue = this.value.toLowerCase();
 
+                desktopCategories.forEach(category => {
+                    const text = category.dataset.category;
 
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-    
-    const authBtn = document.getElementById('createPostBt');
-    const guestBtn = document.getElementById('createPostBtGuest');
-    
-
-    if (authBtn) {
-        authBtn.addEventListener('click', () => {
-            Livewire.dispatch('openCreatePostModal');
-        });
+                    if (text.includes(searchValue)) {
+                        category.classList.remove('hidden');
+                    } else {
+                        category.classList.add('hidden');
+                    }
+                });
+            });
+        }
     }
 
-    if (guestBtn) {
-        guestBtn.addEventListener('click', () => {
-            window.location.href = "/login";
-        });
-    }
-   
-});
+    document.addEventListener('DOMContentLoaded', initDesktopSidebar);
+    document.addEventListener('livewire:navigated', initDesktopSidebar);
 </script>

@@ -17,12 +17,13 @@
     @include('components.navbar')
 
     {{-- Login Modal --}}
-    @include('components.login')
+    @if (!Auth::check())
+    <livewire:login-form/>
+    @endif
 
 
 
-
-    @include('components.createPostModal')
+    <livewire:create-post/>
     <div class="pt-[140px]">
 
         {{-- MAIN GRID WITH SIDE BARS --}}
@@ -39,7 +40,7 @@
             </div>
 
             {{-- PAGE CONTENT  --}}
-            <div class="text-white">
+            <div class="text-white" x-data="{ activeTab: 'posts' }">
 
 
                 {{-- profile name and picture section --}}
@@ -47,9 +48,9 @@
                     <div class="h-26 w-26"><img class="w-full rounded-full object-cover h-full"
                             src="{{ asset('img/yaoyapo.jpg') }}" alt=""></div>
                     <div class="">
-                        <p class="text-white text-3xl">James Paul Castador</p>
+                        <p class="text-white text-3xl">{{ $user->first_name }} {{ $user->last_name }}</p>
                         <div class="flex gap-2 items-center mt-1">
-                            <p class="text-white text-sm opacity-60">2 Total Post</p>
+                            <p class="text-white text-sm opacity-60">{{ $user->reports->count() }} Total Post</p>
                             <div id="profilemenu" class="w-10 h-10 cursor-pointer"
                         @click="$dispatch('open-edit-profile')">
                         <img class="w-full h-full rounded-full object-cover" src="{{ asset('img/ninogprofile.jpg') }}" alt="">
@@ -60,17 +61,30 @@
 
 
                 <div class="flex gap-12 my-3">
-                    <p class="cursor-pointer" id="postsTab">Posts</p>
-                    <p class="cursor-pointer" id="trackIssueTab">Track issue</p>
-
+                    <p class="cursor-pointer pb-1 transition-all duration-200" 
+                       @click="activeTab = 'posts'"
+                       :class="activeTab === 'posts' ? 'text-[#31A871] border-b-2 border-[#31A871] opacity-100' : 'text-white opacity-60 hover:opacity-100'">
+                       Posts
+                    </p>
+                    <p class="cursor-pointer pb-1 transition-all duration-200" 
+                       @click="activeTab = 'track'"
+                       :class="activeTab === 'track' ? 'text-[#31A871] border-b-2 border-[#31A871] opacity-100' : 'text-white opacity-60 hover:opacity-100'">
+                       Track issue
+                    </p>
                 </div>
                 <hr class="mb-7 opacity-60 z-10 ">
-                <div id="postsSection" class=" space-y-3 max-w-[650px] mx-auto w-full">
-                    <x-postCard />
-                    <x-postCard />
-                    <x-postCard />
+                <div id="postsSection" x-show="activeTab === 'posts'" class=" space-y-3 max-w-[650px] mx-auto w-full">
+                    @forelse($user->reports as $post)
+                        <livewire:post-card :post="$post" :key="$post->id" />
+                    @empty
+                        <div class="text-white text-center opacity-50 py-10">No posts yet.</div>
+                    @endforelse
                 </div>
-                <div id="trackIssueSection" class="flex justify-center">
+
+
+                
+                <div id="trackIssueSection" x-show="activeTab === 'track'" class="flex justify-center" style="display: none;">
+                    @forelse($user->reports as $post)
                     <div class="bg-[#0f1f2f] border border-[#1e3246] px-3 py-3 rounded-lg w-full max-w-[50em]">
                         <div class="flex items-center justify-between gap-3 mb-2">
                             <div class="flex items-center gap-3">
@@ -79,16 +93,18 @@
                                         src="{{ asset('img/yaoyapo.jpg') }}" alt="profile">
                                 </div>
                                 <div class="leading-tight">
-                                    <p class="text-white text-sm">Khristian Jay Malavar</p>
-                                    <p class="text-xs text-[#9fb1c5]">November 4, 2025 <span class="mx-1">•</span>
-                                        Broken Road</p>
+                                    <p class="text-white text-sm">{{ $user->first_name }} {{ $user->last_name }}</p>
+                                    <p class="text-xs text-[#9fb1c5]">{{ $user->reports->first()->created_at->format('F j, Y') }} <span class="mx-1">•</span>
+                                        {{ $user->reports->first()->title }}</p>
                                 </div>
                             </div>
-                            <span class="text-sm bg-lime-500 text-[#122333] px-3 py-1 rounded-2xl">Pending</span>
+                            <span class="text-sm bg-lime-500 text-[#122333] px-3 py-1 rounded-2xl">{{ $user->reports->first()->report_status ? 'Pending' : 'Resolved' }}</span>
                         </div>
-                        <p class="text-white text-base">Free massage ang inyong likod ani. Palihog, hinay-hinay lang! 😂
-                        </p>
+                        <p class="text-white text-base">{{ $user->reports->first()->description }}</p>
                     </div>
+                    @empty
+                        <div class="text-white text-center opacity-50 py-10">No posts yet.</div>
+                    @endforelse
                 </div>
 
             </div>
@@ -105,22 +121,7 @@
 
 
     @vite('resources/js/postPreview.js')
-    <script>
-        const postsTab = document.getElementById('postsTab');
-        const trackIssueTab = document.getElementById('trackIssueTab');
-        const postsSection = document.getElementById('postsSection');
-        const trackIssueSection = document.getElementById('trackIssueSection');
 
-        postsTab.addEventListener('click', () => {
-            postsSection.classList.remove('hidden');
-            trackIssueSection.classList.add('hidden');
-        });
-
-        trackIssueTab.addEventListener('click', () => {
-            postsSection.classList.add('hidden');
-            trackIssueSection.classList.remove('hidden');
-        });
-    </script>
 </body>
 
 

@@ -21,6 +21,7 @@ class Report extends Model
         'rejection_reason',
         'priority_level',
         'reviewed_by',
+        'report_id',
     ];
     public function user()
     {

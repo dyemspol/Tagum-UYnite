@@ -14,13 +14,13 @@ class DepartmentSeeder extends Seeder
     public function run(): void
     {
         $departments = [
-            ['department_name' => 'Engineering Office', 'category' => 'roads, streetlights, drainage'],
-            ['department_name' => 'CENRO', 'category' => 'garbage, illegal dumping'],
-            ['department_name' => 'CDRRMO', 'category' => 'floods, hazard issues'],
-            ['department_name' => 'General Services Office', 'category' => 'maintenance, public facilities'],
-            ['department_name' => 'Public Safety / Traffic Office', 'category' => 'traffic concerns'],
-            ['department_name' => 'Health Office', 'category' => 'health/environment sanitary issues'],
-            ['department_name' => 'Social Welfare', 'category' => 'welfare/community issues'],
+            ['department_name' => 'Engineering Office', 'category' => 'Roads, Streetlights, Drainage'],
+            ['department_name' => 'CENRO', 'category' => 'Garbage, Illegal Dumping'],
+            ['department_name' => 'CDRRMO', 'category' => 'Floods, Hazard Issues'],
+            ['department_name' => 'General Services Office', 'category' => 'Maintenance, Public Facilities'],
+            ['department_name' => 'Public Safety / Traffic Office', 'category' => 'Traffic Concerns'],
+            ['department_name' => 'Health Office', 'category' => 'Health/Environment Sanitary Issues'],
+            ['department_name' => 'Social Welfare', 'category' => 'Welfare/Community Issues'],
         ];
 
         foreach ($departments as $department) {

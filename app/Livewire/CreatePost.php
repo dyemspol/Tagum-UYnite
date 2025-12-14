@@ -53,6 +53,8 @@ class CreatePost extends Component
     public function submit(CreatePostServices $createPostServices, CloudinaryServices $cloudinaryServices)
     {
         $userId = Auth::id();
+        \Illuminate\Support\Facades\Log::info('Livewire CreatePost: Submit called', ['user_id' => $userId]);
+
         $data =[
             'title' => $this->title,
             'description' => $this->description,
@@ -63,9 +65,13 @@ class CreatePost extends Component
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
         ];
+
+        \Illuminate\Support\Facades\Log::info('Livewire CreatePost: Data prepared', $data);
+
         $result = $createPostServices->createPost($userId, $data, $this->media, $cloudinaryServices) ;
 
         if($result['success']) {
+            \Illuminate\Support\Facades\Log::info('Livewire CreatePost: Service returned success');
 
             session()->flash('success', $result['message']);
 
@@ -73,6 +79,8 @@ class CreatePost extends Component
             
             return redirect('/');
         }
+
+        \Illuminate\Support\Facades\Log::warning('Livewire CreatePost: Service returned failure', ['result' => $result]);
 
         if (isset($result['errors'])) {
             foreach ($result['errors']->messages() as $field => $messages) {

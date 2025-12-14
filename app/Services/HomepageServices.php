@@ -14,30 +14,32 @@ use App\Models\Report;
 
 class HomepageServices
 {
-    public function getPosts()
+    public function getFeedPosts($type, $categoryIds = [])
+    {
+        $query = Report::with(['user', 'postImages', 'department', 'barangay', 'reactions'])
+                    ->where('post_status', 'approved');
+
+        if (!empty($categoryIds)) {
+            $query->whereIn('department_id', $categoryIds);
+        }
+        if ($type === 'popular') {
+            $query->popular(); 
+        } else {
+            $query->latest();
+        }
+
+        return $query->get();
+    }
+    public function searchPosts($searchQuery)
     {
         return Report::with(['user', 'postImages', 'department', 'barangay', 'reactions'])
                     ->where('post_status', 'approved')
-                    ->get();
-    }
-    public function getLatestPosts()
-    {
-        return Report::with(['user', 'postImages', 'department', 'barangay', 'reactions'])
-                    ->where('post_status', 'approved')
-                    ->orderBy('created_at', 'desc')
-                    ->get();
-    }
-    public function getPopularPosts()
-    {
-        return Report::with(['user', 'postImages', 'department', 'barangay', 'reactions'])
-                    ->popular()
-                    ->where('post_status', 'approved')
-                    ->get();
-    }
-    public function getProfilePosts($userId)
-    {
-        return Report::with(['user', 'postImages', 'department', 'barangay', 'reactions'])
-                    ->where('user_id', $userId)
+                    ->where(function($query)use ($searchQuery){
+                        $query->where('title', 'like', '%' . $searchQuery . '%')
+                        ->orWhere('content', 'like', '%' . $searchQuery . '%')
+                        ->orWhere('barangay', 'like', '%' . $searchQuery . '%');
+                    })
+                    ->latest()
                     ->get();
     }
 }

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Report;
 use Illuminate\Foundation\Cloud;
 use App\Services\CloudinaryServices;
+use App\Models\Department;
 
 class CreatePostServices
 {
@@ -52,18 +53,26 @@ class CreatePostServices
 
     public function createPost(int $id, array $data, array $media, CloudinaryServices $cloudinaryServices)
     {
+        Log::info('CreatePostServices: Attempting to create post', ['user_id' => $id, 'title' => $data['title'] ?? 'N/A']);
+
         $validator = $this->validatePost($data);
         if ($validator->fails()) {
+            Log::warning('CreatePostServices: Validation failed', ['errors' => $validator->errors()]);
             return [
                 'success' => false,
                 'message' => 'Validation failed.',
                 'errors' => $validator->errors(),
             ];
         }
+
         try {
             DB::beginTransaction();
-
-           $post = Report::create([
+            $reportId = $this->generateReportId($data['department_id']);
+            
+      
+            
+            $post = Report::create([
+                'report_id' => $reportId,
                 'user_id' => $id,
                 'title' => $data['title'],
                 'content' => $data['description'],
@@ -78,14 +87,17 @@ class CreatePostServices
                 'rejection_reason' => null,
                 'priority_level' => 'low',
                 'reviewed_by' => null,
-
-            ]);
-            if (!empty($media)) {
                 
+            ]);
+
+            if (!empty($media)) {
+                Log::info('CreatePostServices: Uploading media', ['count' => count($media)]);
                 $cloudinaryServices->uploadPostMedia($media, $post->id);
             }
 
             DB::commit();
+
+            Log::info('CreatePostServices: Post created successfully', ['post_id' => $post->id]);
 
             return [
                 'success' => true,
@@ -94,7 +106,7 @@ class CreatePostServices
             ];
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('Error creating post: ' . $e->getMessage());
+            Log::error('CreatePostServices: Error creating post: ' . $e->getMessage());
 
             return [
                 'success' => false,
@@ -102,9 +114,40 @@ class CreatePostServices
             ];
         }
     }
-    public function generateReportId()
+    public function generateReportId(int $departmentId)
     {
-        $reportId = 'RP-' . date('Ymd') . '-' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
+        $department = Department::find($departmentId);
+
+        if (!$department) {
+            return null;
+        }else {
+            switch ($department->department_name) {
+                case 'Engineering Office':
+                    $reportId = 'EO' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
+                    break;
+                case 'CENRO':
+                    $reportId = 'CE' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
+                    break;
+                case 'CDRRMO':
+                    $reportId = 'CD' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
+                    break;
+                case 'General Services Office':
+                    $reportId = 'GS' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
+                    break;
+                case 'Public Safety / Traffic Office':
+                    $reportId = 'PS' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
+                    break;
+                case 'Health Office':
+                    $reportId = 'HO' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
+                    break;
+                case 'Social Welfare':
+                    $reportId = 'SW' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
+                    break;
+                default:
+                    $reportId = 'RP' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
+                    break;
+            }
+        }
         return $reportId;
     }
 }
