@@ -21,7 +21,7 @@
 </head>
 
 <body class="bg-[#122333] min-h-screen">
-    @include('components.notification')
+
     @include('components.comment-modal')
     @include('components.navbar')
     @include('components.postCardModal')

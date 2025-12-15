@@ -1,1 +1,1 @@
-@include('components.notificationModal', ['notifications' => $notifications])
+@include('components.notification', ['notifications' => $notifications])

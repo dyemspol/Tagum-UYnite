@@ -1,5 +1,5 @@
 <!-- Notification Sidebar -->
-<div id="notificationsidebar" class="w-[14em] z-30 fixed hidden right-10 top-20 bg-[#182b3c] h-auto p-5 rounded-md shadow-md">
+<div x-show="$store.notificationModal.open"  @click.self="$store.notificationModal.close()" class="w-[14em] z-30 fixed right-10 top-20 bg-[#182b3c] h-auto p-5 rounded-md shadow-md">
     <div class="flex flex-col h-full">
   
   <!-- Header -->
@@ -14,58 +14,30 @@
       <!-- Scrollable Notifications -->
       <div class="flex-1 overflow-y-auto space-y-3 mt-2 hide-scrollbar">
         <!-- Example Notification -->
+         @forelse($notifications as $notif)
         <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
           <div class="w-8 h-8 flex-shrink-0">
             <img class="w-full h-full rounded-full object-cover" 
-                 src="{{ asset('img/ninogprofile.jpg') }}" 
+                 src="{{ $notif->user->profile_photo ? $notif->user->profile_photo : asset('img/noprofile.jpg') }}"
                  alt="User">
           </div>
           <div>
-            <p class="text-white text-xs">Someone upvoted your post</p>
-            <span class="text-gray-400 text-xs">2 min ago</span>
+           <p class="text-white text-xs">
+                    <span class="font-bold">{{ $notif->user->username }}</span>
+                    @if($notif->type === 'comment')
+                        commented on your post: <span class="text-gray-400 italic">"{{ Str::limit($notif->content, 20) }}"</span>
+                    @else
+                        liked your post
+                    @endif
+                </p>
+                <span class="text-gray-400 text-xs">{{ $notif->created_at->diffForHumans() }}</span>
           </div>
         </a>
-        <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
-            <div class="w-8 h-8 flex-shrink-0">
-              <img class="w-full h-full rounded-full object-cover" 
-                   src="{{ asset('img/ninogprofile.jpg') }}" 
-                   alt="User">
-            </div>
-            <div>
-              <p class="text-white text-xs">Someone upvoted your post</p>
-              <span class="text-gray-400 text-xs">2 min ago</span>
-            </div>
-          </a>
-         
-         
-         
-          
-  
-        <!-- Duplicate as many notifications as needed -->
-        <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
-          <div class="w-8 h-8 flex-shrink-0">
-            <img class="w-full h-full rounded-full object-cover" 
-                 src="{{ asset('img/ninogprofile.jpg') }}" 
-                 alt="User">
-          </div>
-          <div>
-            <p class="text-white text-xs">Someone commented on your post</p>
-            <span class="text-gray-400 text-xs">5 min ago</span>
-          </div>
-        </a>
-  
-        <!-- Add more notifications here -->
-        <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
-          <div class="w-8 h-8 flex-shrink-0">
-            <img class="w-full h-full rounded-full object-cover" 
-                 src="{{ asset('img/ninogprofile.jpg') }}" 
-                 alt="User">
-          </div>
-          <div>
-            <p class="text-white text-xs">Your post was shared</p>
-            <span class="text-gray-400 text-xs">10 min ago</span>
-          </div>
-        </a>
+        @empty
+        <div class="flex items-center justify-center p-2">
+            <p class="text-gray-400 text-xs">No notifications</p>
+        </div>
+        @endforelse
   
       </div>
 
@@ -84,35 +56,7 @@
       </div>
   </div>
   
-  <!-- Script for toggling -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const notifSidebar = document.getElementById('notificationsidebar');
-      const notifIcon = document.getElementById('notifIcon'); // bell icon
-      const notifX = document.getElementById('notifX');
-      const viewAllBottomBtn = document.getElementById('viewAllNotificationsBottom');
-      const notifModal = document.getElementById('notificationModal');
-  
-      if (notifIcon && notifSidebar) {
-        notifIcon.addEventListener('click', () => {
-          notifSidebar.classList.toggle('hidden');
-        });
-      }
-  
-      if (notifX && notifSidebar) {
-        notifX.addEventListener('click', () => {
-          notifSidebar.classList.add('hidden');
-        });
-      }
-  
-      if (viewAllBottomBtn && notifModal) {
-        viewAllBottomBtn.addEventListener('click', () => {
-          notifModal.classList.remove('hidden');
-          notifModal.classList.add('flex');
-        });
-      }
-    });
-  </script>
+
   
   
   

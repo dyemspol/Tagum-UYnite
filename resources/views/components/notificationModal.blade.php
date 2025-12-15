@@ -1,7 +1,8 @@
-<div x-show="$store.notificationModal.open"
+<div 
+     x-show="$store.notificationModal.open"
      x-transition.opacity
      style="display: none;"
-     @click.self="$store.notificationModal.close()"
+    
      class="fixed inset-0 bg-[#000000a0] bg-opacity-50 z-50 flex items-center justify-center">
     
     <!-- Modal Content -->
