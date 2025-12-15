@@ -1,19 +1,14 @@
 {{-- <div id="editProfileModal"
     class="flex fixed inset-0 w-full h-screen z-50 bg-[#070707b6] backdrop-blur-sm justify-center items-center overflow-y-auto py-5"> --}}
-    <div 
-    x-data="{ open: false }"
-    x-show="open"
-    x-transition
-    @click.outside="open = false"
-    @open-edit-profile.window="open = true" <!-- listens to button click -->
-    class="flex fixed inset-0 w-full h-screen z-50 bg-[#070707b6] backdrop-blur-sm justify-center items-center overflow-y-auto py-5"
->
+<div x-data="{ open: false }" x-show="open" x-transition @click.outside="open = false"
+    @open-edit-profile.window="open = true"
+    class="flex fixed inset-0 w-full h-screen z-50 bg-[#070707b6] backdrop-blur-sm justify-center items-center overflow-y-auto py-5">
     <div
         class="w-full h-auto max-w-md bg-gradient-to-b from-[#1F486C] to-[#0F1F2C]
              rounded-lg shadow-2xl p-8 my-5">
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-white text-2xl font-semibold">Edit Profile</h1>
-            <button id="editProfileModalX"
+            <button @click="open = false"
                 class="h-7 w-7 flex justify-center items-center rounded-full bg-[#31A871] cursor-pointer text-white">
                 x
             </button>
@@ -36,14 +31,15 @@
         <div class="mb-4">
             <label class="text-white text-sm mb-2 block">Full Name</label>
             <input type="text"
-                class="w-full bg-transparent border border-white rounded px-4 py-2 text-white focus:outline-none focus:border-blue-300" />
+         class="w-full bg-transparent border-[0.5px] border-white rounded px-4 py-2 text-white focus:outline-none focus:border-blue-300" />
+
         </div>
 
         <!-- Email -->
         <div class="mb-6">
             <label class="text-white text-sm mb-2 block">Email</label>
             <input type="email"
-                class="w-full bg-transparent border border-white rounded px-4 py-2 text-white focus:outline-none focus:border-blue-300" />
+                class="w-full bg-transparent border-[0.5px] border-white rounded px-4 py-2 text-white focus:outline-none focus:border-blue-300" />
         </div>
 
         <!-- Change Password Section -->

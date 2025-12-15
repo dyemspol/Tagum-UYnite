@@ -15,7 +15,7 @@
 
     {{-- Navbar --}}
     @include('components.navbar')
-
+    @include('components.editprofile')
     {{-- Login Modal --}}
     @if (!Auth::check())
     <livewire:login-form/>
@@ -26,21 +26,9 @@
     <livewire:create-post/>
     <div class="pt-[140px]">
 
-        {{-- MAIN GRID WITH SIDE BARS --}}
-        <div
-            class="grid    
-            grid-cols-1 
-            md:grid-cols-[1fr_1fr] 
-            lg:grid-cols-[18rem_minmax(600px,650px)] 
-            lg:gap-60 px-5 sm:px-10">
-
-            {{-- LEFT SIDEBAR --}}
-            <div class="hidden md:block">
-                @include('components.leftSideBar')
-            </div>
-
-            {{-- PAGE CONTENT  --}}
-            <div class="text-white" x-data="{ activeTab: 'posts' }">
+        {{-- PAGE CONTENT --}}
+        <div class="flex justify-center px-5 sm:px-10">
+            <div class="text-white w-full max-w-[650px]" x-data="{ activeTab: 'posts' }">
 
 
                 {{-- profile name and picture section --}}
@@ -52,10 +40,10 @@
                         <div class="flex gap-2 items-center mt-1">
                             <p class="text-white text-sm opacity-60">{{ $user->reports->count() }} Total Post</p>
                             <button
-                            @click="$dispatch('open-edit-profile')"
-                            class="px-3 py-1 border border-white text-white text-xs rounded hover:opacity-80 transition">
-                            Edit
-                        </button>
+    @click="$dispatch('open-edit-profile')"
+    class="px-3 py-1 border border-white text-white text-xs rounded hover:opacity-80 transition">
+    Edit
+</button>
                         
                         </div>
                     </div>
@@ -113,11 +101,6 @@
 
 
         </div>
-
-        {{-- RIGHT SIDEBAR --}}
-        {{-- <div class="hidden md:block">
-                @include('components.rightSideBar')
-            </div> --}}
 
     </div>
 
