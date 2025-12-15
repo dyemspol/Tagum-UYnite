@@ -73,8 +73,9 @@
 
 
     </div>
-    @vite('resources/js/commentmodal.js')
+
     
+    @vite('resources/js/commentModal.js')
     @vite('resources/js/postPreview.js')
     @vite('resources/js/autocompleteLocation.js')
     @stack('scripts')
