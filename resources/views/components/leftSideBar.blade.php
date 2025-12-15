@@ -60,17 +60,34 @@
   </div>
         <div id="desktopCategoryList" class="overflow-y-scroll hide-scrollbar">
    @foreach($departments as $department)
-   <div class="category-item space-y-2" data-category="{{ strtolower($department->category) }}">
-       <label class="flex justify-between items-center space-y-4 cursor-pointer">
-           <p class="text-white font-light text-sm">
-               {{ $department->category }}
-           </p>
-          <input type="checkbox"
-                                    value="{{ $department->id }}"
-                                   @change="$dispatch('toggle-category', { id: {{ $department->id }} })"
-                                    class="w-4 h-4 accent-[#31A871] rounded cursor-pointer" />
-       </label>
-   </div>
+   <div class="category-item py-2"
+     data-category="{{ strtolower($department->category) }}">
+
+    <label class="flex items-center justify-between cursor-pointer select-none">
+
+        <p class="text-white text-sm font-light">
+            {{ $department->category }}
+        </p>
+
+        <!-- Hidden checkbox -->
+        <input
+            type="checkbox"
+            value="{{ $department->id }}"
+            @change="$dispatch('toggle-category', { id: {{ $department->id }} })"
+            class="peer hidden"
+        />
+
+        <!-- Simple circle -->
+        <span
+            class="w-4 h-4 rounded-full border border-gray-400
+                   flex items-center justify-center
+                   transition peer-checked:border-[#31A871]
+                   peer-checked:bg-[#31A871]">
+        </span>
+
+    </label>
+</div>
+
 @endforeach
         </div>
 
