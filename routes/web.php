@@ -13,9 +13,7 @@ Route::get('/', [HomepageController::class, 'index', 'departments' => \App\Model
 
 
 
-Route::get('/message', function () {
-    return view('page.messagePage'); // use dot notation, not slash
-})->name('message');
+
 
 
 
@@ -34,5 +32,7 @@ Route::middleware(['auth', 'custom:user' ,'preventbackhistory'])->group(function
     Route::get('/profile', [HomepageController::class, 'profile'])->name('profile');
    
     Route::get('/search', [HomepageController::class, 'searchPosts'])->name('search');
-});
 
+    Route::get('/message', [HomepageController::class, 'message'])->name('message');
+
+});

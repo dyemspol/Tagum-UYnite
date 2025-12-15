@@ -37,7 +37,9 @@ class HomepageServices
                     ->where(function($query)use ($searchQuery){
                         $query->where('title', 'like', '%' . $searchQuery . '%')
                         ->orWhere('content', 'like', '%' . $searchQuery . '%')
-                        ->orWhere('barangay', 'like', '%' . $searchQuery . '%');
+                        ->orWhereHas('barangay', function($q) use ($searchQuery) {
+                            $q->where('barangay_name', 'like', '%' . $searchQuery . '%');
+                        });
                     })
                     ->latest()
                     ->get();

@@ -69,10 +69,18 @@ class HomepageController extends Controller
         if ($searchQuery) {
             $posts = $this->HomepageServices->searchPosts($searchQuery);
         }
-        return view('page.HomePage', [
+        return view('page.searchPage', [
             'isProfilePage' => false,
             'posts' => $posts,
             'searchQuery' => $searchQuery
+        ]);
+    }
+    public function message()
+    {
+        
+        return view('page.messagePage', [
+            'isProfilePage' => false,
+            
         ]);
     }
 }

@@ -4,17 +4,16 @@
 
     <div class="bg-[#182b3cd5] py-3 w-[85%] max-w-[45em] lg:max-w-[50em] rounded-lg">
         <div class="flex px-3 gap-3 items-center justify-between mb-3">
-            <div class="space-x-3 flex items-center">
-                <div class="w-11 h-11 ">
-                    <img class="w-full h-full rounded-full object-cover"
-                        src="{{ $post->user->profile_photo_path ? asset('storage/' . $post->user->profile_photo_path) : asset('img/default-avatar.png') }}"
-                        alt="{{ $post->user->username }}">
-                </div>
-                <div class="">
-                    <p class="font-normal text-sm text-white">{{ $post->user->username ?? 'Unknown User' }}</p>
-                    <p class="font-light text-[#ffffffa4] text-xs">
-                        {{ $post->created_at->format('F d, Y') }} at {{ $post->created_at->format('h:i A') }}
-                        <span>•</span>
+           <div class="space-x-3 flex items-center">
+             <div class="w-11 h-11 ">
+                <img class="w-full h-full rounded-full object-cover"
+                     src="{{ $post->user->profile_photo ? $post->user->profile_photo : asset('img/noprofile.jpg') }}" 
+                     alt="{{ $post->user->username }}">
+             </div>
+             <div class="">
+                 <p class="font-normal text-sm text-white">{{ $post->user->username ?? 'Unknown User' }}</p>
+                 <p class="font-light text-[#ffffffa4] text-xs">
+                    {{ $post->created_at->format('F d, Y') }}  at {{ $post->created_at->format('h:i A') }} <span>•</span> 
                         {{ $post->barangay->barangay_name ?? 'Unknown Location' }}
                     </p>
                 </div>

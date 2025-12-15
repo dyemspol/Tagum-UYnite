@@ -28,15 +28,7 @@
             <form wire:submit.prevent="submit" class="space-y-2 mt-3">
                 <input class="bg-transparent border-[0.5px] border-black rounded-sm w-full text-black py-2 px-2 text-sm" type="text" placeholder="First Name" wire:model="firstname" required>
                 <input class="bg-transparent border-[0.5px] border-black rounded-sm w-full text-black py-2 px-2 text-sm" type="text" placeholder="Last Name" wire:model="lastname" required>
-                <select wire:model="barangay_id" class="bg-transparent border-[0.5px] border-black rounded-sm w-full text-black py-2 px-2 text-sm" type="text" placeholder="Select Barangay" required>
-                    <option value="" disabled hidden @selected($barangay_id === '')>
-                        Select Barangay
-                    </option>
-                    @foreach ($barangays as $barangay)
-                        <option value="{{ $barangay->id }}">{{ $barangay->barangay_name }}</option>
-                    @endforeach
-                </select>
-                <input class="bg-transparent border-[0.5px] border-black rounded-sm w-full text-black py-2 px-2 text-sm" type="text" placeholder="Purok/Street Name, Building, House No." wire:model="Street_Purok" required>
+                <input class="bg-transparent border-[0.5px] border-black rounded-sm w-full text-black py-2 px-2 text-sm" type="email" placeholder="Email" wire:model="email" required>
                 <input class="bg-transparent border-[0.5px] border-black rounded-sm w-full text-black py-2 px-2 text-sm" type="text" placeholder="Username" wire:model="username" required>
                 <input class="bg-transparent border-[0.5px] border-black rounded-sm w-full text-black py-2 px-2 text-sm" type="password" placeholder="Password" wire:model="password" required>
                 <input class="bg-transparent border-[0.5px] border-black rounded-sm w-full text-black py-2 px-2 text-sm" type="password" placeholder="Confirm Password" wire:model="confirm_password" required>

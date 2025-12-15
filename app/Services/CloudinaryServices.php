@@ -69,5 +69,19 @@ class CloudinaryServices
         
         return $uploadedImages;
     }
+    public function uploadProfilePhoto(TemporaryUploadedFile $file): string
+    {
+        $publicId = 'profile_photos/' . time() . '_' . uniqid();
+        
+        $result = $this->cloudinary->uploadApi()->upload($file->getRealPath(), [
+            'public_id' => $publicId,
+            'folder' => 'profile_photos',
+            'resource_type' => 'image',
+            'quality' => 'auto:good',
+            'fetch_format' => 'auto',
+        ]);
+        
+        return $result['secure_url'];
+    }
 
 }

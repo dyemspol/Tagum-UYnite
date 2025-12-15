@@ -53,7 +53,7 @@ class CreatePost extends Component
     public function submit(CreatePostServices $createPostServices, CloudinaryServices $cloudinaryServices)
     {
         $userId = Auth::id();
-        \Illuminate\Support\Facades\Log::info('Livewire CreatePost: Submit called', ['user_id' => $userId]);
+        
 
         $data =[
             'title' => $this->title,

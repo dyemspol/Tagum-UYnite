@@ -23,8 +23,6 @@ class AuthServices
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
-            'barangay_id' => 'required|exists:barangays,id',
-            'Street_Purok' => 'required|string|max:255',
             'password' => 'required|string|min:8',
             'confirm_password' => 'required|string|min:8|same:password',
         ], 
@@ -39,11 +37,6 @@ class AuthServices
             'username.string' => 'The username field must be a string.',
             'username.max' => 'The username field must be less than 255 characters.',
             'username.unique' => 'The username has already been taken.',
-            'barangay_id.required' => 'The barangay field is required.',
-            'barangay_id.exists' => 'The selected barangay is invalid.',
-            'Street_Purok.required' => 'The street purok field is required.',
-            'Street_Purok.string' => 'The street purok field must be a string.',
-            'Street_Purok.max' => 'The street purok field must be less than 255 characters.',
             'password.required' => 'The password field is required.',
             'password.string' => 'The password field must be a string.',
             'password.min' => 'The password field must be at least 8 characters long.',
@@ -69,14 +62,14 @@ class AuthServices
         try{
 
         DB::beginTransaction();
-        $barangay = Baranggay::find($data['barangay_id']);
-        $address = $data['Street_Purok'] . ' ' . $barangay->barangay_name;
         $user = User::create([
             'first_name' => $data['firstname'],
             'last_name' => $data['lastname'],
             'username' => $data['username'],
-            'barangay_id' => $data['barangay_id'],
-            'complete_address' => $address,
+            'email' => null,
+            'email_verified_at' => null,
+            'address' => null,
+            'barangay_id' => null,
             'password' => Hash::make($data['password']),
             'role' => 'user',
             'profile_photo' => null,

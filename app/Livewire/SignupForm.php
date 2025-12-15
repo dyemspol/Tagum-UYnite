@@ -17,10 +17,9 @@ class SignupForm extends Component
     public $password;
     public $confirm_password;
     public $role;
-    public $Street_Purok;
-    public $barangay_id = '';
     public $department_id;
     public $showError = false;
+    public $email;
 
     
   
@@ -34,8 +33,7 @@ class SignupForm extends Component
             'username' => $this->username,
             'password' => $this->password,
             'confirm_password' => $this->confirm_password,
-            'Street_Purok' => $this->Street_Purok,
-            'barangay_id' => $this->barangay_id
+            'email' => $this->email,
         ];
         $result = $authServices->createUser($data);
         Log::info('Signup result received.', ['success' => $result['success'] ?? false, 'message' => $result['message'] ?? '']);
@@ -43,7 +41,7 @@ class SignupForm extends Component
         if($result['success']) {
             Auth::login($result['user']);
             session()->flash('success', $result['message']);
-            $this->reset('firstname', 'lastname', 'username', 'password', 'confirm_password', 'Street_Purok', 'barangay_id', 'department_id');
+            $this->reset('firstname', 'lastname', 'username', 'password', 'confirm_password', 'email');
             return redirect('/');
         }
         
@@ -53,10 +51,10 @@ class SignupForm extends Component
                 $this->addError($field, $messages[0]);
                 
             }
-            $this->reset('firstname', 'lastname', 'username', 'password', 'confirm_password', 'Street_Purok', 'barangay_id', 'department_id');
+            $this->reset('firstname', 'lastname', 'username', 'password', 'confirm_password', 'email');
         }else{
             session()->flash('error', $result['message']);
-            $this->reset('firstname', 'lastname', 'username', 'password', 'confirm_password', 'Street_Purok', 'barangay_id', 'department_id');
+            $this->reset('firstname', 'lastname', 'username', 'password', 'confirm_password', 'email');
             $this->showError = true;
         }
 
