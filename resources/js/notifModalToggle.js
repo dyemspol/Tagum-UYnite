@@ -19,4 +19,5 @@ notifContainer.addEventListener("click", (e) => {
         notifContainer.classList.add("hidden");
         notifContainer.classList.remove("flex");
     }
+
 });
