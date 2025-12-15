@@ -22,7 +22,7 @@
 
 <body class="bg-[#122333] min-h-screen">
 
-    
+    @include('components.comment-modal')
     @include('components.navbar')
     @include('components.postCardModal')
     @include('components.editprofile')
@@ -77,6 +77,20 @@
     @vite('resources/js/postPreview.js')
     @vite('resources/js/autocompleteLocation.js')
     @stack('scripts')
+    <script>
+        // Global store to toggle the shared comment modal from any component
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('commentModal', {
+                open: false,
+                show() {
+                    this.open = true;
+                },
+                hide() {
+                    this.open = false;
+                }
+            });
+        });
+    </script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""></script>
