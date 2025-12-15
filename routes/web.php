@@ -9,7 +9,7 @@ use App\Livewire\SignupForm;
 use Illuminate\Auth\Events\Login;
 use App\Http\Middleware\PreventBackHistory;
 use App\Livewire\Navbar;
-Route::get('/', [HomepageController::class, 'index', 'departments' => \App\Models\Department::all()])->middleware('preventbackhistory')->name('homepage');
+Route::get('/', [HomepageController::class, 'index'])->middleware('preventbackhistory')->name('homepage');
 
 
 
