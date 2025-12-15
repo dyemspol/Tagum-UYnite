@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'preventbackhistory' => PreventBackHistory::class,
             'custom' => Custom::class,
         ]);
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         
