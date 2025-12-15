@@ -1,0 +1,1 @@
+@include('components.notificationModal', ['notifications' => $notifications])
