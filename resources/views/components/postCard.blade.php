@@ -135,9 +135,42 @@
         </div>
         
         {{-- Comment Section (Placeholder for now) --}}
-        <div class="mt-3 px-3 pb-2 hidden comment-section">
-             
+       {{-- Comment Section --}}
+<div class="mt-3 px-3 pb-2 comment-section">
+
+    <!-- Existing comments -->
+    <div class="space-y-3 mb-3">
+        <div class="flex items-start space-x-2">
+            <img src="{{ asset('img/default-avatar.png') }}"
+                 class="w-8 h-8 rounded-full object-cover">
+            <div class="bg-[#1f3548] rounded-lg px-3 py-2 w-full">
+                <p class="text-xs text-white font-medium">Username</p>
+                <p class="text-xs text-[#ffffffc7] font-light">
+                    This is a sample comment content.
+                </p>
+            </div>
         </div>
+    </div>
+
+    <!-- Add comment -->
+    <div class="flex items-center space-x-2">
+        <img src="{{ auth()->user()->profile_photo_path 
+            ? asset('storage/' . auth()->user()->profile_photo_path) 
+            : asset('img/default-avatar.png') }}"
+            class="w-8 h-8 rounded-full object-cover">
+
+        <input 
+            type="text"
+            placeholder="Write a comment..."
+            class="w-full bg-[#1f3548] text-white text-xs px-3 py-2 rounded-xl outline-none focus:ring-1 focus:ring-[#31A871] placeholder:text-[#ffffff88]">
+
+        <button class="text-[#31A871] hover:text-white transition-colors text-sm font-medium">
+            Post
+        </button>
+    </div>
+
+</div>
+
 
     </div>
 </div>

@@ -22,7 +22,7 @@
 
 <body class="bg-[#122333] min-h-screen">
 
-
+    
     @include('components.navbar')
     @include('components.postCardModal')
     @include('components.editprofile')

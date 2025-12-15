@@ -15,15 +15,26 @@
                 </div>
             </div>
 
-            <!-- LOADING OVERLAY -->
-            <div wire:loading wire:target="submit" 
-                 class="absolute inset-0 bg-black/80 backdrop-blur-sm z-50 flex flex-col justify-center items-center rounded-xl transition-all duration-300">
-                <svg class="animate-spin -ml-1 mr-3 h-10 w-10 text-[#31A871]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <p class="text-white mt-4 font-medium animate-pulse">Posting to your community...</p>
-            </div>
+       
+<div wire:loading wire:target="submit"
+class="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm flex items-center justify-center">
+<div class="flex flex-col items-center justify-center h-full w-full">
+   <!-- Spinner -->
+   <svg class="animate-spin h-10 w-10 text-[#31A871]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+       <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+       <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+   </svg>
+
+   <p class="text-white mt-4 text-sm font-medium animate-pulse text-center">
+       Posting to your community...
+   </p>
+</div>
+</div>
+
+
+       
+       
+
 
             <form wire:submit.prevent="submit" class="space-y-3 mt-5">
 

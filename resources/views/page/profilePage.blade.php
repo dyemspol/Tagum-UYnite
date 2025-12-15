@@ -51,10 +51,12 @@
                         <p class="text-white text-3xl">{{ $user->first_name }} {{ $user->last_name }}</p>
                         <div class="flex gap-2 items-center mt-1">
                             <p class="text-white text-sm opacity-60">{{ $user->reports->count() }} Total Post</p>
-                            <div id="profilemenu" class="w-10 h-10 cursor-pointer"
-                        @click="$dispatch('open-edit-profile')">
-                        <img class="w-full h-full rounded-full object-cover" src="{{ asset('img/ninogprofile.jpg') }}" alt="">
-                    </div>
+                            <button
+                            @click="$dispatch('open-edit-profile')"
+                            class="px-3 py-1 border border-white text-white text-xs rounded hover:opacity-80 transition">
+                            Edit
+                        </button>
+                        
                         </div>
                     </div>
                 </div>
