@@ -14,13 +14,12 @@
 <body class="bg-[#122333] min-h-screen">
 
     {{-- Navbar --}}
-    @vite('resources/js/commentmodal.js')
-    @vite('resources/js/postPreview.js')
-    @vite('resources/js/autocompleteLocation.js')
-
-    
+    @include('components.notification')
+    @include('components.comment-modal')
     @include('components.navbar')
+    @include('components.postCardModal')
     @include('components.editprofile')
+    @include('components.notificationModal')
     {{-- Login Modal --}}
     @if (!Auth::check())
         <livewire:login-form />
@@ -113,7 +112,11 @@
     </div>
 
 
+    @vite('resources/js/commentmodal.js')
+    @vite('resources/js/notifModalToggle.js')
     @vite('resources/js/postPreview.js')
+    @vite('resources/js/autocompleteLocation.js')
+    @stack('scripts')
 
 </body>
 

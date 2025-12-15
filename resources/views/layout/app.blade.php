@@ -21,7 +21,7 @@
 </head>
 
 <body class="bg-[#122333] min-h-screen">
-
+    @include('components.notification')
     @include('components.comment-modal')
     @include('components.navbar')
     @include('components.postCardModal')
@@ -62,11 +62,11 @@
             </div>
 
             {{-- RIGHT SIDEBAR --}}
-            @if ($hasRightSidebar)
+            {{-- @if ($hasRightSidebar)
                 <div class="block">
                     @include('components.rightSideBar')
                 </div>
-            @endif
+            @endif --}}
 
         </div>
 
