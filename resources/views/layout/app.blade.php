@@ -26,7 +26,7 @@
     @include('components.navbar')
     @include('components.postCardModal')
     @include('components.editprofile')
-    @include('components.notificationModal')
+    <livewire:notif-modal />
 
     {{-- Login Modal --}}
     @if(!Auth::check())
@@ -74,7 +74,7 @@
 
     </div>
     @vite('resources/js/commentmodal.js')
-    @vite('resources/js/notifModalToggle.js')
+    
     @vite('resources/js/postPreview.js')
     @vite('resources/js/autocompleteLocation.js')
     @stack('scripts')
@@ -87,6 +87,16 @@
                     this.open = true;
                 },
                 hide() {
+                    this.open = false;
+                }
+            });
+
+            Alpine.store('notificationModal', {
+                open: false,
+                toggle() {
+                    this.open = !this.open;
+                },
+                close() {
                     this.open = false;
                 }
             });

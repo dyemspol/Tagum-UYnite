@@ -25,13 +25,13 @@
 
 </head>
 
-<body class="bg-[#122333] min-h-screen py-22 px-5 sm:px-10">
+<body class="bg-[#122333] min-h-screen py-22 px-5 sm:px-10" x-data>
 
 
     @include('components.navbar')
     @include('components.postCardModal')
     @include('components.editprofile')
-    @include('components.notificationModal')
+    <livewire:notif-modal />
 <a href="/" class="text-white flex items-center gap-2">  <i class="fa-solid fa-less-than text-xs"></i>
     <p>Back</p>
 </a>
@@ -40,9 +40,26 @@
     <livewire:chatbox />
 
 
-    @vite('resources/js/notifModalToggle.js')
+
     @vite('resources/js/postPreview.js')
     @vite('resources/js/autocompleteLocation.js')
+    
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('commentModal', {
+                open: false,
+                show() { this.open = true; },
+                hide() { this.open = false; }
+            });
+
+            Alpine.store('notificationModal', {
+                open: false,
+                toggle() { this.open = !this.open; },
+                close() { this.open = false; }
+            });
+        });
+    </script>
+
     @stack('scripts')
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>

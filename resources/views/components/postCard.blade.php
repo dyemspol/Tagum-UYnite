@@ -170,9 +170,7 @@
 
             <!-- Add comment -->
             <div class="flex items-center space-x-2">
-                <img src="{{ auth()->user()->profile_photo_path
-                    ? asset('storage/' . auth()->user()->profile_photo_path)
-                    : asset('img/default-avatar.png') }}"
+                <img src="{{ auth()->user()->profile_photo ?? asset('img/noprofile.jpg') }}"
                     class="w-8 h-8 rounded-full object-cover">
 
                 <input type="text" placeholder="Write a comment..."

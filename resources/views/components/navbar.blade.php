@@ -29,7 +29,7 @@
             <div class="flex items-center gap-5">
                 <a href="{{ route('message') }}"><i class="fa-regular fa-message text-[#31A871] text-2xl group-hover:text-white cursor-pointer "></i></a>
                 
-                <i id="notifIcon" class="fa-regular fa-bell text-[#31A871] text-2xl text-normal group-hover:text-white cursor-pointer"></i>
+                <i id="notifIcon" @click="$store.notificationModal.toggle()" class="fa-regular fa-bell text-[#31A871] text-2xl text-normal group-hover:text-white cursor-pointer"></i>
                 <div id="profilemenu" class="w-10 h-10 cursor-pointer">
                     <img class="w-full h-full rounded-full object-cover" 
                         src="{{ asset('img/ninogprofile.jpg') }}" 
