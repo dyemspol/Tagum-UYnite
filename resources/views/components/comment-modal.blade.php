@@ -1,18 +1,17 @@
 <div
     id="commentModal"
-    x-cloak
-    x-show="$store.commentModal.open"
-    x-transition.opacity
-    class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm"
-    @click.self="$store.commentModal.hide()"
+   
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-[#000000b6] bg-opacity-70 backdrop-blur-sm"
+   
 >
         
     
-    <div class="bg-[#182b3cd5] w-[90%] max-w-lg rounded-xl p-5 relative shadow-2xl">
+    <div class="bg-[#182b3c] w-[90%] max-w-lg rounded-xl p-5 relative shadow-2xl">
         
       
         <button
-            @click="$store.commentModal.hide()"
+           
+            id="commentModalX"
             class="absolute top-3 right-3 text-white hover:text-red-400 text-3xl leading-none transition-colors">
             &times;
         </button>

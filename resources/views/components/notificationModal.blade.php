@@ -61,65 +61,14 @@
           </div>
         </a>
 
-        <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
-          <div class="w-8 h-8 flex-shrink-0">
-            <img class="w-full h-full rounded-full object-cover" 
-                 src="{{ asset('img/ninogprofile.jpg') }}" 
-                 alt="User">
-          </div>
-          <div>
-            <p class="text-white text-xs">Someone upvoted your post</p>
-            <span class="text-gray-400 text-xs">2 min ago</span>
-          </div>
-        </a>
+       
+       
 
-        <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
-          <div class="w-8 h-8 flex-shrink-0">
-            <img class="w-full h-full rounded-full object-cover" 
-                 src="{{ asset('img/ninogprofile.jpg') }}" 
-                 alt="User">
-          </div>
-          <div>
-            <p class="text-white text-xs">Someone upvoted your post</p>
-            <span class="text-gray-400 text-xs">2 min ago</span>
-          </div>
-        </a>
+       
 
-        <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
-          <div class="w-8 h-8 flex-shrink-0">
-            <img class="w-full h-full rounded-full object-cover" 
-                 src="{{ asset('img/ninogprofile.jpg') }}" 
-                 alt="User">
-          </div>
-          <div>
-            <p class="text-white text-xs">Someone upvoted your post</p>
-            <span class="text-gray-400 text-xs">2 min ago</span>
-          </div>
-        </a>
+       
 
-        <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
-          <div class="w-8 h-8 flex-shrink-0">
-            <img class="w-full h-full rounded-full object-cover" 
-                 src="{{ asset('img/ninogprofile.jpg') }}" 
-                 alt="User">
-          </div>
-          <div>
-            <p class="text-white text-xs">Someone commented on your post</p>
-            <span class="text-gray-400 text-xs">5 min ago</span>
-          </div>
-        </a>
-
-        <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
-          <div class="w-8 h-8 flex-shrink-0">
-            <img class="w-full h-full rounded-full object-cover" 
-                 src="{{ asset('img/ninogprofile.jpg') }}" 
-                 alt="User">
-          </div>
-          <div>
-            <p class="text-white text-xs">Your post was shared</p>
-            <span class="text-gray-400 text-xs">10 min ago</span>
-          </div>
-        </a>
+       
 
       </div>
 

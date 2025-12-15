@@ -63,7 +63,7 @@
 
             {{-- RIGHT SIDEBAR --}}
             @if ($hasRightSidebar)
-                <div class="hidden lg:block">
+                <div class="block">
                     @include('components.rightSideBar')
                 </div>
             @endif
@@ -73,6 +73,7 @@
 
 
     </div>
+    @vite('resources/js/commentmodal.js')
     @vite('resources/js/notifModalToggle.js')
     @vite('resources/js/postPreview.js')
     @vite('resources/js/autocompleteLocation.js')

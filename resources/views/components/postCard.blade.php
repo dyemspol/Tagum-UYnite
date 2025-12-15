@@ -1,8 +1,13 @@
 @props(['isProfilePage' => false, 'post', 'likes' => 0, 'dislikes' => 0, 'userReaction' => null])
 
-<div class="{{ $isProfilePage ? '' : 'flex items-center md:items-start justify-center lg:items-center' }} my-4">
+@php
+    // Make post card full-width on profile page, compact/centered elsewhere
+    $isProfileRoute = request()->routeIs('profile');
+@endphp
 
-    <div class="bg-[#182b3cd5] py-3 w-[85%] max-w-[45em] lg:max-w-[50em] rounded-lg">
+<div class="{{ ($isProfilePage || $isProfileRoute) ? '' : 'flex items-center md:items-start justify-center lg:items-center' }} my-4">
+
+    <div class="bg-[#182b3cd5] py-3 rounded-lg {{ ($isProfilePage || $isProfileRoute) ? 'w-full' : 'w-[85%] max-w-[45em] lg:w-[41%] xl:w-[50%]' }}">
         <div class="flex px-3 gap-3 items-center justify-between mb-3">
            <div class="space-x-3 flex items-center">
              <div class="w-11 h-11 ">
@@ -133,9 +138,8 @@
                 <span class="text-white text-sm" x-text="dislikes"></span>
             </button>
             <button type="button"
+            id="commentModalBtn"
                 class="flex items-center space-x-1 text-[#31A871] hover:text-white transition-colors px-2 py-1 rounded-xl">
-              
-
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M7 10h10M7 14h5m-9 3.5V6.8c0-1.01.82-1.8 1.84-1.8h12.32C18.18 5 19 5.79 19 6.8v8.4c0 1.01-.82 1.8-1.84 1.8H9.2L5.5 17.5Z" />
