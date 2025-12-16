@@ -25,7 +25,6 @@
     @include('components.comment-modal')
     @include('components.navbar')
     @include('components.postCardModal')
-    @include('components.editprofile')
     <livewire:notif-modal />
 
     {{-- Login Modal --}}

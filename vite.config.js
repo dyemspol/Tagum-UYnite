@@ -18,4 +18,9 @@ export default defineConfig({
             refresh: true, // hot reload
         }),
     ],
+    server: {
+        hmr: {
+            host: 'tagum-uynite.test',
+        },
+    },
 });

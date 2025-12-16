@@ -115,8 +115,9 @@ class AuthServices
                 'errors' => $validator->errors(),
             ];
         }
+         $loginField = filter_var($data['username'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        if(Auth::attempt($data)) {
+        if(Auth::attempt([$loginField => $data['username'], 'password' => $data['password']])) {
             Log::info('Login successful');
             session()->regenerate();
             return [
@@ -161,9 +162,10 @@ class AuthServices
         );
 
         if($status === Password::RESET_LINK_SENT) {
+            $maskedEmail = $this->maskEmail($data['email']);
             return [
                 'success' => true,
-                'message' => 'Password reset link has been sent to your email address.',
+                'message' => 'Password reset link has been sent to ' . $maskedEmail,
             ];
         } else {
             return [
@@ -171,6 +173,21 @@ class AuthServices
                 'message' => 'Unable to send password reset link. Please try again later.',
             ];
         }
+    }
+
+    private function maskEmail($email)
+    {
+        $parts = explode('@', $email);
+        $username = $parts[0];
+        $domain = $parts[1];
+        
+        if (strlen($username) <= 2) {
+            $maskedUsername = substr($username, 0, 1) . str_repeat('*', strlen($username) - 1);
+        } else {
+            $maskedUsername = substr($username, 0, 2) . str_repeat('*', strlen($username) - 2);
+        }
+        
+        return $maskedUsername . '@' . $domain;
     }
 
     public function validatePasswordResetForm(array $data)

@@ -1,1 +1,1 @@
-@include('components.notification', ['notifications' => $notifications])
+@include('components.notification')

@@ -11,23 +11,20 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<body class="bg-[#122333] min-h-screen">
+<body class="bg-[#122333] min-h-screen" x-data>
 
     {{-- Navbar --}}
-    @include('components.notification')
     @include('components.comment-modal')
     @include('components.navbar')
     @include('components.postCardModal')
-    @include('components.editprofile')
-    @include('components.notificationModal')
-    {{-- Login Modal --}}
+    <livewire:edit-profile :user="$user" />
     @if (!Auth::check())
         <livewire:login-form />
     @endif
 
-
-
+        
     <livewire:create-post />
+    <livewire:notif-modal />
     <div class="pt-[140px]">
 
         {{-- PAGE CONTENT --}}
@@ -38,7 +35,7 @@
                 {{-- profile name and picture section --}}
                 <div class="flex items-center gap-2 mb-7">
                     <div class="h-26 w-26"><img class="w-full rounded-full object-cover h-full"
-                            src="{{ asset('img/yaoyapo.jpg') }}" alt=""></div>
+                            src="{{ $user->profile_photo ? $user->profile_photo : asset('img/noprofile.jpg') }}" alt=""></div>
                     <div class="">
                         <p class="text-white text-3xl">{{ $user->first_name }} {{ $user->last_name }}</p>
                         <div class="flex gap-2 items-center mt-1">
@@ -84,7 +81,7 @@
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10">
                                         <img class="w-full h-full rounded-full object-cover"
-                                            src="{{ asset('img/yaoyapo.jpg') }}" alt="profile">
+                                            src="{{ $user->profile_photo ? $user->profile_photo : asset('img/noprofile.jpg') }}" alt="profile">
                                     </div>
                                     <div class="leading-tight">
                                         <p class="text-white text-sm">{{ $user->first_name }} {{ $user->last_name }}</p>
@@ -117,7 +114,30 @@
     @vite('resources/js/postPreview.js')
     @vite('resources/js/autocompleteLocation.js')
     @stack('scripts')
+        <script>
+        // Global store to toggle the shared comment modal from any component
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('commentModal', {
+                open: false,
+                show() {
+                    this.open = true;
+                },
+                hide() {
+                    this.open = false;
+                }
+            });
 
+            Alpine.store('notificationModal', {
+                open: false,
+                toggle() {
+                    this.open = !this.open;
+                },
+                close() {
+                    this.open = false;
+                }
+            });
+        });
+    </script>
 </body>
 
 
