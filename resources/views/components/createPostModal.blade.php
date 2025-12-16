@@ -78,7 +78,7 @@
                 class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm">
                 <option value="" disabled>Select Barangay</option>
                 @foreach ($barangays ?? [] as $barangay)
-                    <option value="{{ $barangay->id }}" class="text-black">
+                    <option value="{{ $barangay->id }}" class="text-white">
                         {{ $barangay->barangay_name }}
                     </option>
                 @endforeach
