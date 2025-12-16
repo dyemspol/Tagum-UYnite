@@ -10,6 +10,7 @@ use App\Models\Baranggay;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Password;
 class AuthServices
 {
     public function register(array $data)
@@ -127,6 +128,104 @@ class AuthServices
             return [
                 'success' => false,
                 'message' => 'Invalid credentials',
+            ];
+        }
+    }
+
+    public function validatePasswordReset(array $data)
+    {
+        return Validator::make($data, [
+            'email' => 'required|email|exists:users,email',
+        ], 
+        [
+            'email.required' => 'The email field is required.',
+            'email.email' => 'Please enter a valid email address.',
+            'email.exists' => 'We could not find a user with that email address.',
+        ]);
+    }
+
+    public function sendPasswordResetLink(array $data)
+    {
+        $validator = $this->validatePasswordReset($data);
+        
+        if($validator->fails()) {
+            return [
+                'success' => false,
+                'errors' => $validator->errors(),
+                'message' => 'Please enter a valid email address.',
+            ];
+        }
+
+        $status = Password::sendResetLink(
+            ['email' => $data['email']]
+        );
+
+        if($status === Password::RESET_LINK_SENT) {
+            return [
+                'success' => true,
+                'message' => 'Password reset link has been sent to your email address.',
+            ];
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Unable to send password reset link. Please try again later.',
+            ];
+        }
+    }
+
+    public function validatePasswordResetForm(array $data)
+    {
+        return Validator::make($data, [
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|string|min:8|confirmed',
+            'token' => 'required|string',
+        ], 
+        [
+            'email.required' => 'The email field is required.',
+            'email.email' => 'Please enter a valid email address.',
+            'email.exists' => 'We could not find a user with that email address.',
+            'password.required' => 'The password field is required.',
+            'password.string' => 'The password field must be a string.',
+            'password.min' => 'The password must be at least 8 characters long.',
+            'password.confirmed' => 'The password confirmation does not match.',
+            'token.required' => 'The reset token is required.',
+        ]);
+    }
+
+    public function resetPassword(array $data)
+    {
+        $validator = $this->validatePasswordResetForm($data);
+        
+        if($validator->fails()) {
+            return [
+                'success' => false,
+                'errors' => $validator->errors(),
+                'message' => 'Please check your input and try again.',
+            ];
+        }
+
+        $status = Password::reset(
+            [
+                'email' => $data['email'],
+                'password' => $data['password'],
+                'password_confirmation' => $data['password_confirmation'],
+                'token' => $data['token'],
+            ],
+            function ($user, $password) {
+                $user->password = Hash::make($password);
+                $user->save();
+            }
+        );
+
+        if($status === Password::PASSWORD_RESET) {
+            return [
+                'success' => true,
+                'message' => 'Your password has been reset successfully. You can now login with your new password.',
+            ];
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Invalid or expired reset token. Please request a new password reset link.',
             ];
         }
     }

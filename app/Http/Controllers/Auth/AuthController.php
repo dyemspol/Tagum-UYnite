@@ -21,6 +21,19 @@ class AuthController extends Controller
             return view('page.loginPage');
         }
 
+        public function showForgotPasswordForm()
+        {
+            return view('page.forgotPasswordPage');
+        }
+
+        public function showResetPasswordForm(Request $request)
+        {
+            return view('page.resetPasswordPage', [
+                'token' => $request->route('token'),
+                'email' => $request->query('email'),
+            ]);
+        }
+
         public function logout(Request $request)
         {
             Auth::logout();
