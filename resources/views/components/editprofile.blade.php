@@ -1,5 +1,6 @@
 <div x-data="{ open: false }" x-show="open" x-transition @click.outside="open = false"
     @open-edit-profile.window="open = true"
+    @close-edit-profile.window="open = false"
     class="flex fixed inset-0 w-full h-screen z-50 bg-[#070707b6] backdrop-blur-sm justify-center items-center overflow-y-auto py-5" style="display: none;">
     <div
         class="w-full h-auto max-w-md bg-gradient-to-b from-[#1F486C] to-[#0F1F2C]
@@ -43,7 +44,7 @@
         <!-- Barangay -->
         <div class="mb-4">
             <label class="text-white text-sm mb-2 block">Barangay</label>
-            <select wire:model="barangay_id" required class="w-full bg-[#1F486C] border-[0.5px] border-white rounded px-4 py-2 text-white focus:outline-none focus:border-blue-300">
+            <select wire:model="barangay_id"  class="w-full bg-[#1F486C] border-[0.5px] border-white rounded px-4 py-2 text-white focus:outline-none focus:border-blue-300">
                 <option value="" disabled>Select Barangay</option>
                 @foreach ($barangays ?? [] as $barangay)
                     <option value="{{ $barangay->id }}" class="bg-[#0F1F2C] text-white">
@@ -57,7 +58,7 @@
         <div class="mb-6">
             <label class="text-white text-sm mb-2 block">Email</label>
             <input type="email"
-                class="w-full bg-transparent border-[0.5px] border-white rounded px-4 py-2 text-white focus:outline-none focus:border-blue-300" wire:model="email" required />
+                class="w-full bg-transparent border-[0.5px] border-white rounded px-4 py-2 text-white focus:outline-none focus:border-blue-300" wire:model="email" />
             @error('email') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
         </div>
 
