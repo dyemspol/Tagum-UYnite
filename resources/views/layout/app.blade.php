@@ -74,7 +74,7 @@
 
     </div>
 
-    
+    @vite('resources/js/passwordShow.js')
     @vite('resources/js/commentModal.js')
     @vite('resources/js/postPreview.js')
     @vite('resources/js/autocompleteLocation.js')
