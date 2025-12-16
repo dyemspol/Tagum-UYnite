@@ -73,7 +73,7 @@
 
 
 
-                <div id="trackIssueSection" x-show="activeTab === 'track'" class="flex justify-center"
+                <div id="trackIssueSection" x-show="activeTab === 'track'" class="flex flex-col justify-center"
                     style="display: none;">
                     @forelse($user->reports as $post)
                         <div class="bg-[#0f1f2f] border border-[#1e3246] px-3 py-3 rounded-lg w-full max-w-[50em]">
