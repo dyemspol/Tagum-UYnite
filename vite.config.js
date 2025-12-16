@@ -11,6 +11,7 @@ export default defineConfig({
                 "resources/js/passwordShow.js",
                 "resources/js/app.js",
                 "resources/js/commentModal.js",
+                "resources/js/notifModalToggle.js",
                 "resources/js/postPreview.js",
                 "resources/js/autocompleteLocation.js",
                 "resources/js/Homepage.js"
