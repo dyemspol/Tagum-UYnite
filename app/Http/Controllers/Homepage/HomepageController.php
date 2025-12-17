@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Report;
 use App\Models\User;
+use App\Models\Comment;
+use App\Models\Reaction;
 
 
 class HomepageController extends Controller
@@ -77,10 +79,50 @@ class HomepageController extends Controller
     }
     public function message()
     {
-        
         return view('page.messagePage', [
             'isProfilePage' => false,
-            
+        ]);
+    }
+
+    public function notifications()
+    {
+        $user = Auth::user();
+        $notifications = collect();
+
+        if ($user) {
+            $myPostIds = Report::where('user_id', $user->id)->pluck('id');
+
+            $comments = Comment::whereIn('report_id', $myPostIds)
+                ->where('user_id', '!=', $user->id)
+                ->with(['user', 'report'])
+                ->latest()
+                ->take(20)
+                ->get()
+                ->map(function ($item) {
+                    $item->type = 'comment';
+                    return $item;
+                });
+
+            $reactions = Reaction::whereIn('report_id', $myPostIds)
+                ->where('user_id', '!=', $user->id)
+                ->with(['user', 'report'])
+                ->latest()
+                ->take(20)
+                ->get()
+                ->map(function ($item) {
+                    $item->type = 'reaction';
+                    return $item;
+                });
+
+            $notifications = $comments->merge($reactions)
+                ->sortByDesc('created_at')
+                ->take(50)
+                ->values();
+        }
+
+        return view('page.notificationPage', [
+            'isProfilePage' => false,
+            'notifications' => $notifications,
         ]);
     }
 }

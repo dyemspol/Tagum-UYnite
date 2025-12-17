@@ -14,14 +14,14 @@ export default defineConfig({
                 "resources/js/notifModalToggle.js",
                 "resources/js/postPreview.js",
                 "resources/js/autocompleteLocation.js",
-                "resources/js/Homepage.js"
+                "resources/js/Homepage.js",
             ],
             refresh: true, // hot reload
         }),
     ],
     server: {
         hmr: {
-            host: 'tagum-uynite.test',
+            host: "tagum-uynite.test",
         },
     },
 });

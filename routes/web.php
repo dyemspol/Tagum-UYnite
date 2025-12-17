@@ -36,5 +36,5 @@ Route::middleware(['auth', 'custom:user' ,'preventbackhistory'])->group(function
     Route::get('/search', [HomepageController::class, 'searchPosts'])->name('search');
 
     Route::get('/message', [HomepageController::class, 'message'])->name('message');
-
+    Route::get('/notifications', [HomepageController::class, 'notifications'])->name('notifications');
 });

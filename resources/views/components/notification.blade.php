@@ -16,7 +16,7 @@
         <!-- Example Notification -->
          @forelse($notifications as $notif)
         <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
-          <div class="w-8 h-8 flex-shrink-0">
+          <div class="w-8 h-8 shrink-0">
             <img class="w-full h-full rounded-full object-cover" 
                  src="{{ $notif->user->profile_photo ? $notif->user->profile_photo : asset('img/noprofile.jpg') }}"
                  alt="User">
@@ -44,11 +44,12 @@
       <!-- Bottom "View all notifications" link -->
       <div class="mt-3">
         <hr class="border-gray-700 mb-2">
-        <button
+        <a
+          href="{{ route('notifications') }}"
           id="viewAllNotificationsBottom"
-          class="w-full text-center text-[0.75rem] text-[#31A871] hover:underline py-1">
+          class="block w-full text-center text-[0.75rem] text-[#31A871] hover:underline py-1">
           View all notifications
-        </button>
+        </a>
         <hr class="border-gray-700 mt-2">
       </div>
   

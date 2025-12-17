@@ -1,7 +1,7 @@
   <div class="grid grid-cols-1 md:grid-cols-2 h-screen max-w-[]">
 
       <div class="relative hidden md:flex items-center justify-center bg-cover bg-center"
-          style="background-image: url('{{ asset('img/palm.png') }}')">
+          style="background-image: url('{{ asset('img/pedicab.png') }}')">
           <!-- Overlay -->
           <div class="absolute inset-0 bg-[rgba(21,64,105,0.6)]"></div>
 
@@ -41,7 +41,7 @@
                           wire:focus="clearFieldError('password')">
 
                       <i class="fa-regular fa-eye absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer text-gray-600"
-                          onclick="togglePassword()"></i>
+                          onclick="togglePassword(this)"></i>
                   </div>
 
 

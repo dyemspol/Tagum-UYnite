@@ -20,7 +20,7 @@
 
 </head>
 
-<body class="bg-[#122333] min-h-screen">
+<body class="bg-[#122333] min-h-screen" x-data>
 
     @include('components.comment-modal')
     @include('components.navbar')
@@ -72,7 +72,7 @@
 
 
     </div>
-
+    @vite('resources/js/notifModalToggle.js')
     @vite('resources/js/passwordShow.js')
     @vite('resources/js/commentModal.js')
     @vite('resources/js/postPreview.js')

@@ -168,7 +168,7 @@
             </button>
             <button type="button"
             id="commentModalBtn"
-                class="flex items-center space-x-1 text-[#31A871] hover:text-white transition-colors px-2 py-1 rounded-xl">
+                class="flex cursor-pointer items-center space-x-1 text-[#31A871] hover:text-white transition-colors px-2 py-1 rounded-xl">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M7 10h10M7 14h5m-9 3.5V6.8c0-1.01.82-1.8 1.84-1.8h12.32C18.18 5 19 5.79 19 6.8v8.4c0 1.01-.82 1.8-1.84 1.8H9.2L5.5 17.5Z" />
@@ -181,12 +181,11 @@
 
 
 
-        {{-- Comment Section (Placeholder for now) --}}
-        {{-- Comment Section --}}
-        <div class="mt-3 px-3 pb-2 comment-section">
+      
+        {{-- <div class="mt-3 px-3 pb-2 comment-section"> --}}
 
-            <!-- Existing comments -->
-            <div class="space-y-3 mb-3">
+            
+            {{-- <div class="space-y-3 mb-3">
                 <div class="flex items-start space-x-2">
                     <img src="{{ asset('img/default-avatar.png') }}" class="w-8 h-8 rounded-full object-cover">
                     <div class="bg-[#1f3548] rounded-lg px-3 py-2 w-full">
@@ -211,7 +210,7 @@
                 </button>
             </div>
 
-        </div>
+        </div> --}}
 
 
     </div>
