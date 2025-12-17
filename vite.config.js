@@ -20,8 +20,8 @@ export default defineConfig({
         }),
     ],
     server: {
-        hmr: {
-            host: "tagum-uynite.test",
-        },
+        // hmr: {
+        //     host: "tagum-uynite.test",
+        // },
     },
 });
