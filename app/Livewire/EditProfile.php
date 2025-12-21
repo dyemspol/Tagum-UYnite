@@ -112,27 +112,13 @@ class EditProfile extends Component
             }
 
             if ($this->photo) {
-                // Debug: Check if config is actually loaded
-                $cloudUrl = config('cloudinary.cloud_url');
-                Log::info('Cloudinary Config Check: ' . (empty($cloudUrl) ? 'EMPTY' : 'Found (Length: ' . strlen($cloudUrl) . ')'));
-                
-                Log::info('Attempting Cloudinary upload for user: ' . $currentUser->id);
-                
                 try {
-                    $uploadResponse = Cloudinary::upload($this->photo->getRealPath(), [
-                        'folder' => 'profile-photos'
-                    ]);
-
-                    if (!$uploadResponse) {
-                        throw new \Exception('Cloudinary upload returned no response.');
-                    }
-
-                    $data['profile_photo'] = $uploadResponse->getSecurePath();
-                    Log::info('Cloudinary upload successful: ' . $data['profile_photo']);
-
+                    $cloudinaryService = new \App\Services\CloudinaryServices();
+                    $data['profile_photo'] = $cloudinaryService->uploadProfilePhoto($this->photo);
+                    Log::info('Cloudinary upload successful via Service: ' . $data['profile_photo']);
                 } catch (\Exception $uploadError) {
-                    Log::error('Cloudinary Specific Error: ' . $uploadError->getMessage());
-                    throw new \Exception('Cloudinary upload failed. Check your API keys and CLOUDINARY_URL.');
+                    Log::error('Cloudinary Service Error: ' . $uploadError->getMessage());
+                    throw new \Exception('Cloudinary upload failed via Service. Check config.');
                 }
             }
 
