@@ -38,7 +38,7 @@
   
 
     <livewire:chatbox />
-    <livewire:editprofile />
+    <livewire:edit-profile />
    
 
 

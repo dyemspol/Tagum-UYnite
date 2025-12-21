@@ -7,9 +7,9 @@ use Livewire\Attributes\On;
 use App\Models\Report;
 use App\Models\Comment;
 use App\Models\User;
-use App\Models\Barangay;
+use App\Models\Baranggay;
 use App\Models\Reaction;
-use App\Models\PostImage;
+use App\Models\PostImages;
 use Illuminate\Support\Facades\Auth;
 
 class CommentModal extends Component
