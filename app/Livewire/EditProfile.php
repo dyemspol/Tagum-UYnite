@@ -112,7 +112,10 @@ class EditProfile extends Component
             }
 
             if ($this->photo) {
-                // Log for debugging
+                // Debug: Check if config is actually loaded
+                $cloudUrl = config('cloudinary.cloud_url');
+                Log::info('Cloudinary Config Check: ' . (empty($cloudUrl) ? 'EMPTY' : 'Found (Length: ' . strlen($cloudUrl) . ')'));
+                
                 Log::info('Attempting Cloudinary upload for user: ' . $currentUser->id);
                 
                 try {
