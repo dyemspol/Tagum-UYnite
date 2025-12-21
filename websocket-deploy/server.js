@@ -58,8 +58,12 @@ io.on('connection', (socket) => {
     });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = parseInt(process.env.PORT) || 3000;
+
+console.log('Environment PORT:', process.env.PORT);
+console.log('Using PORT:', PORT);
 
 server.listen(PORT, '0.0.0.0', () => {
-    console.log(`Socket.IO server running on port ${PORT}`);
+    console.log(`✅ Socket.IO server successfully started on 0.0.0.0:${PORT}`);
+    console.log(`Health check: http://localhost:${PORT}/health`);
 });
