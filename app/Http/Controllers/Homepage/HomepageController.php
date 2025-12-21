@@ -24,7 +24,7 @@ class HomepageController extends Controller
     {
         // Fetch all posts with their relationships, ordered by newest first
         
-        return view('page.homePage', [
+        return view('page.HomePage', [
             'isProfilePage' => false,
             
         ]);
