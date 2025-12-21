@@ -66,26 +66,34 @@ class Chatbox extends Component
             'selectedDepartmentId' => 'required'
         ]);
 
-        if (!$this->selectedConversation) {
-             $conversation = Conversation::create([
+        if (!$this->selectedConversation && $this->selectedDepartmentId) {
+             $conversation = Conversation::firstOrCreate([
                 'user_id' => Auth::id(),
                 'department_id' => $this->selectedDepartmentId
             ]);
             $this->selectedConversation = $conversation->id;
         }
 
-        $message = Message::create([
-            'conversation_id' => $this->selectedConversation,
-            'sender_id' => Auth::id(),
-            'message' => $this->newMessage,
-        ]);
+        if (!$this->selectedConversation) return;
 
-        broadcast(new \App\Events\MessageSent($message))->toOthers();
-        \Illuminate\Support\Facades\Log::info('Message BROADCASTED to others successfully!');
+        try {
+            $message = Message::create([
+                'conversation_id' => $this->selectedConversation,
+                'sender_id' => Auth::id(),
+                'message' => $this->newMessage,
+            ]);
 
-        $this->newMessage = '';
-        $this->chatMessages = Message::where('conversation_id', $this->selectedConversation)->get();
-        $this->dispatch('message-received-log');
+            broadcast(new \App\Events\MessageSent($message))->toOthers();
+            \Illuminate\Support\Facades\Log::info('Message BROADCASTED to others successfully!');
+
+            $this->newMessage = '';
+            $this->chatMessages = Message::where('conversation_id', $this->selectedConversation)->get();
+            $this->dispatch('message-received-log');
+
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('CHAT ERROR: ' . $e->getMessage());
+            $this->addError('newMessage', 'Failed to send message. ' . $e->getMessage());
+        }
     }
 
 }

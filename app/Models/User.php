@@ -28,7 +28,7 @@ class User extends Authenticatable
         'barangay_id',
         'profile_photo',
         'department_id',
-
+        'email_verified_at',
     ];
 
     /**
