@@ -101,8 +101,7 @@ class EditProfile extends Component
         }
 
         if ($this->photo) {
-            $path = $this->photo->store('profile-photos', 'public');
-            $data['profile_photo'] = Storage::url($path);
+             $data['profile_photo'] = $this->photo->storeOnCloudinary('profile-photos')->getSecurePath();
         }
 
         $this->user->update($data);
