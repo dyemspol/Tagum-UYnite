@@ -113,12 +113,15 @@ class EditProfile extends Component
 
             if ($this->photo) {
                 try {
-                    $cloudinaryService = new \App\Services\CloudinaryServices();
-                    $data['profile_photo'] = $cloudinaryService->uploadProfilePhoto($this->photo);
-                    Log::info('Cloudinary upload successful via Service: ' . $data['profile_photo']);
+                    $uploadedFileUrl = cloudinary()->upload($this->photo->getRealPath(), [
+                        'folder' => 'profile-photos'
+                    ])->getSecurePath();
+                    
+                    $data['profile_photo'] = $uploadedFileUrl;
+                    Log::info('Cloudinary upload successful via Helper: ' . $uploadedFileUrl);
                 } catch (\Exception $uploadError) {
-                    Log::error('Cloudinary Service Error: ' . $uploadError->getMessage());
-                    throw new \Exception('Cloudinary upload failed via Service. Check config.');
+                    Log::error('Cloudinary Helper Error: ' . $uploadError->getMessage());
+                    throw new \Exception('Cloudinary upload failed via Helper. Check config.');
                 }
             }
 
