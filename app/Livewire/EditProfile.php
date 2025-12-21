@@ -45,7 +45,7 @@ class EditProfile extends Component
         ]);
     }
 
-    public function updateProfile()
+    public function updateProfile(CloudinaryServices $cloudinaryServices)
     {
  
         $hasChanges = false;
@@ -114,8 +114,7 @@ class EditProfile extends Component
 
             if ($this->photo) {
                 try {
-                    $cloudinaryService = new CloudinaryServices();
-                    $uploadedFileUrl = $cloudinaryService->uploadProfilePhoto($this->photo);
+                    $uploadedFileUrl = $cloudinaryServices->uploadProfilePhoto($this->photo);
                     
                     $data['profile_photo'] = $uploadedFileUrl;
                     Log::info('Cloudinary upload successful: ' . $uploadedFileUrl);

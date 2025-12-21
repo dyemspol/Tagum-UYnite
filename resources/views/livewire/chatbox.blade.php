@@ -86,7 +86,27 @@
         </div>
     </div>
     <script>
-        console.log('%c [System] Chatbot Real-time Listener is ACTIVE ', 'background: #234156; color: #31A871; font-weight: bold; border-radius: 4px; padding: 2px 5px;');
+        console.log('%c [System] Socket.IO Real-time Listener is ACTIVE ', 'background: #234156; color: #31A871; font-weight: bold; border-radius: 4px; padding: 2px 5px;');
+
+        // Get conversation ID from Livewire
+        const conversationId = @json($selectedConversation);
+        
+        if (conversationId && window.socket) {
+            // Join the conversation room
+            window.socket.emit('join-conversation', conversationId);
+            
+            window.socket.on('joined-conversation', (data) => {
+                console.log('%c [Socket.IO] Joined conversation: ' + data.conversation_id, 'background: #31A871; color: #fff; font-weight: bold; border-radius: 4px; padding: 2px 5px;');
+            });
+            
+            // Listen for new messages
+            window.socket.on('new-message', (message) => {
+                console.log('%c [Real-time] New message received! ', 'background: #31A871; color: #fff; font-weight: bold; border-radius: 4px; padding: 2px 5px;', message);
+                
+                // Refresh the chat messages via Livewire
+                @this.call('refreshMessages');
+            });
+        }
 
         window.addEventListener('message-received-log', () => {
             console.log('%c [Real-time] Message detected and UI updated! ', 'background: #31A871; color: #fff; font-weight: bold; border-radius: 4px; padding: 2px 5px;');
