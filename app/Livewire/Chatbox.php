@@ -73,29 +73,7 @@ class Chatbox extends Component
                 'message' => $this->newMessage,
             ]);
 
-            // Notify Socket.IO server about the new message
-            try {
-                $socketUrl = env('SOCKET_IO_URL', 'http://localhost:3000');
-                \Illuminate\Support\Facades\Http::post("{$socketUrl}/broadcast-message", [
-                    'conversation_id' => $this->selectedConversation,
-                    'message' => [
-                        'id' => $message->id,
-                        'conversation_id' => $message->conversation_id,
-                        'sender_id' => $message->sender_id,
-                        'message' => $message->message,
-                        'created_at' => $message->created_at->toISOString(),
-                        'sender' => [
-                            'id' => Auth::id(),
-                            'first_name' => Auth::user()->first_name,
-                            'last_name' => Auth::user()->last_name,
-                        ]
-                    ]
-                ]);
-                \Illuminate\Support\Facades\Log::info('Message sent to Socket.IO server successfully!');
-            } catch (\Exception $socketError) {
-                \Illuminate\Support\Facades\Log::warning('Socket.IO notification failed: ' . $socketError->getMessage());
-                // Don't fail the whole operation if Socket.IO is down
-            }
+            \Illuminate\Support\Facades\Log::info('Message saved successfully!');
 
             $this->newMessage = '';
             $this->chatMessages = Message::where('conversation_id', $this->selectedConversation)->get();

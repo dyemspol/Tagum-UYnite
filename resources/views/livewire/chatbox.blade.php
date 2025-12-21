@@ -1,4 +1,4 @@
-<div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4 px-5 sm:px-10 mt-8">
+<div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4 px-5 sm:px-10 mt-8" wire:poll.3s="refreshMessages">
     <!-- Left Sidebar - Departments -->
     <div class="bg-[#1a3447] rounded-lg p-6">
         <h2 class="text-white text-xl font-semibold mb-6">Departments</h2>
@@ -86,30 +86,6 @@
         </div>
     </div>
     <script>
-        console.log('%c [System] Socket.IO Real-time Listener is ACTIVE ', 'background: #234156; color: #31A871; font-weight: bold; border-radius: 4px; padding: 2px 5px;');
-
-        // Get conversation ID from Livewire
-        const conversationId = @json($selectedConversation);
-        
-        if (conversationId && window.socket) {
-            // Join the conversation room
-            window.socket.emit('join-conversation', conversationId);
-            
-            window.socket.on('joined-conversation', (data) => {
-                console.log('%c [Socket.IO] Joined conversation: ' + data.conversation_id, 'background: #31A871; color: #fff; font-weight: bold; border-radius: 4px; padding: 2px 5px;');
-            });
-            
-            // Listen for new messages
-            window.socket.on('new-message', (message) => {
-                console.log('%c [Real-time] New message received! ', 'background: #31A871; color: #fff; font-weight: bold; border-radius: 4px; padding: 2px 5px;', message);
-                
-                // Refresh the chat messages via Livewire
-                @this.call('refreshMessages');
-            });
-        }
-
-        window.addEventListener('message-received-log', () => {
-            console.log('%c [Real-time] Message detected and UI updated! ', 'background: #31A871; color: #fff; font-weight: bold; border-radius: 4px; padding: 2px 5px;');
-        });
+        console.log('%c [System] Livewire Polling is ACTIVE (every 3s) ', 'background: #234156; color: #31A871; font-weight: bold; border-radius: 4px; padding: 2px 5px;');
     </script>
 </div>
