@@ -32,7 +32,7 @@
                 <i id="notifIcon" @click="$store.notificationModal.toggle()" class="fa-regular fa-bell text-[#31A871] text-2xl text-normal group-hover:text-white cursor-pointer"></i>
                 <div id="profilemenu" class="w-10 h-10 cursor-pointer">
                     <img class="w-full h-full rounded-full object-cover" 
-                        src="{{ Auth::user()->profile_photo ? asset(Auth::user()->profile_photo) : asset('img/ninogprofile.jpg') }}" 
+                        src="{{ Auth::user()->profile_photo ? asset(Auth::user()->profile_photo) : asset('img/noprofile.jpg') }}" 
                         alt="Profile">
                 </div>
             </div>
