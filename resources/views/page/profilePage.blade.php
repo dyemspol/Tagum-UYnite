@@ -14,13 +14,14 @@
 <body class="bg-[#122333] min-h-screen" x-data>
 
     {{-- Navbar --}}
-    @include('components.comment-modal')
+    
     @include('components.navbar')
     @include('components.postCardModal')
     <livewire:edit-profile :user="$user" />
     @if (!Auth::check())
         <livewire:login-form />
     @endif
+    <livewire:comment-modal />
 
         
     <livewire:create-post />
@@ -33,9 +34,11 @@
 
 
                 {{-- profile name and picture section --}}
-                <div class="flex items-center gap-2 mb-7">
-                    <div class="h-26 w-26"><img class="w-full rounded-full object-cover h-full"
-                            src="{{ $user->profile_photo ? $user->profile_photo : asset('img/noprofile.jpg') }}" alt=""></div>
+                <div class="flex items-center gap-5 mb-7">
+                    <div class="h-32 w-32 flex-shrink-0">
+                        <img class="w-full h-full rounded-full object-cover border-2 border-[#1e3246]"
+                            src="{{ $user->profile_photo ? $user->profile_photo : asset('img/noprofile.jpg') }}" alt="Profile Picture">
+                    </div>
                     <div class="">
                         <p class="text-white text-3xl">{{ $user->first_name }} {{ $user->last_name }}</p>
                         <div class="flex gap-2 items-center mt-1">
@@ -86,15 +89,17 @@
                                     <div class="leading-tight">
                                         <p class="text-white text-sm">{{ $user->first_name }} {{ $user->last_name }}</p>
                                         <p class="text-xs text-[#9fb1c5]">
-                                            {{ $user->reports->first()->created_at->format('F j, Y') }} <span
+                                            {{ $post->created_at->format('F j, Y') }} <span
                                                 class="mx-1">•</span>
-                                            {{ $user->reports->first()->title }}</p>
+                                            {{ $post->title }}</p>
                                     </div>
                                 </div>
                                 <span
-                                    class="text-sm bg-lime-500 text-[#122333] px-3 py-1 rounded-2xl">{{ $user->reports->first()->report_status ? 'Pending' : 'Resolved' }}</span>
+                                    class="text-sm {{ $post->report_status == 'resolved' ? 'bg-lime-500' : 'bg-amber-400' }} text-[#122333] px-3 py-1 rounded-2xl">
+                                    {{ ucfirst(str_replace('_', ' ', $post->report_status)) }}
+                                </span>
                             </div>
-                            <p class="text-white text-base">{{ $user->reports->first()->description }}</p>
+                            <p class="text-white text-base">{{ $post->content }}</p>
                         </div>
                     @empty
                         <div class="text-white text-center opacity-50 py-10">No posts yet.</div>
@@ -109,7 +114,7 @@
     </div>
 
 
-    @vite('resources/js/commentModal.js')
+    
     @vite('resources/js/notifModalToggle.js')
     @vite('resources/js/postPreview.js')
     @vite('resources/js/autocompleteLocation.js')

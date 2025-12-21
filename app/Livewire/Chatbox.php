@@ -24,6 +24,22 @@ class Chatbox extends Component
     {
         $this->departments = Department::all();
     }
+    public function getListeners()
+    {
+         if (!$this->selectedConversation) {
+            return [];
+        }
+        return [
+            "echo:chatbox{$this->selectedConversation},.MessageSent" => 'refreshMessages'
+        ];
+    }
+
+    public function refreshMessages()
+    {
+        \Illuminate\Support\Facades\Log::info('Real-time message listener triggered for conversation: ' . $this->selectedConversation);
+        $this->chatMessages = Message::where('conversation_id', $this->selectedConversation)->get();
+        $this->dispatch('message-received-log');
+    }
 
     public function selectDepartment($departmentId)
     {
@@ -58,14 +74,18 @@ class Chatbox extends Component
             $this->selectedConversation = $conversation->id;
         }
 
-        Message::create([
+        $message = Message::create([
             'conversation_id' => $this->selectedConversation,
             'sender_id' => Auth::id(),
             'message' => $this->newMessage,
         ]);
 
+        broadcast(new \App\Events\MessageSent($message))->toOthers();
+        \Illuminate\Support\Facades\Log::info('Message BROADCASTED to others successfully!');
+
         $this->newMessage = '';
         $this->chatMessages = Message::where('conversation_id', $this->selectedConversation)->get();
+        $this->dispatch('message-received-log');
     }
 
 }

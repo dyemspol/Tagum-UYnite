@@ -24,8 +24,8 @@
                 </div>
             </div>
             <div class="">
-                <p class="text-sm bg-amber-400 rounded-2xl px-2 py-0.5 text-black font-medium">
-                    {{ $post->report_status == 'Pending' ? 'Pending' : 'Pending' }}
+                <p class="text-sm {{ $post->report_status == 'resolved' ? 'bg-lime-500' : 'bg-amber-400' }} rounded-2xl px-2 py-0.5 text-black font-medium">
+                    {{ ucfirst(str_replace('_', ' ', $post->report_status)) }}
                 </p>
             </div>
         </div>
@@ -168,12 +168,13 @@
             </button>
             <button type="button"
             id="commentModalBtn"
+            wire:click="$dispatch('openCommentModal', { postId: {{ $post->id }} })"
                 class="flex cursor-pointer items-center space-x-1 text-[#31A871] hover:text-white transition-colors px-2 py-1 rounded-xl">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M7 10h10M7 14h5m-9 3.5V6.8c0-1.01.82-1.8 1.84-1.8h12.32C18.18 5 19 5.79 19 6.8v8.4c0 1.01-.82 1.8-1.84 1.8H9.2L5.5 17.5Z" />
                 </svg>
-
+                <span class="text-white text-sm">{{ $post->comments->count() }}</span>
             </button>
         </div>
         @endauth
@@ -182,10 +183,10 @@
 
 
       
-        {{-- <div class="mt-3 px-3 pb-2 comment-section"> --}}
+        <!-- <div class="mt-3 px-3 pb-2 comment-section">
 
             
-            {{-- <div class="space-y-3 mb-3">
+            <div class="space-y-3 mb-3">
                 <div class="flex items-start space-x-2">
                     <img src="{{ asset('img/default-avatar.png') }}" class="w-8 h-8 rounded-full object-cover">
                     <div class="bg-[#1f3548] rounded-lg px-3 py-2 w-full">
@@ -195,10 +196,10 @@
                         </p>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Add comment -->
-            <div class="flex items-center space-x-2">
+            <!-- <div class="flex items-center space-x-2">
                 <img src="{{ auth()->user()->profile_photo ?? asset('img/noprofile.jpg') }}"
                     class="w-8 h-8 rounded-full object-cover">
 
@@ -210,7 +211,7 @@
                 </button>
             </div>
 
-        </div> --}}
+        </div>  --> 
 
 
     </div>

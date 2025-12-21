@@ -10,6 +10,7 @@ class Comment extends Model
         'report_id',
         'user_id',
         'comment_text',
+        
     ];
 
     public function user()

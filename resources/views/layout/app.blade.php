@@ -22,9 +22,9 @@
 
 <body class="bg-[#122333] min-h-screen" x-data>
 
-    @include('components.comment-modal')
+
     @include('components.navbar')
-    @include('components.postCardModal')
+    
     <livewire:notif-modal />
 
     {{-- Login Modal --}}
@@ -32,7 +32,7 @@
     <livewire:login-form />
     @endif
 
-    
+    <livewire:comment-modal />
 
     <livewire:create-post />
     <div class="pt-20">
@@ -74,7 +74,7 @@
     </div>
     @vite('resources/js/notifModalToggle.js')
     @vite('resources/js/passwordShow.js')
-    @vite('resources/js/commentModal.js')
+    <!-- @vite('resources/js/commentModal.js') -->
     @vite('resources/js/postPreview.js')
     @vite('resources/js/autocompleteLocation.js')
     @stack('scripts')

@@ -85,4 +85,11 @@
             </form>
         </div>
     </div>
+    <script>
+        console.log('%c [System] Chatbot Real-time Listener is ACTIVE ', 'background: #234156; color: #31A871; font-weight: bold; border-radius: 4px; padding: 2px 5px;');
+
+        window.addEventListener('message-received-log', () => {
+            console.log('%c [Real-time] Message detected and UI updated! ', 'background: #31A871; color: #fff; font-weight: bold; border-radius: 4px; padding: 2px 5px;');
+        });
+    </script>
 </div>

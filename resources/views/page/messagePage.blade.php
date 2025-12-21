@@ -29,8 +29,8 @@
 
 
     @include('components.navbar')
-    @include('components.postCardModal')
-    @include('components.editprofile')
+    
+    
     <livewire:notif-modal />
 <a href="/" class="text-white flex items-center gap-2">  <i class="fa-solid fa-less-than text-xs"></i>
     <p>Back</p>
@@ -38,11 +38,11 @@
   
 
     <livewire:chatbox />
+    <livewire:editprofile />
+   
 
 
-
-    @vite('resources/js/postPreview.js')
-    @vite('resources/js/autocompleteLocation.js')
+    
     
     <script>
         document.addEventListener('alpine:init', () => {

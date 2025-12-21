@@ -24,13 +24,14 @@ class EditProfile extends Component
     public $photo; 
     public $barangay_id;
 
-    public function mount($user)
+    public function mount($user = null)
     {
-        $this->user = $user;
-        $this->first_name = $user->first_name;
-        $this->last_name = $user->last_name;
-        $this->email = $user->email;
-        $this->barangay_id = $user->barangay_id;
+         $this->user = $user ?? Auth::user();
+        
+        $this->first_name = $this->user->first_name;
+        $this->last_name = $this->user->last_name;
+        $this->email = $this->user->email;
+        $this->barangay_id = $this->user->barangay_id;
     }
 
     public function render()
