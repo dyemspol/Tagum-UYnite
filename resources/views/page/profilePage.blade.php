@@ -37,7 +37,7 @@
                 <div class="flex items-center gap-5 mb-7">
                     <div class="h-32 w-32 flex-shrink-0">
                         <img class="w-full h-full rounded-full object-cover border-2 border-[#1e3246]"
-                            src="{{ $user->profile_photo ? $user->profile_photo : asset('img/noprofile.jpg') }}" alt="Profile Picture">
+                            src="{{ $user->profile_photo ? asset($user->profile_photo) : asset('img/noprofile.jpg') }}" alt="Profile Picture">
                     </div>
                     <div class="">
                         <p class="text-white text-3xl">{{ $user->first_name }} {{ $user->last_name }}</p>

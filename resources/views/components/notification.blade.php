@@ -28,7 +28,7 @@
                         commented on your post: <span class="text-gray-400 italic">"{{ Str::limit($notif->content, 20) }}"</span>
                     @else
                         liked your post
-                    @endif
+                    @endif   
                 </p>
                 <span class="text-gray-400 text-xs">{{ $notif->created_at->diffForHumans() }}</span>
           </div>

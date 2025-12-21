@@ -22,7 +22,7 @@
         <!-- Profile Photo -->
         <div class="flex flex-col items-center mb-6">
             <div class="w-32 h-32 rounded-full overflow-hidden mb-3 bg-gray-700">
-                <img src="{{ $photo ? $photo->temporaryUrl() : ($user->profile_photo ? $user->profile_photo : asset('img/noprofile.jpg')) }}"
+                <img src="{{ $photo ? $photo->temporaryUrl() : ($user->profile_photo ? asset($user->profile_photo) : asset('img/noprofile.jpg')) }}"
                     alt="Profile" class="w-full h-full object-cover" />
             </div>
             <label for="uploadPhoto"
