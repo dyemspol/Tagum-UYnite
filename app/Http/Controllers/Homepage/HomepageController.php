@@ -55,7 +55,7 @@ class HomepageController extends Controller
         return view('page.profilePage', compact('user', 'post'));
     }
 
-    public function popularPOST()
+    public function popularpost()
     {
         
 
