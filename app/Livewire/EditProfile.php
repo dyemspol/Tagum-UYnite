@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class EditProfile extends Component
 {
@@ -88,28 +89,47 @@ class EditProfile extends Component
         }
         $this->validate($rules);
 
+        // Sanitize email: Convert empty string to null to avoid unique constraint issues
+        $email = !empty($this->email) ? trim($this->email) : null;
+
         $data = [
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'email' => $this->email,
-            'email_verified_at' => now(),
+            'first_name' => trim($this->first_name),
+            'last_name' => trim($this->last_name),
+            'email' => $email,
+            'email_verified_at' => $email ? now() : null,
             'barangay_id' => $this->barangay_id,
         ];
 
-        if (!empty($this->password)) {
-            $data['password'] = \Illuminate\Support\Facades\Hash::make($this->password);
-        }
+        try {
+            DB::beginTransaction();
 
-        if ($this->photo) {
-             $data['profile_photo'] = $this->photo->storeOnCloudinary('profile-photos')->getSecurePath();
-        }
+            if (!empty($this->password)) {
+                $data['password'] = \Illuminate\Support\Facades\Hash::make($this->password);
+            }
 
-        $this->user->update($data);
-        Log::info('Profile utin');
-        $this->reset(['current_password', 'password', 'password_confirmation', 'photo']);
-        Log::info('Profile updated successfully');
-        $this->dispatch('profile-updated'); 
-        $this->dispatch('close-edit-profile'); 
-        return redirect()->route('profile');
+            if ($this->photo) {
+                 $data['profile_photo'] = $this->photo->storeOnCloudinary('profile-photos')->getSecurePath();
+            }
+
+            $this->user->update($data);
+
+            DB::commit();
+
+            $this->reset(['current_password', 'password', 'password_confirmation', 'photo']);
+            Log::info('Profile updated successfully for user: ' . $this->user->id);
+            
+            $this->dispatch('profile-updated'); 
+            $this->dispatch('close-edit-profile'); 
+
+            return redirect()->route('profile');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error updating profile for user ' . $this->user->id . ': ' . $e->getMessage());
+            
+            $errorMessage = app()->isLocal() ? $e->getMessage() : 'An unexpected error occurred.';
+            session()->flash('error', 'There was an error updating your profile. ' . $errorMessage);
+            return;
+        }
     }
 }

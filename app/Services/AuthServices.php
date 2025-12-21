@@ -24,6 +24,7 @@ class AuthServices
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
+            'email' => 'required|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'confirm_password' => 'required|string|min:8|same:password',
         ], 
@@ -64,11 +65,11 @@ class AuthServices
 
         DB::beginTransaction();
         $user = User::create([
-            'first_name' => $data['firstname'],
-            'last_name' => $data['lastname'],
-            'username' => $data['username'],
-            'email' => null,
-            'email_verified_at' => null,
+            'first_name' => trim($data['firstname']),
+            'last_name' => trim($data['lastname']),
+            'username' => trim($data['username']),
+            'email' => !empty($data['email']) ? trim($data['email']) : null,
+            'email_verified_at' => !empty($data['email']) ? now() : null,
             'address' => null,
             'barangay_id' => null,
             'password' => Hash::make($data['password']),

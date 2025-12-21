@@ -153,7 +153,7 @@
                     <a href="/profile" class="flex items-center space-x-3">
                         <div class="w-9 h-9">
                             <img class="w-full h-full rounded-full object-cover" 
-                                src="{{ Auth::user()->profile_photo ? asset(Auth::user()->profile_photo) : asset('img/ninogprofile.jpg') }}" 
+                                src="{{ Auth::user()->profile_photo ? asset(Auth::user()->profile_photo) : asset('img/noprofile.jpg') }}" 
                                 alt="Profile Photo">
                         </div>
                         <p class="text-white text-sm">View Profile</p>

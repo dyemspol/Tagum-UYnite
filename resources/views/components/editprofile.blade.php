@@ -13,6 +13,12 @@
             </button>
         </div>
 
+        @if (session()->has('error'))
+            <div class="bg-red-500/20 border border-red-500 text-red-100 px-4 py-2 rounded mb-4 text-sm">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <!-- Profile Photo -->
         <div class="flex flex-col items-center mb-6">
             <div class="w-32 h-32 rounded-full overflow-hidden mb-3 bg-gray-700">
