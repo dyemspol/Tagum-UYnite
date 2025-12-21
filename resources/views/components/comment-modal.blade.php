@@ -102,7 +102,7 @@
                             <div class="bg-[#1f3548] rounded-2xl px-3 py-2 inline-block max-w-full">
                                 <p class="text-xs text-white font-bold hover:underline cursor-pointer">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</p>
                                 <p class="text-sm text-[#ffffffdd] font-light">
-                                   {{ $comment->comment_text }}
+                                   {{ $comment->body }}
                                 </p>
                             </div>
                             <div class="flex items-center space-x-3 mt-1 ml-2">

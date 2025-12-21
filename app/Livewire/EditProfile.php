@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
-use CloudinaryLabs\CloudinaryLaravel\CloudinaryConfig;
+use App\Services\CloudinaryServices;
 
 
 
@@ -115,15 +114,14 @@ class EditProfile extends Component
 
             if ($this->photo) {
                 try {
-                    $uploadedFileUrl = cloudinary()->upload($this->photo->getRealPath(), [
-                        'folder' => 'profile-photos'
-                    ])->getSecurePath();
+                    $cloudinaryService = new CloudinaryServices();
+                    $uploadedFileUrl = $cloudinaryService->uploadProfilePhoto($this->photo);
                     
                     $data['profile_photo'] = $uploadedFileUrl;
-                    Log::info('Cloudinary upload successful via Helper: ' . $uploadedFileUrl);
+                    Log::info('Cloudinary upload successful: ' . $uploadedFileUrl);
                 } catch (\Exception $uploadError) {
-                    Log::error('Cloudinary Helper Error: ' . $uploadError->getMessage());
-                    throw new \Exception('Cloudinary upload failed via Helper. Check config.');
+                    Log::error('Cloudinary upload error: ' . $uploadError->getMessage());
+                    throw new \Exception('Failed to upload profile photo. Please try again.');
                 }
             }
 

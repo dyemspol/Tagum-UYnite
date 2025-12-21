@@ -35,7 +35,7 @@ public function loadPost($postId) {
         $this->validate(['comment' => 'required|min:1']);
         Comment::create([
             'user_id' => Auth::id(),
-            'comment_text' => $this->comment,
+            'body' => $this->comment,
             'report_id' => $this->post->id
         ]);
         $this->comments = Comment::with('user')->where('report_id', $this->post->id)->get();

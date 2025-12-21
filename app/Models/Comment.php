@@ -9,7 +9,7 @@ class Comment extends Model
     protected $fillable = [
         'report_id',
         'user_id',
-        'comment_text',
+        'body',
         
     ];
 
