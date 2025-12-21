@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+
 
 class EditProfile extends Component
 {
@@ -103,20 +105,40 @@ class EditProfile extends Component
         try {
             DB::beginTransaction();
 
+            $currentUser = Auth::user();
+
             if (!empty($this->password)) {
-                $data['password'] = \Illuminate\Support\Facades\Hash::make($this->password);
+                $data['password'] = Hash::make($this->password);
             }
 
             if ($this->photo) {
-                 $data['profile_photo'] = $this->photo->storeOnCloudinary('profile-photos')->getSecurePath();
+                // Log for debugging
+                Log::info('Attempting Cloudinary upload for user: ' . $currentUser->id);
+                
+                try {
+                    $uploadResponse = Cloudinary::upload($this->photo->getRealPath(), [
+                        'folder' => 'profile-photos'
+                    ]);
+
+                    if (!$uploadResponse) {
+                        throw new \Exception('Cloudinary upload returned no response.');
+                    }
+
+                    $data['profile_photo'] = $uploadResponse->getSecurePath();
+                    Log::info('Cloudinary upload successful: ' . $data['profile_photo']);
+
+                } catch (\Exception $uploadError) {
+                    Log::error('Cloudinary Specific Error: ' . $uploadError->getMessage());
+                    throw new \Exception('Cloudinary upload failed. Check your API keys and CLOUDINARY_URL.');
+                }
             }
 
-            $this->user->update($data);
+            $currentUser->update($data);
 
             DB::commit();
 
             $this->reset(['current_password', 'password', 'password_confirmation', 'photo']);
-            Log::info('Profile updated successfully for user: ' . $this->user->id);
+            Log::info('Profile updated successfully for user: ' . $currentUser->id);
             
             $this->dispatch('profile-updated'); 
             $this->dispatch('close-edit-profile'); 
@@ -125,10 +147,10 @@ class EditProfile extends Component
 
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('Error updating profile for user ' . $this->user->id . ': ' . $e->getMessage());
+            Log::error('Final Profile Update Error: ' . $e->getMessage());
             
-            $errorMessage = app()->isLocal() ? $e->getMessage() : 'An unexpected error occurred.';
-            session()->flash('error', 'There was an error updating your profile. ' . $errorMessage);
+            // Show the actual error message so we can fix it!
+            session()->flash('error', 'There was an error updating your profile: ' . $e->getMessage());
             return;
         }
     }
