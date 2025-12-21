@@ -6,10 +6,12 @@ window.Pusher.logToConsole = true;
 
 window.Echo = new Echo({
     broadcaster: 'reverb',
-    key: 'tagum-uynite-key',
-    wsHost: 'tagumuynite.up.railway.app',
+    key: import.meta.env.VITE_REVERB_APP_KEY,
+
+    wsHost: import.meta.env.VITE_REVERB_HOST,
     wsPort: 443,
     wssPort: 443,
+
     forceTLS: true,
     enabledTransports: ['ws', 'wss'],
 });

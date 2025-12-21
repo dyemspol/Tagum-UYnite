@@ -83,8 +83,8 @@ class Chatbox extends Component
                 'message' => $this->newMessage,
             ]);
 
-            broadcast(new \App\Events\MessageSent($message))->toOthers();
-            \Illuminate\Support\Facades\Log::info('Message BROADCASTED to others successfully!');
+            // broadcast(new \App\Events\MessageSent($message))->toOthers();
+            \Illuminate\Support\Facades\Log::info('Message SAVED successfully (Broadcast disabled for stability)!');
 
             $this->newMessage = '';
             $this->chatMessages = Message::where('conversation_id', $this->selectedConversation)->get();
