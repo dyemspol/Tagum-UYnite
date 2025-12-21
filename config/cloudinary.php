@@ -31,10 +31,10 @@ return [
     |
     |
     */
-    'cloud_url' => null,
-    'cloud_name' => 'deklle0es',
-    'api_key' => '584775371466268',
-    'api_secret' => 'sgm6MbcawkQGkZZ5AdjkTAojOSo',
+    'cloud_url' => env('CLOUDINARY_URL'),
+    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+    'api_key' => env('CLOUDINARY_API_KEY'),
+    'api_secret' => env('CLOUDINARY_API_SECRET'),
 
     /**
      * Upload Preset From Cloudinary Dashboard
