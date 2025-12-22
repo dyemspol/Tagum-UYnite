@@ -22,7 +22,7 @@ class HomepageController extends Controller
     }
     public function index()
     {
-        // Fetch all posts with their relationships, ordered by newest first
+        
         
         return view('page.HomePage', [
             'isProfilePage' => false,
