@@ -30,7 +30,7 @@
                         liked your post
                     @endif   
                 </p>
-                <span class="text-gray-400 text-xs">{{ $notif->created_at->diffForHumans() }}</span>
+                <span class="text-gray-400 text-xs">{{ $notif->created_at?->diffForHumans() ?? 'Just now' }}</span>
           </div>
         </a>
         @empty
