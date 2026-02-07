@@ -12,10 +12,24 @@ use App\Livewire\Navbar;
 Route::get('/', [HomepageController::class, 'index', 'departments' => \App\Models\Department::all()])->middleware('preventbackhistory')->name('homepage');
 
 
-
-
-
-
+Route::get('/map', function () {
+    return view('page.admin.map');
+})->name('map');
+Route::get('/messages', function () {
+    return view('page.admin.message');
+})->name('messages');
+Route::get('/adminlogin', function () {
+    return view('page.admin.authentication.login');
+})->name('adminlogin');
+Route::get('/Reports', function () {
+    return view('page.admin.reportsManagement');
+})->name('reports');
+Route::get('/tracker', function () {
+    return view('page.admin.IssueTracker');
+})->name('tracker');
+Route::get('/dashboard', function () {
+   return view('page.admin.mainDashboard');
+})->name('dashboard');
 
 Route::get('/login-form', LoginForm::class)->name('login-form');
 
