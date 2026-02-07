@@ -197,10 +197,10 @@
                         </p>
                     </div>
                 </div>
-            </div> -->
+            </div> --}}
 
-            <!-- Add comment -->
-            <!-- <div class="flex items-center space-x-2">
+            {{-- Add comment --}}
+            {{-- <div class="flex items-center space-x-2">
                 <img src="{{ auth()->user()->profile_photo ?? asset('img/noprofile.jpg') }}"
                     class="w-8 h-8 rounded-full object-cover">
 
@@ -212,7 +212,7 @@
                 </button>
             </div>
 
-        </div>  --> 
+        </div>  --}} 
 
 
     </div>

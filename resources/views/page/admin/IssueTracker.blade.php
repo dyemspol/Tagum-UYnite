@@ -8,7 +8,7 @@
         <div class="flex space-x-6 text-white">
             <p id="activeIssueNavigation">Active Issue</p>
             <p id="scheduledNavigation">Scheduled</p>
-            <p id="historyNavigation">History</p>
+            <p id="historyNavigation"   >History</p>
         </div>
         <hr class="text-[#ffffff1b] my-4">
 
