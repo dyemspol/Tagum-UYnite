@@ -1,4 +1,4 @@
-<div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4 px-5 sm:px-10 mt-8">
+<div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4 px-5 sm:px-10 mt-8" wire:poll.3s="refreshMessages">
     <!-- Left Sidebar - Departments -->
     <div class="bg-[#1a3447] rounded-lg p-6">
         <h2 class="text-white text-xl font-semibold mb-6">Departments</h2>
@@ -85,4 +85,7 @@
             </form>
         </div>
     </div>
+    <script>
+        console.log('%c [System] Livewire Polling is ACTIVE (every 3s) ', 'background: #234156; color: #31A871; font-weight: bold; border-radius: 4px; padding: 2px 5px;');
+    </script>
 </div>

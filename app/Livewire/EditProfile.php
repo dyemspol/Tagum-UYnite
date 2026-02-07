@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use App\Services\CloudinaryServices;
+
+
 
 class EditProfile extends Component
 {
@@ -24,13 +28,14 @@ class EditProfile extends Component
     public $photo; 
     public $barangay_id;
 
-    public function mount($user)
+    public function mount($user = null)
     {
-        $this->user = $user;
-        $this->first_name = $user->first_name;
-        $this->last_name = $user->last_name;
-        $this->email = $user->email;
-        $this->barangay_id = $user->barangay_id;
+         $this->user = $user ?? Auth::user();
+        
+        $this->first_name = $this->user->first_name;
+        $this->last_name = $this->user->last_name;
+        $this->email = $this->user->email;
+        $this->barangay_id = $this->user->barangay_id;
     }
 
     public function render()
@@ -40,7 +45,7 @@ class EditProfile extends Component
         ]);
     }
 
-    public function updateProfile()
+    public function updateProfile(CloudinaryServices $cloudinaryServices)
     {
  
         $hasChanges = false;
@@ -87,29 +92,57 @@ class EditProfile extends Component
         }
         $this->validate($rules);
 
+        // Sanitize email: Convert empty string to null to avoid unique constraint issues
+        $email = !empty($this->email) ? trim($this->email) : null;
+
         $data = [
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'email' => $this->email,
-            'email_verified_at' => now(),
+            'first_name' => trim($this->first_name),
+            'last_name' => trim($this->last_name),
+            'email' => $email,
+            'email_verified_at' => $email ? now() : null,
             'barangay_id' => $this->barangay_id,
         ];
 
-        if (!empty($this->password)) {
-            $data['password'] = \Illuminate\Support\Facades\Hash::make($this->password);
-        }
+        try {
+            DB::beginTransaction();
 
-        if ($this->photo) {
-            $path = $this->photo->store('profile-photos', 'public');
-            $data['profile_photo'] = Storage::url($path);
-        }
+            $currentUser = Auth::user();
 
-        $this->user->update($data);
-        Log::info('Profile utin');
-        $this->reset(['current_password', 'password', 'password_confirmation', 'photo']);
-        Log::info('Profile updated successfully');
-        $this->dispatch('profile-updated'); 
-        $this->dispatch('close-edit-profile'); 
-        return redirect()->route('profile');
+            if (!empty($this->password)) {
+                $data['password'] = Hash::make($this->password);
+            }
+
+            if ($this->photo) {
+                try {
+                    $uploadedFileUrl = $cloudinaryServices->uploadProfilePhoto($this->photo);
+                    
+                    $data['profile_photo'] = $uploadedFileUrl;
+                    Log::info('Cloudinary upload successful: ' . $uploadedFileUrl);
+                } catch (\Exception $uploadError) {
+                    Log::error('Cloudinary upload error: ' . $uploadError->getMessage());
+                    throw new \Exception('Failed to upload profile photo. Please try again.');
+                }
+            }
+
+            $currentUser->update($data);
+
+            DB::commit();
+
+            $this->reset(['current_password', 'password', 'password_confirmation', 'photo']);
+            Log::info('Profile updated successfully for user: ' . $currentUser->id);
+            
+            $this->dispatch('profile-updated'); 
+            $this->dispatch('close-edit-profile'); 
+
+            return redirect()->route('profile');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Final Profile Update Error: ' . $e->getMessage());
+            
+            // Show the actual error message so we can fix it!
+            session()->flash('error', 'There was an error updating your profile: ' . $e->getMessage());
+            return;
+        }
     }
 }

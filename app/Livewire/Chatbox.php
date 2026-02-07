@@ -24,6 +24,12 @@ class Chatbox extends Component
     {
         $this->departments = Department::all();
     }
+    public function refreshMessages()
+    {
+        \Illuminate\Support\Facades\Log::info('Real-time message listener triggered for conversation: ' . $this->selectedConversation);
+        $this->chatMessages = Message::where('conversation_id', $this->selectedConversation)->get();
+        $this->dispatch('message-received-log');
+    }
 
     public function selectDepartment($departmentId)
     {
@@ -50,22 +56,33 @@ class Chatbox extends Component
             'selectedDepartmentId' => 'required'
         ]);
 
-        if (!$this->selectedConversation) {
-             $conversation = Conversation::create([
+        if (!$this->selectedConversation && $this->selectedDepartmentId) {
+             $conversation = Conversation::firstOrCreate([
                 'user_id' => Auth::id(),
                 'department_id' => $this->selectedDepartmentId
             ]);
             $this->selectedConversation = $conversation->id;
         }
 
-        Message::create([
-            'conversation_id' => $this->selectedConversation,
-            'sender_id' => Auth::id(),
-            'message' => $this->newMessage,
-        ]);
+        if (!$this->selectedConversation) return;
 
-        $this->newMessage = '';
-        $this->chatMessages = Message::where('conversation_id', $this->selectedConversation)->get();
+        try {
+            $message = Message::create([
+                'conversation_id' => $this->selectedConversation,
+                'sender_id' => Auth::id(),
+                'message' => $this->newMessage,
+            ]);
+
+            \Illuminate\Support\Facades\Log::info('Message saved successfully!');
+
+            $this->newMessage = '';
+            $this->chatMessages = Message::where('conversation_id', $this->selectedConversation)->get();
+            $this->dispatch('message-received-log');
+
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('CHAT ERROR: ' . $e->getMessage());
+            $this->addError('newMessage', 'Failed to send message. ' . $e->getMessage());
+        }
     }
 
 }

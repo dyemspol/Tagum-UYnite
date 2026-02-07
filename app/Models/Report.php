@@ -48,7 +48,7 @@ class Report extends Model
     }
     public function barangay()
     {
-        return $this->belongsTo(Baranggay::class);
+        return $this->belongsTo(Baranggay::class, 'barangay_id');
     }
     public function scopePopular($query)
 {

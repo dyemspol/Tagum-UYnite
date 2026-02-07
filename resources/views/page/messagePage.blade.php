@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Community')</title>
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
@@ -29,8 +29,8 @@
 
 
     @include('components.navbar')
-    @include('components.postCardModal')
-    @include('components.editprofile')
+    
+    
     <livewire:notif-modal />
 <a href="/" class="text-white flex items-center gap-2">  <i class="fa-solid fa-less-than text-xs"></i>
     <p>Back</p>
@@ -38,11 +38,11 @@
   
 
     <livewire:chatbox />
+    <livewire:edit-profile />
+   
 
 
-
-    @vite('resources/js/postPreview.js')
-    @vite('resources/js/autocompleteLocation.js')
+    
     
     <script>
         document.addEventListener('alpine:init', () => {

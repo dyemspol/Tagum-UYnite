@@ -15,22 +15,22 @@
       <div class="flex-1 overflow-y-auto space-y-3 mt-2 hide-scrollbar">
         <!-- Example Notification -->
          @forelse($notifications as $notif)
-        <a href="#" class="flex items-start space-x-3 p-2 rounded-sm hover:bg-[#31A871] transition duration-150">
-          <div class="w-8 h-8 shrink-0">
+        <a href="/profile" class="flex items-center gap-3 p-2 hover:bg-[#234156] rounded-lg transition">
+          <div class="w-10 h-10 rounded-full overflow-hidden bg-gray-700 flex-shrink-0">
             <img class="w-full h-full rounded-full object-cover" 
-                 src="{{ $notif->user->profile_photo ? $notif->user->profile_photo : asset('img/noprofile.jpg') }}"
+                 src="{{ $notif['user']['profile_photo'] ?? asset('img/noprofile.jpg') }}"
                  alt="User">
           </div>
           <div>
            <p class="text-white text-xs">
-                    <span class="font-bold">{{ $notif->user->username }}</span>
-                    @if($notif->type === 'comment')
-                        commented on your post: <span class="text-gray-400 italic">"{{ Str::limit($notif->content, 20) }}"</span>
+                    <span class="font-bold">{{ $notif['user']['username'] }}</span>
+                    @if($notif['type'] === 'comment')
+                        commented on your post: <span class="text-gray-400 italic">"{{ Str::limit($notif['content'] ?? $notif['body'] ?? '', 20) }}"</span>
                     @else
                         liked your post
-                    @endif
+                    @endif   
                 </p>
-                <span class="text-gray-400 text-xs">{{ $notif->created_at->diffForHumans() }}</span>
+                <span class="text-gray-400 text-xs">{{ isset($notif['created_at']) ? \Carbon\Carbon::parse($notif['created_at'])->diffForHumans() : 'Just now' }}</span>
           </div>
         </a>
         @empty

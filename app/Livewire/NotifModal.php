@@ -50,7 +50,8 @@ class NotifModal extends Component
         $this->notifications = $comments->merge($reactions)
             ->sortByDesc('created_at')
             ->take(20)
-            ->values();
+            ->values()
+            ->toArray();
     }
     public function render()
     {

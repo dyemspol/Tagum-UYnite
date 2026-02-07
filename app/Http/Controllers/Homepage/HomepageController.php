@@ -22,7 +22,7 @@ class HomepageController extends Controller
     }
     public function index()
     {
-        // Fetch all posts with their relationships, ordered by newest first
+        
         
         return view('page.HomePage', [
             'isProfilePage' => false,
@@ -33,7 +33,7 @@ class HomepageController extends Controller
     public function latestpost()
     {
         
-        return view('page.LatestPage', [
+        return view('page.latestPage', [
             'isProfilePage' => false,
             
         ]);
@@ -55,11 +55,11 @@ class HomepageController extends Controller
         return view('page.profilePage', compact('user', 'post'));
     }
 
-    public function popularPOST()
+    public function popularpost()
     {
         
 
-        return view('page.PopularPage', [
+        return view('page.popularPage', [
             'isProfilePage' => false,
             
         ]);

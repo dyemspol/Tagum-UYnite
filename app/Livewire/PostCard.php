@@ -14,6 +14,8 @@ class PostCard extends Component
     public $likes = 0;
     public $dislikes = 0;
     public $userReaction = null;
+    
+    
 
 
     public function render()
@@ -66,4 +68,5 @@ class PostCard extends Component
         }
         $this->loadReactionCounts();
     }
+    
 }

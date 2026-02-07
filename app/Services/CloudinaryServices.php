@@ -11,22 +11,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models\Report;
-use Cloudinary\Cloudinary as CloudinarySDK;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile; 
 use App\Models\PostImages; 
 class CloudinaryServices
 {
-    protected $cloudinary;
-    public function __construct()
-    {
-        $this->cloudinary = new CloudinarySDK([
-            'cloud' => [
-                'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-                'api_key'    => env('CLOUDINARY_API_KEY'),
-                'api_secret' => env('CLOUDINARY_API_SECRET'),
-            ],
-        ]);
-    }
    public function uploadPostMedia(array $mediaFiles, int $reportId): array
     {
         $uploadedImages = [];
@@ -41,15 +29,20 @@ class CloudinaryServices
             try {
                 // Determine resource type for Cloudinary
                 $resourceType = str_starts_with($file->getMimeType(), 'video') ? 'video' : 'image';
-                $publicId = $folder . '/' . $reportId . '_' . time() . '_' . uniqid();
+                
+                // Bypass the broken Facade and use SDK directly
+                $cloudinary = new \Cloudinary\Cloudinary([
+                    'cloud' => [
+                        'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                        'api_key'    => env('CLOUDINARY_API_KEY'),
+                        'api_secret' => env('CLOUDINARY_API_SECRET'),
+                    ],
+                ]);
                 
                 // Upload to Cloudinary using the file's real path
-                $result = $this->cloudinary->uploadApi()->upload($file->getRealPath(), [
-                    'public_id' => $publicId,
+                $result = $cloudinary->uploadApi()->upload($file->getRealPath(), [
                     'folder' => $folder,
                     'resource_type' => $resourceType,
-                    'quality' => 'auto:good',
-                    'fetch_format' => 'auto',
                 ]);
                 
                 // Save to database
@@ -71,17 +64,26 @@ class CloudinaryServices
     }
     public function uploadProfilePhoto(TemporaryUploadedFile $file): string
     {
-        $publicId = 'profile_photos/' . time() . '_' . uniqid();
-        
-        $result = $this->cloudinary->uploadApi()->upload($file->getRealPath(), [
-            'public_id' => $publicId,
-            'folder' => 'profile_photos',
-            'resource_type' => 'image',
-            'quality' => 'auto:good',
-            'fetch_format' => 'auto',
-        ]);
-        
-        return $result['secure_url'];
+        try {
+            // Bypass the broken Facade and use SDK directly
+            $cloudinary = new \Cloudinary\Cloudinary([
+                'cloud' => [
+                    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                    'api_key'    => env('CLOUDINARY_API_KEY'),
+                    'api_secret' => env('CLOUDINARY_API_SECRET'),
+                ],
+            ]);
+
+            $result = $cloudinary->uploadApi()->upload($file->getRealPath(), [
+                'folder' => 'profile_photos',
+                'resource_type' => 'image'
+            ]);
+
+            return $result['secure_url'];
+        } catch (\Exception $e) {
+            Log::error('Cloudinary upload failure: ' . $e->getMessage());
+            throw $e;
+        }
     }
 
 }

@@ -22,6 +22,7 @@ class HomepageServices
         if (!empty($categoryIds)) {
             $query->whereIn('department_id', $categoryIds);
         }
+        
         if ($type === 'popular') {
             $query->popular(); 
         } else {
