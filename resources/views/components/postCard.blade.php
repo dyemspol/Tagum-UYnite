@@ -181,10 +181,11 @@
 
 
 
-      
+        {{-- Comment Section (Placeholder for now) --}}
+        {{-- Comment Section --}}
         {{-- <div class="mt-3 px-3 pb-2 comment-section"> --}}
 
-            
+            <!-- Existing comments -->
             {{-- <div class="space-y-3 mb-3">
                 <div class="flex items-start space-x-2">
                     <img src="{{ asset('img/default-avatar.png') }}" class="w-8 h-8 rounded-full object-cover">

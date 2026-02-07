@@ -18,7 +18,7 @@
       </div>
 
       <div class="flex items-center justify-center ">
-          <div class="w-[25em]">
+          <div class="w-[23em]">
               <div class="w-30 mb-4 block md:hidden h-auto mx-auto">
                   <img src="{{ asset('img/logodark.png') }}" alt="">
               </div>
