@@ -99,7 +99,7 @@
         Approve
       </button>
       <button
-        onclick="document.getElementById('userModal').style.display = 'none'"
+        onclick="document.getElementById('userReviewAccountModal').style.display = 'none'"
         class="border border-white/30 px-5 py-2 rounded-lg text-white"
       >
         Cancel
