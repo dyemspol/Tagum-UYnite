@@ -14,7 +14,7 @@
 <body class="bg-[#122333] min-h-screen" x-data>
 
     {{-- Navbar --}}
-    
+    @include('components.usersVerifyModal')
     @include('components.navbar')
     @include('components.postCardModal')
     <livewire:edit-profile :user="$user" />
@@ -47,7 +47,13 @@
                                 class="px-3 py-1 border border-white text-white text-xs rounded hover:opacity-80 transition">
                                 Edit
                             </button>
-
+                           <div>
+                             <button onclick="document.getElementById('verifyUserAccountModal').style.display='flex'"
+                                 class="px-3 py-1 border border-white text-white text-xs rounded hover:opacity-80 transition">
+                                 Verify Now
+                                 
+                             </button>
+                           </div>
                         </div>
                     </div>
                 </div>
@@ -70,7 +76,7 @@
                     @forelse($user->reports as $post)
                         <livewire:post-card :post="$post" :key="$post->id" />
                     @empty
-                        <div class="text-white text-center opacity-50 py-10">No posts yet.</div>
+                        <div class="text-white text-center opacity-50 py-10"> You can't post if you are not verified..</div>
                     @endforelse
                 </div>
 
@@ -93,6 +99,7 @@
                                                 class="mx-1">•</span>
                                             {{ $post->title }}</p>
                                     </div>
+                                    
                                 </div>
                                 <span
                                     class="text-sm {{ $post->report_status == 'resolved' ? 'bg-lime-500' : 'bg-amber-400' }} text-[#122333] px-3 py-1 rounded-2xl">

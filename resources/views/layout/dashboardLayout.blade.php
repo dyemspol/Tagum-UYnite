@@ -71,6 +71,7 @@
 
 </div>
 @include('components.viewIssueModal')
+
 @vite('js/charts/barchart.js')
 <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
