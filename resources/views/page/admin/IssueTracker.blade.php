@@ -41,7 +41,7 @@
                         </td>
 
                         <td class="px-4 py-4 flex space-x-1 items-center gap-2">
-                            <i class="hgi hgi-stroke hgi-view text-2xl hover:text-blue-400 transition-all duration-300"></i>
+                            <i onclick="document.getElementById('issueModal').style.display = 'flex'" class="hgi hgi-stroke hgi-view text-2xl hover:text-blue-400 transition-all duration-300 cursor-pointer"></i>
                             <i class="hgi hgi-stroke hgi-delete-01 text-2xl text-red-500 hover:text-red-300"></i>
                         </td>
                     </tr>

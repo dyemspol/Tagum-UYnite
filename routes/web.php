@@ -12,6 +12,20 @@ use App\Livewire\Navbar;
 Route::get('/', [HomepageController::class, 'index', 'departments' => \App\Models\Department::all()])->middleware('preventbackhistory')->name('homepage');
 
 
+// superadmin
+Route::get('/account', function () {
+    return view('page.super_admin.accountReview');
+})->name('accountReview');
+Route::get('/superadmin', function () {
+    return view('page.super_admin.dashboard');
+})->name('superadmin');
+Route::get('/staffAccount', function () {
+    return view('page.super_admin.staffAccounts');
+})->name('staffAccount');
+
+
+
+
 Route::get('/map', function () {
     return view('page.admin.map');
 })->name('map');
