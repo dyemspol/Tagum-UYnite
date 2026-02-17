@@ -1,4 +1,4 @@
-@extends('layout.superadminLayout')
+@extends('layout.dashboardLayout')
 @section('title', 'Super Admin Account Review')
 
 

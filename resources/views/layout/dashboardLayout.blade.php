@@ -7,18 +7,22 @@
     <title>@yield('title',"Dashboard")</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
    <link rel="stylesheet" href="https://use.hugeicons.com/font/icons.css" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
    <!-- Glide.js CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
-
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.theme.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 
 <body>
+    
     @vite("resources/js/app.js")
     <div class="bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 flex ">
 
@@ -54,6 +58,22 @@
                     {{-- <i class="fa-regular fa-comment text-white" style="font-size: 1.25rem;"></i> --}}
                     <span class="text-white font-medium">Reports</span>
                 </a>
+
+
+
+                {{-- superadmin nav menu --}}
+                 <a href="{{ route('superadmin') }}" class="flex items-center space-x-2">
+                    <img class="w-7 h-7" src="{{ asset('img/dashboardIcon.png') }}" alt="">
+                    <span class="text-white font-medium">Dashboard</span>
+                </a>
+                <a href="{{ route('staffAccount') }}" class="flex items-center space-x-3">
+                    <img class="w-6 h-6" src="{{ asset('img/Survey.png') }}" alt="">
+                    <span class="text-white font-medium">Accounts</span>
+                </a>
+                <a href="{{ route('accountReview') }}" class="flex items-center space-x-3">
+                    <img class="w-6 h-6" src="{{ asset('img/Person.png') }}" alt="">
+                    <span class="text-white font-medium">Review</span>
+                </a>
             </div>
         </div>
 
@@ -71,12 +91,24 @@
 
 </div>
 @include('components.viewIssueModal')
-
+@include('components.staffCreateAccountModal')
+@include('components.viewAccountReview')
 @vite('js/charts/barchart.js')
+ <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@vite("resources/js/app.js")
+@vite("resources/js/track_issue_sections.js")
+{{-- @vite('js/charts/barchart.js') --}}
 <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+@vite("resources/js/map.js")
 
 @vite("resources/js/track_issue_sections.js")
+
+
+
+
 </body>
 
 </html>
