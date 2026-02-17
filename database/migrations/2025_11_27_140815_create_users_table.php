@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('username')->unique();
             $table->string('password');
-            $table->enum('role', ['user', 'employee', 'technician'])->default('user');
+            $table->enum('role', ['resident', 'employee', 'superadmin'])->default('resident');
             $table->string('address')->nullable();
             $table->foreignId('barangay_id')->nullable()->constrained();
             $table->string('profile_photo')->nullable();

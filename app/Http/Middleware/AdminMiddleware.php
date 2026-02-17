@@ -7,21 +7,20 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class Custom
+class AdminMiddleware
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, ...$roles): Response
+    public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
-
-        if ($user->role === 'resident') {
+        if ($user->role === 'employee' || $user->role === 'superadmin') {
             return $next($request);
         } else {
-            return redirect('/')->with('error', 'You do not have access to this page.');
+            return redirect('/login')->with('error', 'You do not have access to this page.');
         }
     }
 }

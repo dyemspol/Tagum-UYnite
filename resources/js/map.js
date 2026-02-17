@@ -94,9 +94,9 @@ issues.forEach((loc) => {
         .addTo(map)
         .bindPopup(
             `<b>Status:</b> ${loc.status}<br>` +
-                `<b>Issue:</b> ${loc.issue}<br>` +
-                `<b>Reported by:</b> ${loc.reportedBy}<br>` +
-                `<b>Date:</b> ${loc.date}<br>` +
-                `<b>Coordinates:</b> ${loc.lat.toFixed(5)}, ${loc.lng.toFixed(5)}`,
+            `<b>Issue:</b> ${loc.issue}<br>` +
+            `<b>Reported by:</b> ${loc.reportedBy}<br>` +
+            `<b>Date:</b> ${loc.date}<br>` +
+            `<b>Coordinates:</b> ${loc.lat.toFixed(5)}, ${loc.lng.toFixed(5)}`,
         );
 });
