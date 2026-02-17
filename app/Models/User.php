@@ -29,6 +29,7 @@ class User extends Authenticatable
         'profile_photo',
         'department_id',
         'email_verified_at',
+        'date_of_birth',
     ];
 
     /**

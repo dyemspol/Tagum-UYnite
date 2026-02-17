@@ -23,15 +23,15 @@ class EditProfile extends Component
     public $last_name;
     public $email;
     public $current_password;
-    public $password; 
+    public $password;
     public $password_confirmation;
-    public $photo; 
+    public $photo;
     public $barangay_id;
 
     public function mount($user = null)
     {
-         $this->user = $user ?? Auth::user();
-        
+        $this->user = $user ?? Auth::user();
+
         $this->first_name = $this->user->first_name;
         $this->last_name = $this->user->last_name;
         $this->email = $this->user->email;
@@ -47,7 +47,7 @@ class EditProfile extends Component
 
     public function updateProfile(CloudinaryServices $cloudinaryServices)
     {
- 
+
         $hasChanges = false;
         if ($this->first_name !== $this->user->first_name) $hasChanges = true;
         if ($this->last_name  !== $this->user->last_name)  $hasChanges = true;
@@ -62,10 +62,10 @@ class EditProfile extends Component
             return;
         }
 
-        
+
         $rules = [
             'barangay_id' => 'required|exists:barangays,id',
-            'photo' => 'nullable|image|max:5000', 
+            'photo' => 'nullable|image|max:5000',
         ];
 
         if ($this->first_name !== $this->user->first_name) {
@@ -80,12 +80,12 @@ class EditProfile extends Component
             $rules['password'] = 'required|string|min:8|confirmed';
         }
         if (!empty($this->email) && $this->email !== $this->user->email) {
-            $rules['email'] = 'required|email|max:255|unique:users,email,'.$this->user->id;
+            $rules['email'] = 'required|email|max:255|unique:users,email,' . $this->user->id;
         }
 
-        
+
         if (!empty($this->current_password)) {
-             if (!Hash::check($this->current_password, $this->user->password)) {
+            if (!Hash::check($this->current_password, $this->user->password)) {
                 $this->addError('current_password', 'The provided password does not match your current password.');
                 return;
             }
@@ -106,8 +106,6 @@ class EditProfile extends Component
         try {
             DB::beginTransaction();
 
-            $currentUser = Auth::user();
-
             if (!empty($this->password)) {
                 $data['password'] = Hash::make($this->password);
             }
@@ -115,7 +113,7 @@ class EditProfile extends Component
             if ($this->photo) {
                 try {
                     $uploadedFileUrl = $cloudinaryServices->uploadProfilePhoto($this->photo);
-                    
+
                     $data['profile_photo'] = $uploadedFileUrl;
                     Log::info('Cloudinary upload successful: ' . $uploadedFileUrl);
                 } catch (\Exception $uploadError) {
@@ -124,22 +122,21 @@ class EditProfile extends Component
                 }
             }
 
-            $currentUser->update($data);
+            $this->user->update($data);
 
             DB::commit();
 
             $this->reset(['current_password', 'password', 'password_confirmation', 'photo']);
-            Log::info('Profile updated successfully for user: ' . $currentUser->id);
-            
-            $this->dispatch('profile-updated'); 
-            $this->dispatch('close-edit-profile'); 
+            Log::info('Profile updated successfully for user: ' . $this->user->id);
+
+            $this->dispatch('profile-updated');
+            $this->dispatch('close-edit-profile');
 
             return redirect()->route('profile');
-
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Final Profile Update Error: ' . $e->getMessage());
-            
+
             // Show the actual error message so we can fix it!
             session()->flash('error', 'There was an error updating your profile: ' . $e->getMessage());
             return;

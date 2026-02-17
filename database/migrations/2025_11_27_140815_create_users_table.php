@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->foreignId('barangay_id')->nullable()->constrained();
             $table->string('profile_photo')->nullable();
+            $table->datetime('date_of_birth')->nullable();
             $table->bigInteger('department_id')->nullable()->foreignKey('departments');
             $table->rememberToken();
             $table->timestamps();

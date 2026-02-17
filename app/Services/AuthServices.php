@@ -78,6 +78,7 @@ class AuthServices
                 'barangay_id' => null,
                 'password' => Hash::make($data['password']),
                 'role' => 'resident',
+                'date_of_birth' => null,
                 'profile_photo' => null,
                 'department_id' => null,
             ]);

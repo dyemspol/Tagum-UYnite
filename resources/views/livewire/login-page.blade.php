@@ -49,7 +49,7 @@
 
 
                   @if ($showError)
-                      <p class="text-red-400 text-xs mt-1">Please enter your correct redentials.</p>
+                  <p class="text-red-400 text-xs mt-1">Please enter your correct redentials.</p>
                   @endif
                   <a href="{{ route('forgotpassword') }}" class="">
                       <p class="text-right text-xs font-extralight text-black">Forgot Password?</p>
