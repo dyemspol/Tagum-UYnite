@@ -1,7 +1,7 @@
 <!-- MODAL BACKDROP -->
 <div
   id="verifyUserAccountModal"
-  class="fixed hidden inset-0 bg-black/60  items-center justify-center z-50"
+  class="fixed hidden inset-0 bg-black/60 items-center justify-center z-50"
 >
   <!-- MODAL CONTAINER -->
   <div class="bg-[#1f3b56] w-[450px] rounded-xl shadow-xl p-6 relative">
@@ -14,32 +14,36 @@
     <!-- FORM CONTENT -->
     <div class="space-y-4 text-sm">
 
+      <!-- Birthday -->
       <div>
-        <label class="text-gray-300">Full Name</label>
-        <input type="text"
+        <label class="text-gray-300">Birthday</label>
+        <input 
+          type="date"
           class="w-full mt-1 p-2 rounded-lg bg-[#244c72] text-white outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="Enter full name">
+        >
       </div>
 
+     
       <div>
-        <label class="text-gray-300">Email</label>
-        <input type="email"
+        <label class="text-gray-300">Barangay Address</label>
+        <input 
+          type="text"
+          placeholder="Enter barangay address"
           class="w-full mt-1 p-2 rounded-lg bg-[#244c72] text-white outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="Enter email">
+        >
       </div>
 
+     
       <div>
-        <label class="text-gray-300">Password</label>
-        <input type="password"
-          class="w-full mt-1 p-2 rounded-lg bg-[#244c72] text-white outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="Enter password">
-      </div>
-
-      <div>
-        <label class="text-gray-300">Upload Valid ID (Optional)</label>
-        <input type="file"
+        <label class="text-gray-300">Upload Valid ID</label>
+        <input 
+          type="file"
           accept="image/*"
-          class="w-full mt-1 p-2 rounded-lg bg-[#244c72] text-white outline-none file:bg-[#31A871] file:text-white file:rounded-lg file:px-3 file:py-1 file:border-none cursor-pointer">
+          required
+          class="w-full mt-1 p-2 rounded-lg bg-[#244c72] text-white outline-none 
+                 file:bg-[#31A871] file:text-white file:rounded-lg 
+                 file:px-3 file:py-1 file:border-none cursor-pointer"
+        >
       </div>
 
     </div>
