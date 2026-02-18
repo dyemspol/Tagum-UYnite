@@ -11,11 +11,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models\Report;
-use Livewire\Features\SupportFileUploads\TemporaryUploadedFile; 
-use App\Models\PostImages; 
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use App\Models\PostImages;
+
 class CloudinaryServices
 {
-   public function uploadPostMedia(array $mediaFiles, int $reportId): array
+    public function uploadPostMedia(array $mediaFiles, int $reportId): array
     {
         $uploadedImages = [];
         $folder = 'reports/post_media'; // Your chosen Cloudinary folder
@@ -23,13 +24,13 @@ class CloudinaryServices
         foreach ($mediaFiles as $file) {
             // Check if the file is a Livewire TemporaryUploadedFile object
             if (!$file instanceof TemporaryUploadedFile) {
-                continue; 
+                continue;
             }
-            
+
             try {
                 // Determine resource type for Cloudinary
                 $resourceType = str_starts_with($file->getMimeType(), 'video') ? 'video' : 'image';
-                
+
                 // Bypass the broken Facade and use SDK directly
                 $cloudinary = new \Cloudinary\Cloudinary([
                     'cloud' => [
@@ -38,13 +39,13 @@ class CloudinaryServices
                         'api_secret' => env('CLOUDINARY_API_SECRET'),
                     ],
                 ]);
-                
+
                 // Upload to Cloudinary using the file's real path
                 $result = $cloudinary->uploadApi()->upload($file->getRealPath(), [
                     'folder' => $folder,
                     'resource_type' => $resourceType,
                 ]);
-                
+
                 // Save to database
                 $postImage = PostImages::create([
                     'report_id' => $reportId,
@@ -54,12 +55,11 @@ class CloudinaryServices
                 ]);
 
                 $uploadedImages[] = $postImage;
-
             } catch (\Exception $e) {
                 Log::error('Cloudinary upload failed for report ' . $reportId, ['error' => $e->getMessage()]);
             }
         }
-        
+
         return $uploadedImages;
     }
     public function uploadProfilePhoto(TemporaryUploadedFile $file): string
@@ -86,4 +86,26 @@ class CloudinaryServices
         }
     }
 
+    public function uploadVerificationPhoto(TemporaryUploadedFile $file): string
+    {
+        try {
+            $cloudinary = new \Cloudinary\Cloudinary([
+                'cloud' => [
+                    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                    'api_key'    => env('CLOUDINARY_API_KEY'),
+                    'api_secret' => env('CLOUDINARY_API_SECRET'),
+                ],
+            ]);
+
+            $result = $cloudinary->uploadApi()->upload($file->getRealPath(), [
+                'folder' => 'verification_photos',
+                'resource_type' => 'image'
+            ]);
+
+            return $result['secure_url'];
+        } catch (\Exception $e) {
+            Log::error('Cloudinary upload failure: ' . $e->getMessage());
+            throw $e;
+        }
+    }
 }
