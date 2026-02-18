@@ -80,6 +80,7 @@ class AuthServices
                 'role' => 'resident',
                 'date_of_birth' => null,
                 'profile_photo' => null,
+                'is_verified' => false,
                 'department_id' => null,
             ]);
             DB::commit();

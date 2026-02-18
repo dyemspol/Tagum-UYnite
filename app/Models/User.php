@@ -30,6 +30,7 @@ class User extends Authenticatable
         'department_id',
         'email_verified_at',
         'date_of_birth',
+        'is_verified',
     ];
 
     /**
@@ -52,6 +53,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_verified' => 'boolean',
         ];
     }
 

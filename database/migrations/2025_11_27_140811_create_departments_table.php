@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('department_name');
             $table->text('category')->nullable();
             $table->timestamps();
-
+            $table->string('department_photo')->nullable();
             $table->index('id');
             $table->index('department_name');
         });

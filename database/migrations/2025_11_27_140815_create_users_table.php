@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('profile_photo')->nullable();
             $table->datetime('date_of_birth')->nullable();
             $table->bigInteger('department_id')->nullable()->foreignKey('departments');
+            $table->boolean('is_verified')->default(false);
             $table->rememberToken();
             $table->timestamps();
 
