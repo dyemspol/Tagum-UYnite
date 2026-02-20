@@ -14,6 +14,8 @@ use App\Models\Comment;
 use App\Models\Reaction;
 use App\Services\CloudinaryServices;
 use App\Services\UserVerification;
+use Illuminate\Support\Facades\Log;
+use App\Models\VerifcationStatus;
 
 
 
@@ -60,8 +62,9 @@ class HomepageController extends Controller
         $user = Auth::user();
         $post = Report::where('user_id', $user->id)->get();
         $barangays = Baranggay::all();
+        $verificationStatus = VerifcationStatus::where('user_id', $user->id)->where('status', 'pending')->first();
 
-        return view('page.profilePage', compact('user', 'post', 'barangays'));
+        return view('page.profilePage', compact('user', 'post', 'barangays', 'verificationStatus'));
     }
 
     public function popularpost()
@@ -92,22 +95,7 @@ class HomepageController extends Controller
             'isProfilePage' => false,
         ]);
     }
-    public function verifyUser(Request $request, CloudinaryServices $cloudinaryServices)
-    {
-        $user = Auth::user();
-        $realUser = User::findOrFail($user->id);
-        $validator = $this->UserVerification->validateVerification($request->all());
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
 
-        $verifyUser = $this->UserVerification->verifyUser($realUser->id, $request->all(), $cloudinaryServices);
-
-        if ($verifyUser) {
-            return redirect()->back()->with('success', 'User verified successfully!');
-        }
-        return redirect()->back()->with('error', 'Failed to verify user!');
-    }
 
     public function notifications()
     {

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models\Report;
+use Illuminate\Http\UploadedFile;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use App\Models\PostImages;
 
@@ -86,7 +87,7 @@ class CloudinaryServices
         }
     }
 
-    public function uploadVerificationPhoto(TemporaryUploadedFile $file): string
+    public function uploadVerificationPhoto(UploadedFile|TemporaryUploadedFile $file): string
     {
         try {
             $cloudinary = new \Cloudinary\Cloudinary([

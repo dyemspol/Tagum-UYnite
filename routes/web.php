@@ -9,6 +9,7 @@ use App\Livewire\SignupForm;
 use Illuminate\Auth\Events\Login;
 use App\Http\Middleware\PreventBackHistory;
 use App\Livewire\Navbar;
+use App\Livewire\VerifyUser;
 
 Route::get('/', [HomepageController::class, 'index', 'departments' => \App\Models\Department::all()])->middleware('preventbackhistory')->name('homepage');
 
@@ -61,7 +62,7 @@ Route::middleware(['auth', 'custom:user', 'preventbackhistory'])->group(function
     Route::get('/popular', [HomepageController::class, 'popularpost'])->name('popular');
 
     Route::get('/profile', [HomepageController::class, 'profile'])->name('profile');
-    Route::post('/verifyUser', [HomepageController::class, 'verifyUser'])->name('verifyUser');
+    
 
     Route::get('/search', [HomepageController::class, 'searchPosts'])->name('search');
 
@@ -69,4 +70,7 @@ Route::middleware(['auth', 'custom:user', 'preventbackhistory'])->group(function
     Route::get('/notifications', [HomepageController::class, 'notifications'])->name('notifications');
 });
 
-Route::middleware(['auth', 'AdminMiddleware:employee,superadmin', 'preventbackhistory'])->group(function () {});
+Route::middleware(['auth', 'AdminMiddleware:employee,superadmin', 'preventbackhistory'])->group(function () {
+
+    
+});
