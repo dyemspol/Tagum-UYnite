@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+
 class EmployeeSeeder extends Seeder
 {
     /**
@@ -21,7 +22,7 @@ class EmployeeSeeder extends Seeder
             'email' => 'carlos@tagum.gov',
             'password' => \Illuminate\Support\Facades\Hash::make('password'),
             'role' => 'employee',
-            'department_id' => $department ? $department->id : null, 
+            'department_id' => $department ? $department->id : null,
             'barangay_id' => 1, // Assumes barangay 1 exists
         ]);
     }

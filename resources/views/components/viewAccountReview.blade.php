@@ -1,15 +1,14 @@
 <!-- MODAL BACKDROP -->
 <div
   id="userReviewAccountModal"
-  class="fixed inset-0 bg-black/60  items-center justify-center z-50 hidden"
->
+  class="fixed inset-0 bg-black/60 items-center justify-center z-50 {{ $selectedUser ? 'flex' : 'hidden' }}">
   <!-- MODAL CONTAINER -->
+  @if($selectedUser)
   <div class="bg-[#1f3b56] w-[430px] rounded-xl shadow-xl p-6 relative">
 
     <!-- HEADER -->
     <h2
-      class="text-xl font-semibold text-white mb-4 border-b border-white/20 pb-2"
-    >
+      class="text-xl font-semibold text-white mb-4 border-b border-white/20 pb-2">
       User Account Details
     </h2>
 
@@ -18,72 +17,59 @@
 
       <div>
         <p class="text-gray-300">User ID</p>
-        <p id="modalUserID">#USR-001</p>
+        <p id="modalUserID">#USR-{{ $selectedUser->id }}</p>
       </div>
 
       <div>
         <p class="text-gray-300">Full Name</p>
-        <p id="modalFullName">Carlos Reyes</p>
+        <p id="modalFullName">{{ $selectedUser->first_name }} {{ $selectedUser->last_name }}</p>
       </div>
 
       <div>
         <p class="text-gray-300">Email</p>
-        <p id="modalEmail">carlos@email.com</p>
+        <p id="modalEmail">{{ $selectedUser->email }}</p>
       </div>
 
       <div>
         <p class="text-gray-300">Location</p>
-        <p id="modalLocation">Manila, Philippines</p>
-      </div>
-
-      <div>
-        <p class="text-gray-300">Valid ID Type</p>
-        <p id="modalIDType">Driver’s License</p>
+        <p id="modalLocation">{{ $selectedUser->address }}</p>
       </div>
 
       <div>
         <p class="text-gray-300">Status</p>
-        <span id="modalStatus" class="text-green-400 font-semibold">Active</span>
+        <span id="modalStatus" class="text-green-400 font-semibold">{{ $selectedUser->verificationStatus->status }}</span>
       </div>
 
       <!-- VALID ID IMAGE PREVIEW -->
       <div
-        class="glide max-w-full h-[200px] mx-auto relative overflow-hidden rounded-xl mt-3 mb-6"
-      >
+        class="glide max-w-full h-[200px] mx-auto relative overflow-hidden rounded-xl mt-3 mb-6">
         <!-- Slides -->
         <div class="glide__track" data-glide-el="track">
           <ul class="glide__slides" id="modalIDImages">
             <!-- Example image slide -->
+            @foreach($selectedUser->verification as $verification)
             <li class="glide__slide">
               <img
-                src="https://static.vecteezy.com/system/resources/thumbnails/053/227/245/small/graphic-representation-of-a-driver-s-license-card-with-a-male-photo-personal-details-and-security-features-png.png"
-                class="w-full h-full object-cover"
-              />
+                src="{{ $verification->verification_photo  ?? 'wala'}}"
+                class="w-full h-full object-cover" />
             </li>
-            <li class="glide__slide">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxm64LfuTMiUyXmmop4VMyJVNSfE5Qfi2G5w&s"
-                class="w-full h-full object-cover"
-              />
-            </li>
+            @endforeach
+
           </ul>
         </div>
 
         <!-- Controls -->
         <div
           class="absolute inset-0 flex justify-between items-center px-4 pointer-events-none"
-          data-glide-el="controls"
-        >
+          data-glide-el="controls">
           <button
             data-glide-dir="<"
-            class="pointer-events-auto bg-black/50 text-white px-3 py-2 rounded-full hover:bg-black"
-          >
+            class="pointer-events-auto bg-black/50 text-white px-3 py-2 rounded-full hover:bg-black">
             ←
           </button>
           <button
             data-glide-dir=">"
-            class="pointer-events-auto bg-black/50 text-white px-3 py-2 rounded-full hover:bg-black"
-          >
+            class="pointer-events-auto bg-black/50 text-white px-3 py-2 rounded-full hover:bg-black">
             →
           </button>
         </div>
@@ -94,17 +80,17 @@
     <!-- FOOTER BUTTONS -->
     <div class="flex justify-end gap-3 mt-6">
       <button
-        class="bg-indigo-500 hover:bg-indigo-600 px-5 py-2 rounded-lg text-white"
-      >
+        wire:click="approveUser({{ $selectedUser->id }})"
+        class="bg-indigo-500 hover:bg-indigo-600 px-5 py-2 rounded-lg text-white">
         Approve
       </button>
       <button
-        onclick="document.getElementById('userReviewAccountModal').style.display = 'none'"
-        class="border border-white/30 px-5 py-2 rounded-lg text-white"
-      >
+        wire:click="closeUser"
+        class="border border-white/30 px-5 py-2 rounded-lg text-white">
         Cancel
       </button>
     </div>
 
   </div>
+  @endif
 </div>

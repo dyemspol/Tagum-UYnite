@@ -19,14 +19,32 @@
     @include('components.postCardModal')
     <livewire:edit-profile :user="$user" />
     @if (!Auth::check())
-        <livewire:login-form />
+    <livewire:login-form />
     @endif
     <livewire:comment-modal />
 
-        
+
     <livewire:create-post />
     <livewire:notif-modal />
     <div class="pt-[140px]">
+        {{-- Flash Messages --}}
+        <div class="fixed top-20 right-5 z-[10000] flex flex-col gap-3 min-w-[300px]">
+            @if (session()->has('success'))
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)"
+                class="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center justify-between transition-all duration-300">
+                <span>{{ session('success') }}</span>
+                <button @click="show = false" class="ml-4 text-white/50 hover:text-white">&times;</button>
+            </div>
+            @endif
+
+            @if (session()->has('error'))
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)"
+                class="bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center justify-between transition-all duration-300">
+                <span>{{ session('error') }}</span>
+                <button @click="show = false" class="ml-4 text-white/50 hover:text-white">&times;</button>
+            </div>
+            @endif
+        </div>
 
         {{-- PAGE CONTENT --}}
         <div class="flex justify-center px-5 sm:px-10">
@@ -47,27 +65,27 @@
                                 class="px-3 py-1 border border-white text-white text-xs rounded hover:opacity-80 transition">
                                 Edit
                             </button>
-                           <div>
-                            @if($user->is_verified)
+                            <div>
+                                @if($user->is_verified)
                                 <span class="inline-flex items-center gap-1 text-green-500 text-xs" title="Verified">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
                                     </svg>
                                     Verified
                                 </span>
-                            @elseif($verificationStatus)
+                                @elseif($verificationStatus)
                                 <span class="text-yellow-500 text-xs">Pending</span>
-                            @else
+                                @else
                                 <button onclick="document.getElementById('verifyUserAccountModal').style.display='flex'"
                                     class="px-3 py-1 border border-white text-white text-xs rounded hover:opacity-80 transition">
                                     Verify Now
                                 </button>
-                            @endif
+                                @endif
 
 
 
 
-                           </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -88,9 +106,9 @@
                 <hr class="mb-7 opacity-60 z-10 ">
                 <div id="postsSection" x-show="activeTab === 'posts'" class=" space-y-3  mx-auto w-full">
                     @forelse($user->reports as $post)
-                        <livewire:post-card :post="$post" :key="$post->id" />
+                    <livewire:post-card :post="$post" :key="$post->id" />
                     @empty
-                        <div class="text-white text-center opacity-50 py-10"> You can't post if you are not verified..</div>
+                    <div class="text-white text-center opacity-50 py-10"> You can't post if you are not verified..</div>
                     @endforelse
                 </div>
 
@@ -99,31 +117,32 @@
                 <div id="trackIssueSection" x-show="activeTab === 'track'" class="flex flex-col justify-center"
                     style="display: none;">
                     @forelse($user->reports as $post)
-                        <div class="bg-[#0f1f2f] border border-[#1e3246] px-3 py-3 rounded-lg w-full max-w-[50em]">
-                            <div class="flex items-center justify-between gap-3 mb-2">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10">
-                                        <img class="w-full h-full rounded-full object-cover"
-                                            src="{{ $user->profile_photo ? $user->profile_photo : asset('img/noprofile.jpg') }}" alt="profile">
-                                    </div>
-                                    <div class="leading-tight">
-                                        <p class="text-white text-sm">{{ $user->first_name }} {{ $user->last_name }}</p>
-                                        <p class="text-xs text-[#9fb1c5]">
-                                            {{ $post->created_at->format('F j, Y') }} <span
-                                                class="mx-1">•</span>
-                                            {{ $post->title }}</p>
-                                    </div>
-                                    
+                    <div class="bg-[#0f1f2f] border border-[#1e3246] px-3 py-3 rounded-lg w-full max-w-[50em]">
+                        <div class="flex items-center justify-between gap-3 mb-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10">
+                                    <img class="w-full h-full rounded-full object-cover"
+                                        src="{{ $user->profile_photo ? $user->profile_photo : asset('img/noprofile.jpg') }}" alt="profile">
                                 </div>
-                                <span
-                                    class="text-sm {{ $post->report_status == 'resolved' ? 'bg-lime-500' : 'bg-amber-400' }} text-[#122333] px-3 py-1 rounded-2xl">
-                                    {{ ucfirst(str_replace('_', ' ', $post->report_status)) }}
-                                </span>
+                                <div class="leading-tight">
+                                    <p class="text-white text-sm">{{ $user->first_name }} {{ $user->last_name }}</p>
+                                    <p class="text-xs text-[#9fb1c5]">
+                                        {{ $post->created_at->format('F j, Y') }} <span
+                                            class="mx-1">•</span>
+                                        {{ $post->title }}
+                                    </p>
+                                </div>
+
                             </div>
-                            <p class="text-white text-base">{{ $post->content }}</p>
+                            <span
+                                class="text-sm {{ $post->report_status == 'resolved' ? 'bg-lime-500' : 'bg-amber-400' }} text-[#122333] px-3 py-1 rounded-2xl">
+                                {{ ucfirst(str_replace('_', ' ', $post->report_status)) }}
+                            </span>
                         </div>
+                        <p class="text-white text-base">{{ $post->content }}</p>
+                    </div>
                     @empty
-                        <div class="text-white text-center opacity-50 py-10">No posts yet.</div>
+                    <div class="text-white text-center opacity-50 py-10">No posts yet.</div>
                     @endforelse
                 </div>
 
@@ -135,12 +154,12 @@
     </div>
 
 
-    
+
     @vite('resources/js/notifModalToggle.js')
     @vite('resources/js/postPreview.js')
     @vite('resources/js/autocompleteLocation.js')
     @stack('scripts')
-        <script>
+    <script>
         // Global store to toggle the shared comment modal from any component
         document.addEventListener('alpine:init', () => {
             Alpine.store('commentModal', {

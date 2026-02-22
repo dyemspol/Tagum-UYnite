@@ -6,105 +6,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title',"Dashboard")</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-   <link rel="stylesheet" href="https://use.hugeicons.com/font/icons.css" />
+    <link rel="stylesheet" href="https://use.hugeicons.com/font/icons.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-   <!-- Glide.js CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.theme.min.css">
+    <!-- Glide.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.theme.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 
-<body>
-    
+<body class="bg-slate-950">
+
     @vite("resources/js/app.js")
-    <div class="bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 flex ">
+    <div class="bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 flex min-h-screen w-full">
+        @auth
+        <!-- Sidebar -->
+        <section class="fixed bg-[#13314f] rounded-tr-4xl rounded-br-4xl h-screen w-[12em] flex flex-col py-5 justify-between">
+            <!-- Top part: logo + menu -->
+            <div>
 
-    <!-- Sidebar -->
-    <section class="fixed bg-[#13314f] rounded-tr-4xl rounded-br-4xl h-screen w-[12em] flex flex-col py-5 justify-between">
-        <!-- Top part: logo + menu -->
-        <div>
-            <div class="flex justify-center mb-4">
-                <img class="w-15 h-auto" src="{{ asset('img/LOGO.png') }}" alt="">
+                <div class="flex justify-center mb-4">
+                    <img class="w-15 h-auto" src="{{ asset('img/LOGO.png') }}" alt="">
+                </div>
+                <div class="text-center text-white text-sm mt-3"> {{ Auth::user()->department->department_name ?? 'Admin' }} Department</div>
+                <hr class="my-5 text-[#ffffff3d]">
+                <div class="flex flex-col pl-2 space-y-8">
+                    @if(Auth::user()->role == 'employee')
+                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
+                        <img class="w-7 h-7" src="{{ asset('img/dashboardIcon.png') }}" alt="">
+                        <span class="text-white font-medium">Dashboard</span>
+                    </a>
+                    <a href="{{ route('tracker') }}" class="flex items-center space-x-3">
+                        <img class="w-6 h-6" src="{{ asset('img/track_issue_logo.png') }}" alt="">
+                        <span class="text-white font-medium">Issues</span>
+                    </a>
+                    <a href="{{ route('map') }}" class="flex items-center space-x-3">
+                        <img class="w-6 h-6" src="{{ asset('img/Location.png') }}" alt="">
+                        <span class="text-white font-medium">Map</span>
+                    </a>
+                    <a href="{{ route('messages') }}" class="flex items-center space-x-3 pl-1">
+                        <i class="fa-regular fa-comment text-white" style="font-size: 1.25rem;"></i>
+                        <span class="text-white font-medium">Messages</span>
+                    </a>
+                    <a href="{{ route('reports') }}" class="flex items-center space-x-3 pl-1">
+                        <i class="hgi hgi-stroke hgi-account-setting-01 text-white" style="font-size: 1.25rem;"></i>
+                        {{-- <i class="fa-regular fa-comment text-white" style="font-size: 1.25rem;"></i> --}}
+                        <span class="text-white font-medium">Reports</span>
+                    </a>
+
+                    @elseif(Auth::user()->role == 'superadmin')
+
+                    {{-- superadmin nav menu --}}
+                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
+                        <img class="w-7 h-7" src="{{ asset('img/dashboardIcon.png') }}" alt="">
+                        <span class="text-white font-medium">Dashboard</span>
+                    </a>
+                    <a href="{{ route('staffAccounts') }}" class="flex items-center space-x-3">
+                        <img class="w-6 h-6" src="{{ asset('img/Survey.png') }}" alt="">
+                        <span class="text-white font-medium">Accounts</span>
+                    </a>
+                    <a href="{{ route('accountReview') }}" class="flex items-center space-x-3">
+                        <img class="w-6 h-6" src="{{ asset('img/Person.png') }}" alt="">
+                        <span class="text-white font-medium">Review</span>
+                    </a>
+                    @endif
+                </div>
             </div>
-            <div class="text-center text-white text-sm mt-3">Engineering Office</div>
-            <hr class="my-5 text-[#ffffff3d]">
-
-            <div class="flex flex-col pl-2 space-y-8">
-                <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
-                    <img class="w-7 h-7" src="{{ asset('img/dashboardIcon.png') }}" alt="">
-                    <span class="text-white font-medium">Dashboard</span>
-                </a>
-                <a href="{{ route('tracker') }}" class="flex items-center space-x-3">
-                    <img class="w-6 h-6" src="{{ asset('img/track_issue_logo.png') }}" alt="">
-                    <span class="text-white font-medium">Issues</span>
-                </a>
-                <a href="{{ route('map') }}" class="flex items-center space-x-3">
-                    <img class="w-6 h-6" src="{{ asset('img/Location.png') }}" alt="">
-                    <span class="text-white font-medium">Map</span>
-                </a>
-                <a href="{{ route('messages') }}" class="flex items-center space-x-3 pl-1">
-                    <i class="fa-regular fa-comment text-white" style="font-size: 1.25rem;"></i>
-                    <span class="text-white font-medium">Messages</span>
-                </a>
-                <a href="{{ route('reports') }}" class="flex items-center space-x-3 pl-1">
-                  <i class="hgi hgi-stroke hgi-account-setting-01 text-white" style="font-size: 1.25rem;"></i>
-                    {{-- <i class="fa-regular fa-comment text-white" style="font-size: 1.25rem;"></i> --}}
-                    <span class="text-white font-medium">Reports</span>
-                </a>
-
-
-
-                {{-- superadmin nav menu --}}
-                 <a href="{{ route('superadmin') }}" class="flex items-center space-x-2">
-                    <img class="w-7 h-7" src="{{ asset('img/dashboardIcon.png') }}" alt="">
-                    <span class="text-white font-medium">Dashboard</span>
-                </a>
-                <a href="{{ route('staffAccount') }}" class="flex items-center space-x-3">
-                    <img class="w-6 h-6" src="{{ asset('img/Survey.png') }}" alt="">
-                    <span class="text-white font-medium">Accounts</span>
-                </a>
-                <a href="{{ route('accountReview') }}" class="flex items-center space-x-3">
-                    <img class="w-6 h-6" src="{{ asset('img/Person.png') }}" alt="">
-                    <span class="text-white font-medium">Review</span>
-                </a>
-            </div>
+            <!-- Bottom part: logout -->
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="flex items-center space-x-3 pl-2">
+                    <img class="w-6 h-6" src="{{ asset('img/Logout.png') }}" alt="">
+                    <span class="text-white font-medium">Logout</span>
+                </button>
+            </form>
+        </section>
+        @endauth
+        <!-- Main Content -->
+        <div class="ml-[12em] flex-1 overflow-y-auto h-screen p-6">
+            @yield('content')
         </div>
 
-        <!-- Bottom part: logout -->
-        <a href="{{ route('adminlogin') }}" class="flex items-center space-x-3 pl-2">
-            <img class="w-6 h-6" src="{{ asset('img/Logout.png') }}" alt="">
-            <span class="text-white font-medium">Logout</span>
-        </a>
-    </section>
-
-    <!-- Main Content -->
-    <div class="ml-[12em] flex-1 overflow-y-auto h-screen p-6">
-        @yield('content')
     </div>
+    @include('components.viewIssueModal')
+    @include('components.staffCreateAccountModal')
 
-</div>
-@include('components.viewIssueModal')
-@include('components.staffCreateAccountModal')
-@include('components.viewAccountReview')
-@vite('js/charts/barchart.js')
- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-@vite("resources/js/app.js")
-@vite("resources/js/track_issue_sections.js")
-{{-- @vite('js/charts/barchart.js') --}}
-<script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-@vite("resources/js/map.js")
+    @vite('js/charts/barchart.js')
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @vite("resources/js/app.js")
+    @vite("resources/js/track_issue_sections.js")
+    {{-- @vite('js/charts/barchart.js') --}}
+    <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    @vite("resources/js/map.js")
 
-@vite("resources/js/track_issue_sections.js")
+    @vite("resources/js/track_issue_sections.js")
 
 
 

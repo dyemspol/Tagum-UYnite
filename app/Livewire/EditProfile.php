@@ -57,7 +57,7 @@ class EditProfile extends Component
         if (!empty($this->current_password) || !empty($this->password)) $hasChanges = true;
 
         // If nothing changed, simply close the modal nd stop here
-        if (! $hasChanges) {
+        if (!$hasChanges) {
             $this->dispatch('close-edit-profile');
             return;
         }
@@ -137,7 +137,6 @@ class EditProfile extends Component
             DB::rollBack();
             Log::error('Final Profile Update Error: ' . $e->getMessage());
 
-            // Show the actual error message so we can fix it!
             session()->flash('error', 'There was an error updating your profile: ' . $e->getMessage());
             return;
         }

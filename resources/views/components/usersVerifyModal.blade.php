@@ -46,28 +46,36 @@
       </div>
 
       <div>
-        
+
         <label class="text-gray-300 block mb-1">Upload Valid ID</label>
         <input wire:model="verification_photo"
           type="file"
+          id="verification_photo"
           accept="image/*"
           multiple
           class="w-full mt-1 p-2 rounded-lg bg-[#244c72] border border-white/20 text-white outline-none 
                file:bg-[#31A871] file:text-white file:rounded-lg 
                file:px-3 file:py-1 file:border-none cursor-pointer focus:ring-2 focus:ring-blue-400 focus:border-transparent">
         <p class="text-gray-400 text-xs mt-1">You can upload 1 or 2 photos</p>
+        <div wire:loading wire:target="verification_photo" class="text-blue-400 text-xs mt-1">
+          Uploading photos...
+        </div>
         @error('verification_photo')<p class="text-red-400 text-xs mt-1">{{ $message }}</p>@enderror
       </div>
 
       <!-- ACTION BUTTONS -->
       <div class="flex justify-end gap-3 mt-6">
         <button type="button"
-          class="bg-[#31A871] hover:bg-green-600 px-5 py-2 rounded-lg text-white">
-          Verify
+          wire:click="verifyUser"
+          wire:loading.attr="disabled"
+          class="bg-[#31A871] hover:bg-green-600 px-5 py-2 rounded-lg text-white disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+          <span wire:loading.remove wire:target="verifyUser">Verify</span>
+          <span wire:loading wire:target="verifyUser">Processing...</span>
+          <div wire:loading wire:target="verifyUser" class="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
         </button>
         <button type="button"
           onclick="document.getElementById('verifyUserAccountModal').style.display='none'"
-          class="border border-white/30 px-5 py-2 rounded-lg text-white">
+          class="border border-white/30 px-5 py-2 rounded-lg text-white hover:bg-white/10 transition">
           Cancel
         </button>
       </div>
@@ -75,4 +83,3 @@
 
   </div>
 </div>
-

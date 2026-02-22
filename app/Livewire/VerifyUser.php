@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Services\CloudinaryServices;
 use App\Models\Baranggay;
+
 class VerifyUser extends Component
 {
     use WithFileUploads;
@@ -25,30 +26,26 @@ class VerifyUser extends Component
     public function verifyUser(UserVerification $userVerification, CloudinaryServices $cloudinaryServices)
     {
         $user = Auth::user();
-        $validator = $userVerification->validateVerification([
+
+        $userVerification->validate([
             'birthday' => $this->birthday,
             'barangay_id' => $this->barangay_id,
             'address' => $this->address,
             'verification_photo' => $this->verification_photo,
         ]);
-        if ($validator->fails()) {
-            Log::info('error');
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-    
+
         $verifyUser = $userVerification->verifyUser($user->id, [
             'birthday' => $this->birthday,
             'barangay_id' => $this->barangay_id,
             'address' => $this->address,
             'verification_photo' => $this->verification_photo,
         ], $cloudinaryServices);
-    
+
         if ($verifyUser) {
-            Log::info('success');
-            return redirect()->back()->with('success', 'User verified successfully!');
+            Log::info('Verification success for user: ' . $user->id);
+            return redirect('/profile')->with('success', 'Your verification request has been submitted and is now pending review.');
         }
-        return redirect()->back()->with('error', 'Failed to verify user!');
-        }
-    
-    
+
+        session()->flash('error', 'Failed to submit verification request. Please try again.');
+    }
 }

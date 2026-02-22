@@ -91,6 +91,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Verification::class);
     }
+
+    public function verificationStatus()
+    {
+        return $this->hasOne(VerifcationStatus::class)->latestOfMany();
+    }
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new \App\Notifications\ResetPasswordNotification($token));

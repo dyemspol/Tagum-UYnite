@@ -12,23 +12,20 @@ use App\Models\VerifcationStatus;
 
 class UserVerification
 {
-    public function validateVerification(array $data)
+    public function validate(array $data)
     {
         $minBirthDate = now()->subYears(18)->format('Y-m-d');
 
-        return Validator::make($data, [
-            'birthday' => [
-                'required',
-                'date',
-                'before_or_equal:' . $minBirthDate,
-            ],
+        Validator::make($data, [
+            'birthday' => ['required', 'date', 'before_or_equal:' . $minBirthDate],
             'barangay_id' => 'required|exists:barangays,id',
             'address' => 'required|string|max:255',
-            'verification_photo' => 'required|array',
-            'verification_photo.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'verification_photo' => 'required|array|min:1|max:2',
+            'verification_photo.*' => 'image|max:2048',
         ], [
-            'birthday.before_or_equal' => 'You must be at least 18 years old to verify your account.',
-        ]);
+            'birthday.before_or_equal' => 'You must be at least 18 years old.',
+            'verification_photo.required' => 'Please upload at least one valid ID photo.',
+        ])->validate();
     }
 
     public function verifyUser(int $userId, array $data, CloudinaryServices $cloudinaryServices)
@@ -36,14 +33,14 @@ class UserVerification
         try {
             $user = User::findOrFail($userId);
 
-            if($user->is_verified) {
+            if ($user->is_verified) {
                 return false;
             }
             $user->update([
                 'date_of_birth' => $data['birthday'],
                 'barangay_id' => $data['barangay_id'],
                 'address' => $data['address'],
-                
+
             ]);
             $photos = isset($data['verification_photo']) && is_array($data['verification_photo'])
                 ? $data['verification_photo']

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Homepage\HomepageController;
@@ -14,38 +15,7 @@ use App\Livewire\VerifyUser;
 Route::get('/', [HomepageController::class, 'index', 'departments' => \App\Models\Department::all()])->middleware('preventbackhistory')->name('homepage');
 
 
-// superadmin
-Route::get('/account', function () {
-    return view('page.super_admin.accountReview');
-})->name('accountReview');
-Route::get('/superadmin', function () {
-    return view('page.super_admin.dashboard');
-})->name('superadmin');
-Route::get('/staffAccount', function () {
-    return view('page.super_admin.staffAccounts');
-})->name('staffAccount');
 
-
-
-
-Route::get('/map', function () {
-    return view('page.admin.map');
-})->name('map');
-Route::get('/messages', function () {
-    return view('page.admin.message');
-})->name('messages');
-Route::get('/adminlogin', function () {
-    return view('page.admin.authentication.login');
-})->name('adminlogin');
-Route::get('/Reports', function () {
-    return view('page.admin.reportsManagement');
-})->name('reports');
-Route::get('/tracker', function () {
-    return view('page.admin.IssueTracker');
-})->name('tracker');
-Route::get('/dashboard', function () {
-    return view('page.admin.mainDashboard');
-})->name('dashboard');
 
 Route::get('/login-form', LoginForm::class)->name('login-form');
 
@@ -62,7 +32,7 @@ Route::middleware(['auth', 'custom:user', 'preventbackhistory'])->group(function
     Route::get('/popular', [HomepageController::class, 'popularpost'])->name('popular');
 
     Route::get('/profile', [HomepageController::class, 'profile'])->name('profile');
-    
+
 
     Route::get('/search', [HomepageController::class, 'searchPosts'])->name('search');
 
@@ -70,7 +40,30 @@ Route::middleware(['auth', 'custom:user', 'preventbackhistory'])->group(function
     Route::get('/notifications', [HomepageController::class, 'notifications'])->name('notifications');
 });
 
-Route::middleware(['auth', 'AdminMiddleware:employee,superadmin', 'preventbackhistory'])->group(function () {
+Route::middleware(['auth', 'admin:employee,superadmin', 'preventbackhistory'])->group(function () {
 
-    
+    Route::get('/map', function () {
+        return view('page.admin.map');
+    })->name('map');
+    Route::get('/messages', function () {
+        return view('page.admin.message');
+    })->name('messages');
+    Route::get('/adminlogin', function () {
+        return view('page.admin.authentication.login');
+    })->name('adminlogin');
+    Route::get('/Reports', function () {
+        return view('page.admin.reportsManagement');
+    })->name('reports');
+    Route::get('/tracker', function () {
+        return view('page.admin.IssueTracker');
+    })->name('tracker');
+    Route::get('/dashboard', function () {
+        return view('page.admin.mainDashboard');
+    })->name('dashboard');
+
+
+    // superadmin
+    Route::get('/account', [AdminController::class, 'accountReview'])->name('accountReview');
+    Route::get('/superadmin', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/staffAccount', [AdminController::class, 'staffAccounts'])->name('staffAccounts');
 });

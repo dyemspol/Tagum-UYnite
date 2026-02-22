@@ -21,4 +21,19 @@ use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
+
+    public function dashboard()
+    {
+        return view('page.super_admin.dashboard');
+    }
+
+    public function accountReview()
+    {
+        return view('page.super_admin.accountReview');
+    }
+
+    public function staffAccounts()
+    {
+        return view('page.super_admin.staffAccounts');
+    }
 }
