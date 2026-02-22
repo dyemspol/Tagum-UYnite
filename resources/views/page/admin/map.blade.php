@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="mb-6">
+<div class="mb-6">
   <h2 class="text-xl font-semibold text-white mb-4">Map</h2>
 
   <!-- Dark Status Container -->
@@ -32,6 +32,13 @@
 <!-- Map Container -->
 <div id="map" class="w-full h-[700px] rounded-lg border z-10 border-gray-700"></div>
 
+<input type="hidden" id="reportsData" value="{{ json_encode($reports) }}">
 
-    
+@push('scripts')
+<script>
+  // Read the data from the hidden input to avoid Blade-in-JS lint errors
+  window.reportsData = JSON.parse(document.getElementById('reportsData').value);
+</script>
+@endpush
+
 @endsection

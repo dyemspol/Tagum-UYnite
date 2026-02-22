@@ -47,7 +47,7 @@
                     class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm"
                     type="text" placeholder="Ex: Potholes on Main Street">
                 @error('title')
-                    <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -57,7 +57,7 @@
                     class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm"
                     type="text" placeholder="Ex: There are several potholes on Main Street that need to be fixed.">
                 @error('description')
-                    <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -65,12 +65,12 @@
                 class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm">
                 <option value="" disabled>Select Category</option>
                 @foreach ($departments ?? [] as $department)
-                    <option value="{{ $department->id }}" class="text-black">
-                        {{ $department->category }}
-                    </option>
+                <option value="{{ $department->id }}" class="text-black">
+                    {{ $department->category }}
+                </option>
                 @endforeach
                 @error('department_id')
-                    <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </select>
 
@@ -78,12 +78,12 @@
                 class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm">
                 <option value="" disabled>Select Barangay</option>
                 @foreach ($barangays ?? [] as $barangay)
-                    <option value="{{ $barangay->id }}" class="text-white">
-                        {{ $barangay->barangay_name }}
-                    </option>
+                <option value="{{ $barangay->id }}" class="text-white">
+                    {{ $barangay->barangay_name }}
+                </option>
                 @endforeach
                 @error('barangay_id')
-                    <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </select>
             <div class="flex flex-col gap-2">
@@ -92,7 +92,7 @@
                     class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm"
                     type="text" placeholder="Ex: Purok 1, Street 1">
                 @error('Street_Purok')
-                    <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
             <div class="flex flex-col gap-2">
@@ -101,7 +101,7 @@
                     class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm"
                     type="text" placeholder="Ex: Near the school">
                 @error('landmark')
-                    <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -117,7 +117,7 @@
                 <input id="createPostMedia" type="file" accept="image/*,video/*" multiple class="hidden"
                     wire:model="media">
                 @error('media')
-                    <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
                 @enderror
                 <label for="createPostMedia"
                     class="border border-dashed border-[#5e7186] text-[#97a7b5] rounded-md w-full h-10 flex items-center justify-center cursor-pointer hover:border-[#31A871] hover:text-white transition-colors">
@@ -138,14 +138,14 @@
                     <div id="createPostMap" class="w-full h-45 rounded-md"></div>
                 </div>
                 @error('latitude')
-                    <span class="text-red-400 text-xs block mt-1">Please select a location on the map.</span>
+                <span class="text-red-400 text-xs block mt-1">Please select a location on the map.</span>
                 @enderror
                 @error('longitude')
-                    <span class="text-red-400 text-xs block mt-1">Longitude is missing.</span>
+                <span class="text-red-400 text-xs block mt-1">Longitude is missing.</span>
                 @enderror
             </div>
             @if ($showError)
-                <p class="text-red-400 text-xs mt-1">Please fill in all required fields correctly.</p>
+            <p class="text-red-400 text-xs mt-1">Please fill in all required fields correctly.</p>
             @endif
             <button class="w-full bg-[#31A871] text-white py-2 rounded-sm mt-3">
                 Submit
@@ -155,152 +155,175 @@
     </div>
 </div>
 @push('scripts')
-    <script>
-        // Use window properties to persist map instance across Livewire updates
-        // and avoid "Identifier has already been declared" errors if script is re-executed.
-        window.createPostMapInstance = window.createPostMapInstance || null;
-        window.createPostMarkerInstance = window.createPostMarkerInstance || null;
+<script>
+    // Use window properties to persist map instance across Livewire updates
+    // and avoid "Identifier has already been declared" errors if script is re-executed.
+    window.createPostMapInstance = window.createPostMapInstance || null;
+    window.createPostMarkerInstance = window.createPostMarkerInstance || null;
 
-        function initCreatePostModal() {
-            const mediaInput = document.getElementById('createPostMedia');
-            const mediaPreviewGrid = document.getElementById('mediaPreviewGrid');
-            const previewMediaBtn = document.getElementById('previewMediaBtn');
+    function initCreatePostModal() {
+        const mediaInput = document.getElementById('createPostMedia');
+        const mediaPreviewGrid = document.getElementById('mediaPreviewGrid');
+        const previewMediaBtn = document.getElementById('previewMediaBtn');
 
-            const modal = document.getElementById('createPostModal');
-            const modalClose = document.getElementById('createPostModalX');
-            const titleInput = document.querySelector('input[wire\\:model="title"]');
-            const descriptionInput = document.querySelector('input[wire\\:model="description"]');
-            const deptSelect = document.querySelector('select[wire\\:model="department_id"]');
-            const barangaySelect = document.querySelector('select[wire\\:model="barangay_id"]');
-            const streetInput = document.querySelector('input[wire\\:model="Street_Purok"]');
-            const landmarkInput = document.querySelector('input[wire\\:model="landmark"]');
+        const modal = document.getElementById('createPostModal');
+        const modalClose = document.getElementById('createPostModalX');
+        const titleInput = document.querySelector('input[wire\\:model="title"]');
+        const descriptionInput = document.querySelector('input[wire\\:model="description"]');
+        const deptSelect = document.querySelector('select[wire\\:model="department_id"]');
+        const barangaySelect = document.querySelector('select[wire\\:model="barangay_id"]');
+        const streetInput = document.querySelector('input[wire\\:model="Street_Purok"]');
+        const landmarkInput = document.querySelector('input[wire\\:model="landmark"]');
 
-            // Media preview (small grid)
-            const renderMediaGrid = (files) => {
-                if (!mediaPreviewGrid || !files || files.length === 0) {
-                    if (mediaPreviewGrid) {
-                        mediaPreviewGrid.classList.add('hidden');
-                        mediaPreviewGrid.classList.remove('grid', 'grid-cols-4');
-                    }
-                    return;
+        // Media preview (small grid)
+        const renderMediaGrid = (files) => {
+            if (!mediaPreviewGrid || !files || files.length === 0) {
+                if (mediaPreviewGrid) {
+                    mediaPreviewGrid.classList.add('hidden');
+                    mediaPreviewGrid.classList.remove('grid', 'grid-cols-4');
                 }
+                return;
+            }
 
-                mediaPreviewGrid.innerHTML = '';
-                Array.from(files).forEach((file) => {
-                    const isVideo = file.type.startsWith('video/');
-                    const thumb = document.createElement('div');
-                    thumb.className =
-                        'w-14 h-14 rounded-md overflow-hidden border border-[#2e4257] bg-[#0f1f2c] flex items-center justify-center';
-                    if (isVideo) {
-                        thumb.innerHTML = `
+            mediaPreviewGrid.innerHTML = '';
+            Array.from(files).forEach((file) => {
+                const isVideo = file.type.startsWith('video/');
+                const thumb = document.createElement('div');
+                thumb.className =
+                    'w-14 h-14 rounded-md overflow-hidden border border-[#2e4257] bg-[#0f1f2c] flex items-center justify-center';
+                if (isVideo) {
+                    thumb.innerHTML = `
                             <div class="w-full h-full flex items-center justify-center bg-[#0f1f2c] text-white text-xs">VID</div>
                         `;
-                    } else {
-                        const img = document.createElement('img');
-                        img.src = URL.createObjectURL(file);
-                        img.className = 'w-full h-full object-cover';
-                        thumb.appendChild(img);
-                    }
-                    mediaPreviewGrid.appendChild(thumb);
-                });
-                mediaPreviewGrid.classList.remove('hidden');
-                mediaPreviewGrid.classList.add('grid', 'grid-cols-6');
-            };
-
-            if (mediaInput) {
-                // Remove old listener to avoid duplicates if element is reused (rare but possible)
-                mediaInput.onchange = (e) => {
-                    const files = e.target.files;
-                    window.uploadedFilesForPreview = Array.from(files || []);
-                    renderMediaGrid(files);
-                    window.dispatchEvent(new CustomEvent('updatePostPreview', {
-                        detail: {
-                            files: window.uploadedFilesForPreview
-                        }
-                    }));
-                };
-            }
-
-            // Close Modal
-            if (modalClose) {
-                // Use onclick property to avoid duplicate listeners on re-init
-                modalClose.onclick = () => {
-                    if (modal) {
-                        modal.classList.add('hidden');
-                        modal.classList.remove('flex');
-                    }
-                    Livewire.dispatch('resetCreatePostModal');
-                };
-            }
-
-            // Open media preview modal with current form data (vanilla JS)
-            if (previewMediaBtn) {
-                previewMediaBtn.onclick = () => {
-                    const departmentText = deptSelect?.options[deptSelect.selectedIndex]?.textContent?.trim();
-                    const barangayText = barangaySelect?.options[barangaySelect.selectedIndex]?.textContent?.trim();
-                    window.dispatchEvent(new CustomEvent('openPostCardPreview', {
-                        detail: {
-                            title: titleInput?.value || '',
-                            description: descriptionInput?.value || '',
-                            department: deptSelect?.value ? departmentText : '',
-                            barangay: barangaySelect?.value ? barangayText : '',
-                            street: streetInput?.value || '',
-                            landmark: landmarkInput?.value || '',
-                            files: window.uploadedFilesForPreview || []
-                        }
-                    }));
-
-                    // Hide create post modal while the preview is shown
-                    if (modal) {
-                        modal.classList.add('hidden');
-                        modal.classList.remove('flex');
-                    }
-                };
-            }
-        }
-
-        // Initialize Map Handler
-        // We define this ONCE on window, but inside it we check for the *current* map element.
-        // If the map element is missing (navigated away), we do nothing.
-        // If the map element exists but instance is null or on old element, we create new.
-
-        window.createPostMapHandler = () => {
-            const mapDiv = document.getElementById('createPostMap');
-            if (!mapDiv) return;
-
-            // If map instance exists but container is different (or container emptied by Livewire morph), reset.
-            if (window.createPostMapInstance && window.createPostMapInstance.getContainer() !== mapDiv) {
-                window.createPostMapInstance.remove();
-                window.createPostMapInstance = null;
-            }
-
-            if (!window.createPostMapInstance) {
-                window.createPostMapInstance = L.map(mapDiv).setView([7.4478, 125.8094], 13);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 19
-                }).addTo(window.createPostMapInstance);
-
-                window.createPostMarkerInstance = L.marker([7.4478, 125.8094], {
-                    draggable: true
-                }).addTo(window.createPostMapInstance);
-                window.createPostMarkerInstance.on('dragend', function(e) {
-                    const lat = e.target.getLatLng().lat;
-                    const lng = e.target.getLatLng().lng;
-                    Livewire.dispatch('setLatLng', [lat, lng]);
-                });
-            } else {
-                setTimeout(() => {
-                    window.createPostMapInstance.invalidateSize();
-                }, 300);
-            }
+                } else {
+                    const img = document.createElement('img');
+                    img.src = URL.createObjectURL(file);
+                    img.className = 'w-full h-full object-cover';
+                    thumb.appendChild(img);
+                }
+                mediaPreviewGrid.appendChild(thumb);
+            });
+            mediaPreviewGrid.classList.remove('hidden');
+            mediaPreviewGrid.classList.add('grid', 'grid-cols-6');
         };
 
-        // Attach the window event listener only once if possible.
-        // To be safe against multiple attachments (if script re-runs), we remove first.
-        window.removeEventListener('openCreatePostModal', window.createPostMapHandler);
-        window.addEventListener('openCreatePostModal', window.createPostMapHandler);
+        if (mediaInput) {
+            // Remove old listener to avoid duplicates if element is reused (rare but possible)
+            mediaInput.onchange = (e) => {
+                const files = e.target.files;
+                window.uploadedFilesForPreview = Array.from(files || []);
+                renderMediaGrid(files);
+                window.dispatchEvent(new CustomEvent('updatePostPreview', {
+                    detail: {
+                        files: window.uploadedFilesForPreview
+                    }
+                }));
+            };
+        }
 
-        document.addEventListener('DOMContentLoaded', initCreatePostModal);
-        document.addEventListener('livewire:navigated', initCreatePostModal);
-    </script>
+        // Close Modal
+        if (modalClose) {
+            // Use onclick property to avoid duplicate listeners on re-init
+            modalClose.onclick = () => {
+                if (modal) {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }
+                Livewire.dispatch('resetCreatePostModal');
+            };
+        }
+
+        // Open media preview modal with current form data (vanilla JS)
+        if (previewMediaBtn) {
+            previewMediaBtn.onclick = () => {
+                const departmentText = deptSelect?.options[deptSelect.selectedIndex]?.textContent?.trim();
+                const barangayText = barangaySelect?.options[barangaySelect.selectedIndex]?.textContent?.trim();
+                window.dispatchEvent(new CustomEvent('openPostCardPreview', {
+                    detail: {
+                        title: titleInput?.value || '',
+                        description: descriptionInput?.value || '',
+                        department: deptSelect?.value ? departmentText : '',
+                        barangay: barangaySelect?.value ? barangayText : '',
+                        street: streetInput?.value || '',
+                        landmark: landmarkInput?.value || '',
+                        files: window.uploadedFilesForPreview || []
+                    }
+                }));
+
+                // Hide create post modal while the preview is shown
+                if (modal) {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }
+            };
+        }
+    }
+
+    // Initialize Map Handler
+    // We define this ONCE on window, but inside it we check for the *current* map element.
+    // If the map element is missing (navigated away), we do nothing.
+    // If the map element exists but instance is null or on old element, we create new.
+
+    window.createPostMapHandler = () => {
+        const mapDiv = document.getElementById('createPostMap');
+        if (!mapDiv) return;
+
+        const tagumBounds = [
+            [7.3500, 125.7000], // South-West
+            [7.5500, 125.9500] // North-East
+        ];
+        // If map instance exists but container is different, reset.
+        if (window.createPostMapInstance && window.createPostMapInstance.getContainer() !== mapDiv) {
+            window.createPostMapInstance.remove();
+            window.createPostMapInstance = null;
+        }
+
+        if (!window.createPostMapInstance) {
+            window.createPostMapInstance = L.map(mapDiv).setView([7.4478, 125.8094], 13);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19
+            }).addTo(window.createPostMapInstance);
+
+            window.createPostMarkerInstance = L.marker([7.4478, 125.8094], {
+                draggable: true
+            }).addTo(window.createPostMapInstance);
+
+            window.createPostMarkerInstance.on('drag', function(e) {
+                const marker = e.target;
+                const latlng = marker.getLatLng();
+
+                // The "Fence" coordinates
+                const minLat = 7.3500;
+                const maxLat = 7.5500;
+                const minLng = 125.7000;
+                const maxLng = 125.9500;
+
+                // Clamp logic: If the pin hits the edge, force it to stay on the line
+                const clampedLat = Math.max(minLat, Math.min(maxLat, latlng.lat));
+                const clampedLng = Math.max(minLng, Math.min(maxLng, latlng.lng));
+
+                marker.setLatLng([clampedLat, clampedLng]);
+            });
+
+            // Send the final position to Livewire ONLY when they let go (performance)
+            window.createPostMarkerInstance.on('dragend', function(e) {
+                const latlng = e.target.getLatLng();
+                Livewire.dispatch('setLatLng', [latlng.lat, latlng.lng]);
+            });
+        } else {
+            setTimeout(() => {
+                window.createPostMapInstance.invalidateSize();
+            }, 300);
+        }
+    };
+
+    // Attach the window event listener only once if possible.
+    // To be safe against multiple attachments (if script re-runs), we remove first.
+    window.removeEventListener('openCreatePostModal', window.createPostMapHandler);
+    window.addEventListener('openCreatePostModal', window.createPostMapHandler);
+
+    document.addEventListener('DOMContentLoaded', initCreatePostModal);
+    document.addEventListener('livewire:navigated', initCreatePostModal);
+</script>
 @endpush

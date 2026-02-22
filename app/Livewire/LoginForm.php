@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Services\AuthServices;
 use Illuminate\Support\Facades\Validator;
+
 class LoginForm extends Component
 {
     public $username;
@@ -27,24 +28,31 @@ class LoginForm extends Component
         ];
         $result = $authServices->login($data);
 
-        if($result['success']) {
-
+        if ($result['success']) {
+            $user = $result['user'];
             session()->flash('success', $result['message']);
 
-            $this->reset('username', 'password');
-            
-            return redirect('/');
+            if ($user->role == 'employee') {
+                return redirect('/dashboard');
+            } else if ($user->role == 'superadmin') {
+                return redirect('/superadmin');
+            } else {
+                return redirect('/');
+            }
         }
+        $this->reset('username', 'password');
+
+
 
         if (isset($result['errors'])) {
             foreach ($result['errors']->messages() as $field => $messages) {
                 $this->addError($field, $messages[0]);
             }
-        }else{
+        } else {
             $this->addError('error_message', $result['message']);
         }
 
-        if(isset($result['errors'])) {
+        if (isset($result['errors'])) {
             $this->reset('username', 'password');
         }
     }
@@ -57,6 +65,4 @@ class LoginForm extends Component
     {
         $this->showLoginModal = false;
     }
-
-    
 }

@@ -1,11 +1,21 @@
-// Initialize map centered on Tagum City
-const map = L.map("map").setView([7.1907, 125.4553], 13);
+// Define the boundaries for Tagum City (South-West and North-East coordinates)
+const tagumBounds = [
+    [7.3500, 125.7000], // South-West
+    [7.5500, 125.9500]  // North-East
+];
 
-// Dark theme tiles
-L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
-    attribution: "&copy; OSM &copy; CARTO",
-    subdomains: "abcd",
-    maxZoom: 19,
+// Initialize map with restrictions
+const map = L.map("map", {
+    center: [7.4477, 125.8094],
+    zoom: 14,
+    minZoom: 12,           // Prevents zooming out too far
+    maxBounds: tagumBounds, // Fences the user inside Tagum
+    maxBoundsViscosity: 1.0 // Makes the edges "hard" (bounces back immediately)
+});
+
+// Green Topographical Map Tiles (OpenTopoMap)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19
 }).addTo(map);
 
 // Marker icons by status
@@ -42,61 +52,19 @@ const icons = {
     }),
 };
 
-// Hard-coded issues array
-const issues = [
-    {
-        lat: 7.442412,
-        lng: 125.774738,
-        status: "Issue",
-        issue: "Electric Outage",
-        reportedBy: "Juan Dela Cruz",
-        date: "Feb 15, 2026",
-    },
-    {
-        lat: 7.450123,
-        lng: 125.765432,
-        status: "Ongoing",
-        issue: "Water Pipe Leakage",
-        reportedBy: "Maria Santos",
-        date: "Feb 16, 2026",
-    },
-    {
-        lat: 7.438567,
-        lng: 125.770987,
-        status: "Resolved",
-        issue: "Blackout",
-        reportedBy: "Khristan Divv",
-        date: "Feb 12, 2026",
-    },
-    {
-        lat: 7.445678,
-        lng: 125.779012,
-        status: "Ongoing",
-        issue: "Street Light Failure",
-        reportedBy: "Alfred Reyes",
-        date: "Feb 17, 2026",
-    },
-    {
-        lat: 7.439876,
-        lng: 125.766543,
-        status: "Issue",
-        issue: "Traffic Light Malfunction",
-        reportedBy: "Lisa Gomez",
-        date: "Feb 18, 2026",
-    },
-];
-
-// Add markers with popup info
-issues.forEach((loc) => {
-    const icon = icons[loc.status]; // choose icon based on status
-
-    L.marker([loc.lat, loc.lng], { icon: icon })
+const issues = window.reportsData || [];
+issues.forEach((report) => {
+    // Determine the status color
+    let statusLabel = report.report_status; // e.g., "Pending", "Ongoing"
+    let icon = icons.Issue; // Default
+    if (statusLabel === 'in_review') icon = icons.Ongoing;
+    if (statusLabel === 'resolved') icon = icons.Resolved;
+    L.marker([report.latitude, report.longitude], { icon: icon })
         .addTo(map)
         .bindPopup(
-            `<b>Status:</b> ${loc.status}<br>` +
-            `<b>Issue:</b> ${loc.issue}<br>` +
-            `<b>Reported by:</b> ${loc.reportedBy}<br>` +
-            `<b>Date:</b> ${loc.date}<br>` +
-            `<b>Coordinates:</b> ${loc.lat.toFixed(5)}, ${loc.lng.toFixed(5)}`,
+            `<b>Issue:</b> ${report.title}<br>` +
+            `<b>Status:</b> ${statusLabel}<br>` +
+            `<b>Location:</b> ${report.address_details ?? 'N/A'}<br>` +
+            `<a href="/tracker?id=${report.id}" class="text-blue-500 font-bold hover:underline">View Details →</a>`
         );
 });

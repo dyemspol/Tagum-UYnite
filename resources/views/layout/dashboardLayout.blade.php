@@ -36,9 +36,10 @@
                 </div>
                 <div class="text-center text-white text-sm mt-3"> {{ Auth::user()->department->department_name ?? 'Admin' }} Department</div>
                 <hr class="my-5 text-[#ffffff3d]">
+                <!-- EMPLOYEE NAV MENU -->
                 <div class="flex flex-col pl-2 space-y-8">
                     @if(Auth::user()->role == 'employee')
-                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
+                    <a href="{{ route('employee.dashboard') }}" class="flex items-center space-x-2">
                         <img class="w-7 h-7" src="{{ asset('img/dashboardIcon.png') }}" alt="">
                         <span class="text-white font-medium">Dashboard</span>
                     </a>
@@ -62,7 +63,7 @@
 
                     @elseif(Auth::user()->role == 'superadmin')
 
-                    {{-- superadmin nav menu --}}
+                    <!-- SUPERADMIN NAV MENU -->
                     <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
                         <img class="w-7 h-7" src="{{ asset('img/dashboardIcon.png') }}" alt="">
                         <span class="text-white font-medium">Dashboard</span>
@@ -113,6 +114,7 @@
 
 
 
+    @stack('scripts')
 </body>
 
 </html>
