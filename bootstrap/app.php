@@ -6,6 +6,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\PreventBackHistory;
 use App\Http\Middleware\Custom;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\EmployeeMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -19,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'preventbackhistory' => PreventBackHistory::class,
             'custom' => Custom::class,
             'admin' => AdminMiddleware::class,
+            'employee' => EmployeeMiddleware::class,
         ]);
         $middleware->trustProxies(at: '*');
     })

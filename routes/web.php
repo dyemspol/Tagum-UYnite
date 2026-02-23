@@ -46,11 +46,13 @@ Route::middleware(['auth', 'custom:user', 'preventbackhistory'])->group(function
 Route::middleware(['auth', 'admin:employee,superadmin', 'preventbackhistory'])->group(function () {
 
     //EMPLOYEE
-    Route::get('/map', [EmployeeController::class, 'map'])->name('map');
-    Route::get('/messages', [EmployeeController::class, 'message'])->name('messages');
-    Route::get('/Reports', [EmployeeController::class, 'reports'])->name('reports');
-    Route::get('/tracker', [EmployeeController::class, 'tracker'])->name('tracker');
-    Route::get('/dashboard', [EmployeeController::class, 'dashboard'])->name('employee.dashboard');
+    Route::middleware(['employee'])->group(function () {
+        Route::get('/map', [EmployeeController::class, 'map'])->name('map');
+        Route::get('/messages', [EmployeeController::class, 'message'])->name('messages');
+        Route::get('/Reports', [EmployeeController::class, 'reports'])->name('reports');
+        Route::get('/tracker', [EmployeeController::class, 'tracker'])->name('tracker');
+        Route::get('/dashboard', [EmployeeController::class, 'dashboard'])->name('employee.dashboard');
+    });
 
 
     //SUPERADMIN
