@@ -53,9 +53,44 @@ class AuthServices
         );
     }
 
+    public function validatEMPLOYEE(array $data)
+    {
+        return  Validator::make(
+            $data,
+            [
+                'firstname' => 'required|string|max:255',
+                'lastname' => 'required|string|max:255',
+                'username' => 'required|string|max:255|unique:users',
+                'password' => 'required|string|min:8',
+                'department_id' => 'required',
+
+            ],
+            [
+                'firstname.required' => 'The first name field is required.',
+                'firstname.string' => 'The first name field must be a string.',
+                'firstname.max' => 'The first name field must be less than 255 characters.',
+                'lastname.required' => 'The last name field is required.',
+                'lastname.string' => 'The last name field must be a string.',
+                'lastname.max' => 'The last name field must be less than 255 characters.',
+                'username.required' => 'The username field is required.',
+                'username.string' => 'The username field must be a string.',
+                'username.max' => 'The username field must be less than 255 characters.',
+                'username.unique' => 'The username has already been taken.',
+                'password.required' => 'The password field is required.',
+                'password.string' => 'The password field must be a string.',
+                'password.min' => 'The password field must be at least 8 characters long.',
+                'department_id.required' => 'The department field is required.',
+            ]
+        );
+    }
+
     public function createUser(array $data)
     {
-        $validator = $this->validateRegister($data);
+        if ($data['department_id'] == null) {
+            $validator = $this->validateRegister($data);
+        } else {
+            $validator = $this->validatEMPLOYEE($data);
+        }
 
         if ($validator->fails()) {
             return [
@@ -64,36 +99,68 @@ class AuthServices
             ];
         }
 
+        if ($data['department_id'] == null) {
+            try {
 
-        try {
+                DB::beginTransaction();
+                $user = User::create([
+                    'first_name' => trim($data['firstname']),
+                    'last_name' => trim($data['lastname']),
+                    'username' => trim($data['username']),
+                    'email' => !empty($data['email']) ? trim($data['email']) : null,
+                    'email_verified_at' => !empty($data['email']) ? now() : null,
+                    'address' => null,
+                    'barangay_id' => null,
+                    'password' => Hash::make($data['password']),
+                    'role' => 'resident',
+                    'date_of_birth' => null,
+                    'profile_photo' => null,
+                    'is_verified' => false,
+                    'department_id' => null,
+                ]);
+                DB::commit();
+                return [
+                    'success' => true,
+                    'message' => 'User created successfully',
+                    'user' => $user,
+                ];
+            } catch (\Exception $e) {
+                return [
+                    'success' => false,
+                    'message' => 'Error creating user: ' . $e->getMessage(),
+                ];
+            }
+        } else {
+            try {
 
-            DB::beginTransaction();
-            $user = User::create([
-                'first_name' => trim($data['firstname']),
-                'last_name' => trim($data['lastname']),
-                'username' => trim($data['username']),
-                'email' => !empty($data['email']) ? trim($data['email']) : null,
-                'email_verified_at' => !empty($data['email']) ? now() : null,
-                'address' => null,
-                'barangay_id' => null,
-                'password' => Hash::make($data['password']),
-                'role' => 'resident',
-                'date_of_birth' => null,
-                'profile_photo' => null,
-                'is_verified' => false,
-                'department_id' => null,
-            ]);
-            DB::commit();
-            return [
-                'success' => true,
-                'message' => 'User created successfully',
-                'user' => $user,
-            ];
-        } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'message' => 'Error creating user: ' . $e->getMessage(),
-            ];
+                DB::beginTransaction();
+                $user = User::create([
+                    'first_name' => trim($data['firstname']),
+                    'last_name' => trim($data['lastname']),
+                    'username' => trim($data['username']),
+                    'email' =>  null,
+                    'email_verified_at' => null,
+                    'address' => null,
+                    'barangay_id' => null,
+                    'password' => Hash::make($data['password']),
+                    'role' => 'employee',
+                    'date_of_birth' => null,
+                    'profile_photo' => null,
+                    'is_verified' => true,
+                    'department_id' => $data['department_id'],
+                ]);
+                DB::commit();
+                return [
+                    'success' => true,
+                    'message' => 'User created successfully',
+                    'user' => $user,
+                ];
+            } catch (\Exception $e) {
+                return [
+                    'success' => false,
+                    'message' => 'Error creating user: ' . $e->getMessage(),
+                ];
+            }
         }
     }
 

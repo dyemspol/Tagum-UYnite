@@ -9,8 +9,8 @@ class Comment extends Model
     protected $fillable = [
         'report_id',
         'user_id',
-        'body',
-        
+        'comment_text',
+
     ];
 
     public function user()

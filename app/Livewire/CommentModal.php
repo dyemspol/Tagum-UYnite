@@ -19,23 +19,25 @@ class CommentModal extends Component
     public $comments = [];
     public $commentModal = false;
 
-    
+
     public function render()
     {
         return view('livewire.comment-modal');
     }
 
     #[On('openCommentModal')]
-public function loadPost($postId) {
-    $this->post = Report::with('comments.user','reactions.user','postImages','barangay','user')->find($postId);
-    $this->comments = Comment::with('user')->where('report_id', $postId)->get();
-    $this->commentModal = true;
+    public function loadPost($postId)
+    {
+        $this->post = Report::with('comments.user', 'reactions.user', 'postImages', 'barangay', 'user')->find($postId);
+        $this->comments = Comment::with('user')->where('report_id', $postId)->orderBy('created_at', 'asc')->get();
+        $this->commentModal = true;
     }
-    public function submitComment() {
+    public function submitComment()
+    {
         $this->validate(['comment' => 'required|min:1']);
         Comment::create([
             'user_id' => Auth::id(),
-            'body' => $this->comment,
+            'comment_text' => $this->comment,
             'report_id' => $this->post->id
         ]);
         $this->comments = Comment::with('user')->where('report_id', $this->post->id)->get();

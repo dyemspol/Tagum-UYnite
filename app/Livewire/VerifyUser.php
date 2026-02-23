@@ -34,6 +34,7 @@ class VerifyUser extends Component
             'verification_photo' => $this->verification_photo,
         ]);
 
+
         $verifyUser = $userVerification->verifyUser($user->id, [
             'birthday' => $this->birthday,
             'barangay_id' => $this->barangay_id,
