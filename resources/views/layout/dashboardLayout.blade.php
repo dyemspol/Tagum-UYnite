@@ -35,9 +35,10 @@
             <!-- Top part: logo + menu -->
             <div>
 
-                <div class="flex justify-center mb-4">
-                    <img class="w-15 h-auto" src="{{ asset('img/LOGO.png') }}" alt="">
-                </div>
+               <div class="flex pl-2 justify-center items-center mb-4 gap-4">
+    {{-- <img class="w-15 h-auto" src="{{ asset('img/LOGO.png') }}" alt="Main Logo"> --}}
+    <img class="w-30 h-auto" src="{{ asset('img/department_logo/health.png') }}" alt="Department Logo">
+</div>
                 <div class="text-center text-white text-sm mt-3"> {{ Auth::user()->department->department_name ?? 'Admin' }} Department</div>
                 <hr class="my-5 text-[#ffffff3d]">
                 <!-- EMPLOYEE NAV MENU -->
