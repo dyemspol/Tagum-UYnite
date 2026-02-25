@@ -18,7 +18,7 @@
             <!-- Cards -->
             <div id="criticalList" class="p-3 flex flex-col gap-3 min-h-[400px] list">
                 <!-- Card -->
-                <div class="bg-[#0f2a43] border border-white/10 rounded-xl p-4 cursor-grab hover:border-red-500/40 transition-all duration-200 group">
+                <div class="bg-[#0f2a43] border border-white/10 rounded-xl p-4 cursor-grab hover:border-red-500/40 transition-all duration-200">
                     <div class="flex items-start justify-between mb-3">
                         <span class="text-xs bg-purple-500/15 text-purple-400 border border-purple-500/25 px-2 py-0.5 rounded-full">Security</span>
                         <span class="text-blue-300 text-xs font-mono">#1021</span>
@@ -27,10 +27,7 @@
                     <p class="text-gray-400 text-xs mb-3">Reported by <span class="text-gray-300">Jose R.</span></p>
                     <div class="flex items-center justify-between">
                         <span class="text-gray-500 text-xs">07/10/25</span>
-                        <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <i class="hgi hgi-stroke hgi-view text-lg text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"></i>
-                            <i class="hgi hgi-stroke hgi-delete-01 text-lg text-gray-400 hover:text-red-400 cursor-pointer transition-colors"></i>
-                        </div>
+                        <i class="hgi hgi-stroke hgi-view text-lg text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"></i>
                     </div>
                 </div>
             </div>
@@ -50,7 +47,7 @@
             <!-- Cards -->
             <div id="ongoingList" class="p-3 flex flex-col gap-3 min-h-[400px] list">
                 <!-- Card -->
-                <div class="bg-[#0f2a43] border border-white/10 rounded-xl p-4 cursor-grab hover:border-yellow-400/40 transition-all duration-200 group">
+                <div class="bg-[#0f2a43] border border-white/10 rounded-xl p-4 cursor-grab hover:border-yellow-400/40 transition-all duration-200">
                     <div class="flex items-start justify-between mb-3">
                         <span class="text-xs bg-red-500/15 text-red-400 border border-red-500/25 px-2 py-0.5 rounded-full">Noise</span>
                         <span class="text-blue-300 text-xs font-mono">#1020</span>
@@ -59,10 +56,7 @@
                     <p class="text-gray-400 text-xs mb-3">Reported by <span class="text-gray-300">Carlo M.</span></p>
                     <div class="flex items-center justify-between">
                         <span class="text-gray-500 text-xs">05/10/25</span>
-                        <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <i class="hgi hgi-stroke hgi-view text-lg text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"></i>
-                            <i class="hgi hgi-stroke hgi-delete-01 text-lg text-gray-400 hover:text-red-400 cursor-pointer transition-colors"></i>
-                        </div>
+                        <i class="hgi hgi-stroke hgi-view text-lg text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"></i>
                     </div>
                 </div>
             </div>
@@ -82,7 +76,7 @@
             <!-- Cards -->
             <div id="resolvedList" class="p-3 flex flex-col gap-3 min-h-[400px] list">
                 <!-- Card -->
-                <div class="bg-[#0f2a43] border border-white/10 rounded-xl p-4 cursor-grab hover:border-green-400/40 transition-all duration-200 group">
+                <div class="bg-[#0f2a43] border border-white/10 rounded-xl p-4 cursor-grab hover:border-green-400/40 transition-all duration-200">
                     <div class="flex items-start justify-between mb-3">
                         <span class="text-xs bg-blue-500/15 text-blue-400 border border-blue-500/25 px-2 py-0.5 rounded-full">Plumbing</span>
                         <span class="text-blue-300 text-xs font-mono">#1012</span>
@@ -91,10 +85,7 @@
                     <p class="text-gray-400 text-xs mb-3">Reported by <span class="text-gray-300">Ben G.</span></p>
                     <div class="flex items-center justify-between">
                         <span class="text-gray-500 text-xs">28/09/25</span>
-                        <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <i class="hgi hgi-stroke hgi-view text-lg text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"></i>
-                            <i class="hgi hgi-stroke hgi-delete-01 text-lg text-gray-400 hover:text-red-400 cursor-pointer transition-colors"></i>
-                        </div>
+                        <i class="hgi hgi-stroke hgi-view text-lg text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"></i>
                     </div>
                 </div>
             </div>
