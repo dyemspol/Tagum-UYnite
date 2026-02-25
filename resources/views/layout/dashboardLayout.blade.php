@@ -96,7 +96,7 @@
 
     </div>
     @include('components.viewIssueModal')
-
+    
     @vite('js/charts/barchart.js')
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

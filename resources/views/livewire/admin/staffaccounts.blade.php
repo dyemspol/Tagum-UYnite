@@ -1,4 +1,9 @@
-<div x-data="{ showCreateModal: false }" @close-modal.window="showCreateModal = false">
+<div x-data="{ 
+        showCreateModal: false, 
+        showStaffModal: false, 
+        selectedStaff: null 
+    }" 
+    @close-modal.window="showCreateModal = false">
     <div class="flex justify-between items-center  mb-10">
         <h2 class="text-xl font-semibold text-white">
             Staff Accounts
@@ -42,19 +47,20 @@
                     <td class="px-4 py-4 text-blue-300">#STF-{{ $user->id }}</td>
                     <td class="px-4 py-4">{{ $user->first_name . ' ' . $user->last_name }}</td>
                     <td class="px-4 py-4">{{ $user->email }}</td>
-                    <td class="px-4 py-4">{{ $user->department->department_name }}</td>
+                    <td class="px-4 py-4">{{ $user->department?->department_name ?? 'N/A' }}</td>
 
                     <td class="px-4 py-4 flex gap-2 items-center">
-
+                        <i @click="showStaffModal = true"
+                        class="fa-solid fa-eye text-2xl  hover:text-[#00c41a] transition-800"></i>
                         <i class="hgi hgi-stroke hgi-delete-01 text-2xl text-red-500 hover:text-red-300 cursor-pointer"></i>
                     </td>
-                </tr>
+                </tr> 
                 @endforeach
 
             </tbody>
         </table>
 
     </div>
-
+    @include('components.staffAccountDetails')
     @include('components.staffCreateAccountModal')
 </div>
