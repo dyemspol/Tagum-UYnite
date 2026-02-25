@@ -79,15 +79,19 @@
     </div>
 
     <!-- FOOTER BUTTONS -->
-    <div class="flex justify-end gap-3 mt-6">
-      <button class="bg-indigo-500 hover:bg-indigo-600 px-4 py-2 rounded-lg text-white">
-        Respond
-      </button>
-      <button @click="showIssueModal = false"
-              class="border border-white/30 px-4 py-2 rounded-lg text-white">
-        Cancel
-      </button>
-    </div>
+    <!-- FOOTER BUTTONS -->
+<div class="flex justify-end gap-3 mt-6">
+  <button class="bg-indigo-500 hover:bg-indigo-600 px-4 py-2 rounded-lg text-white">
+    Respond
+  </button>
+  <button class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-white">
+    Take Down
+  </button>
+  <button @click="showIssueModal = false"
+          class="border border-white/30 px-4 py-2 rounded-lg text-white">
+    Cancel
+  </button>
+</div>
   </div>
 </div>
 
