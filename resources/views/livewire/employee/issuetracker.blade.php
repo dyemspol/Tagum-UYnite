@@ -1,130 +1,117 @@
 <div>
-    <div class="">
-        <h2 class="text-xl font-semibold text-white mb-10">Issue Tracker</h2>
-        <div class="flex space-x-6 text-white">
-            <p id="activeIssueNavigation">Active Issue</p>
-            <p id="scheduledNavigation">Scheduled</p>
-            <p id="historyNavigation">History</p>
-        </div>
-        <hr class="text-[#ffffff1b] my-4">
+    <h2 class="text-xl font-semibold text-white mb-6">Issue Tracker</h2>
 
-        {{-- Active Issues SECTION --}}
-        <div id="activeIssuesSection" class="bg-[#173a5c] p-6 rounded-2xl shadow-lg overflow-auto">
+    <!-- Kanban Board -->
+    <div class="grid grid-cols-3 gap-4">
 
-            <table class="w-full text-sm text-left text-gray-200">
-                <thead>
-                    <tr class="bg-[#244c72] text-white rounded-lg">
-                        <th class="px-4 py-3 rounded-l-lg">Type</th>
-                        <th class="px-4 py-3">ID</th>
-                        <th class="px-4 py-3">Issue name</th>
-                        <th class="px-4 py-3">Reported by</th>
-                        <th class="px-4 py-3">Date</th>
-                        <th class="px-4 py-3">Status</th>
-                        <th class="px-4 py-3 rounded-r-lg">Action</th>
-                    </tr>
-                </thead>
+        <!-- Column 1: Critical -->
+        <div class="bg-[#173a5c] rounded-2xl shadow-lg overflow-hidden">
+            <!-- Column Header -->
+            <div class="px-5 py-4 bg-[#1e4a73] flex items-center justify-between border-b border-white/10">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                    <h3 class="text-white font-semibold text-sm">Critical</h3>
+                </div>
+                <span id="criticalCount" class="text-xs bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded-full font-medium">1</span>
+            </div>
 
-                <tbody>
-                    <tr class="border-t border-[#ffffff1a]">
-                        <td class="px-4 py-4">Noise</td>
-                        <td class="px-4 py-4 text-blue-300">#1023</td>
-                        <td class="px-4 py-4">Saba ang karaoke</td>
-                        <td class="px-4 py-4">Khristian divvv</td>
-                        <td class="px-4 py-4">09/10/25</td>
-
-                        <td class="px-4 py-4">
-                            <span class="text-red-500 font-semibold">Critical</span>
-                        </td>
-
-                        <td class="px-4 py-4 flex space-x-1 items-center gap-2">
-                            <i onclick="document.getElementById('issueModal').style.display = 'flex'" class="hgi hgi-stroke hgi-view text-2xl hover:text-blue-400 transition-all duration-300 cursor-pointer"></i>
-                            <i class="hgi hgi-stroke hgi-delete-01 text-2xl text-red-500 hover:text-red-300"></i>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
+            <!-- Cards -->
+            <div id="criticalList" class="p-3 flex flex-col gap-3 min-h-[400px] list">
+                <!-- Card -->
+                <div class="bg-[#0f2a43] border border-white/10 rounded-xl p-4 cursor-grab hover:border-red-500/40 transition-all duration-200 group">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="text-xs bg-purple-500/15 text-purple-400 border border-purple-500/25 px-2 py-0.5 rounded-full">Security</span>
+                        <span class="text-blue-300 text-xs font-mono">#1021</span>
+                    </div>
+                    <p class="text-white text-sm font-medium mb-1">Broken gate lock Unit 4B</p>
+                    <p class="text-gray-400 text-xs mb-3">Reported by <span class="text-gray-300">Jose R.</span></p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-500 text-xs">07/10/25</span>
+                        <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i class="hgi hgi-stroke hgi-view text-lg text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"></i>
+                            <i class="hgi hgi-stroke hgi-delete-01 text-lg text-gray-400 hover:text-red-400 cursor-pointer transition-colors"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        {{-- SCHEDULED SECTION --}}
+        <!-- Column 2: Ongoing -->
+        <div class="bg-[#173a5c] rounded-2xl shadow-lg overflow-hidden">
+            <!-- Column Header -->
+            <div class="px-5 py-4 bg-[#1e4a73] flex items-center justify-between border-b border-white/10">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
+                    <h3 class="text-white font-semibold text-sm">Ongoing</h3>
+                </div>
+                <span id="ongoingCount" class="text-xs bg-yellow-400/20 text-yellow-400 border border-yellow-400/30 px-2 py-0.5 rounded-full font-medium">1</span>
+            </div>
 
-        <div id="scheduledSection" class="bg-[#173a5c] p-6 rounded-2xl shadow-lg overflow-auto">
-
-            <table class="w-full text-sm text-left text-gray-200">
-                <thead>
-                    <tr class="bg-[#244c72] text-white rounded-lg">
-                        <th class="px-4 py-3 rounded-l-lg">Type</th>
-                        <th class="px-4 py-3">ID</th>
-                        <th class="px-4 py-3">Issue name</th>
-                        <th class="px-4 py-3">Reported by</th>
-                        <th class="px-4 py-3">Date</th>
-                        <th class="px-4 py-3">Status</th>
-                        <th class="px-4 py-3 rounded-r-lg">Action</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr class="border-t border-[#ffffff1a]">
-                        <td class="px-4 py-4">Noise</td>
-                        <td class="px-4 py-4 text-blue-300">#1023</td>
-                        <td class="px-4 py-4">Saba ang karaoke</td>
-                        <td class="px-4 py-4">Khristian divvv</td>
-                        <td class="px-4 py-4">09/10/25</td>
-
-                        <td class="px-4 py-4">
-                            <span class="text-[#CFDE02] font-semibold">Ongoing</span>
-                        </td>
-
-                        <td class="px-4 py-4 flex space-x-1 items-center gap-2">
-                            <i class="hgi hgi-stroke hgi-view text-2xl hover:text-blue-400 transition-all duration-300"></i>
-                            <i class="hgi hgi-stroke hgi-delete-01 text-2xl text-red-500 hover:text-red-300"></i>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
+            <!-- Cards -->
+            <div id="ongoingList" class="p-3 flex flex-col gap-3 min-h-[400px] list">
+                <!-- Card -->
+                <div class="bg-[#0f2a43] border border-white/10 rounded-xl p-4 cursor-grab hover:border-yellow-400/40 transition-all duration-200 group">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="text-xs bg-red-500/15 text-red-400 border border-red-500/25 px-2 py-0.5 rounded-full">Noise</span>
+                        <span class="text-blue-300 text-xs font-mono">#1020</span>
+                    </div>
+                    <p class="text-white text-sm font-medium mb-1">Loud construction Unit 5F</p>
+                    <p class="text-gray-400 text-xs mb-3">Reported by <span class="text-gray-300">Carlo M.</span></p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-500 text-xs">05/10/25</span>
+                        <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i class="hgi hgi-stroke hgi-view text-lg text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"></i>
+                            <i class="hgi hgi-stroke hgi-delete-01 text-lg text-gray-400 hover:text-red-400 cursor-pointer transition-colors"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        {{-- HISTORY SECTION --}}
-        <div id="historySection" class="bg-[#173a5c] p-6 rounded-2xl shadow-lg overflow-auto">
+        <!-- Column 3: Resolved -->
+        <div class="bg-[#173a5c] rounded-2xl shadow-lg overflow-hidden">
+            <!-- Column Header -->
+            <div class="px-5 py-4 bg-[#1e4a73] flex items-center justify-between border-b border-white/10">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-green-400"></span>
+                    <h3 class="text-white font-semibold text-sm">Resolved</h3>
+                </div>
+                <span id="resolvedCount" class="text-xs bg-green-400/20 text-green-400 border border-green-400/30 px-2 py-0.5 rounded-full font-medium">1</span>
+            </div>
 
-            <table class="w-full text-sm text-left text-gray-200">
-                <thead>
-                    <tr class="bg-[#244c72] text-white rounded-lg">
-                        <th class="px-4 py-3 rounded-l-lg">Type</th>
-                        <th class="px-4 py-3">ID</th>
-                        <th class="px-4 py-3">Issue name</th>
-                        <th class="px-4 py-3">Reported by</th>
-                        <th class="px-4 py-3">Date</th>
-                        <th class="px-4 py-3">Status</th>
-                        <th class="px-4 py-3 rounded-r-lg">Action</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr class="border-t border-[#ffffff1a]">
-                        <td class="px-4 py-4">Noise</td>
-                        <td class="px-4 py-4 text-blue-300">#1023</td>
-                        <td class="px-4 py-4">Saba ang karaoke</td>
-                        <td class="px-4 py-4">Khristian divvv</td>
-                        <td class="px-4 py-4">09/10/25</td>
-
-                        <td class="px-4 py-4">
-                            <span class="text-[#00FF37] font-semibold">Resolved</span>
-                        </td>
-
-                        <td class="px-4 py-4 flex space-x-1 items-center gap-2">
-                            <i class="hgi hgi-stroke hgi-view text-2xl hover:text-blue-400 transition-all duration-300"></i>
-                            <i class="hgi hgi-stroke hgi-delete-01 text-2xl text-red-500 hover:text-red-300"></i>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
+            <!-- Cards -->
+            <div id="resolvedList" class="p-3 flex flex-col gap-3 min-h-[400px] list">
+                <!-- Card -->
+                <div class="bg-[#0f2a43] border border-white/10 rounded-xl p-4 cursor-grab hover:border-green-400/40 transition-all duration-200 group">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="text-xs bg-blue-500/15 text-blue-400 border border-blue-500/25 px-2 py-0.5 rounded-full">Plumbing</span>
+                        <span class="text-blue-300 text-xs font-mono">#1012</span>
+                    </div>
+                    <p class="text-white text-sm font-medium mb-1">Clogged drain Unit 1C</p>
+                    <p class="text-gray-400 text-xs mb-3">Reported by <span class="text-gray-300">Ben G.</span></p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-500 text-xs">28/09/25</span>
+                        <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i class="hgi hgi-stroke hgi-view text-lg text-gray-400 hover:text-blue-400 cursor-pointer transition-colors"></i>
+                            <i class="hgi hgi-stroke hgi-delete-01 text-lg text-gray-400 hover:text-red-400 cursor-pointer transition-colors"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-
-
 
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script>
+const lists = document.querySelectorAll('.list');
+
+lists.forEach(list => {
+  new Sortable(list, {
+    group: 'shared',
+    animation: 150,
+    ghostClass: 'opacity-50'
+  });
+});
+</script>
