@@ -1,3 +1,9 @@
+<div x-data="{ 
+       
+        showStaffModal: false, 
+        selectedStaff: null 
+    }" 
+    @close-modal.window="showStaffModal = false">
 <div>
     <div class="">
         <h2 class="text-xl font-semibold text-white mb-6">Super Admin Overview</h2>
@@ -50,31 +56,22 @@
 
             <div class="space-y-3 max-h-[250px] overflow-y-auto hide-scrollbar">
                 <!-- Sample User Item -->
-                <div class="flex justify-between items-center bg-[#2748755e] p-3 rounded">
-                    <div>
-                        <p class="text-white text-sm">Juan Dela Cruz</p>
-                        <p class="text-xs text-gray-300">Registered · 12 Minutes ago</p>
-                    </div>
-                    <button class="text-white bg-[#1f3b56] px-2 py-1 rounded">View</button>
-                </div>
+                
 
-                <div class="flex justify-between items-center bg-[#2748755e] p-3 rounded">
-                    <div>
-                        <p class="text-white text-sm">Maria Santos</p>
-                        <p class="text-xs text-gray-300">Registered · 1 Hour ago</p>
-                    </div>
-                    <button class="text-white bg-[#1f3b56] px-2 py-1 rounded">View</button>
-                </div>
-
+               
                 <div class="flex justify-between items-center bg-[#2748755e] p-3 rounded">
                     <div>
                         <p class="text-white text-sm">Pedro Reyes</p>
                         <p class="text-xs text-gray-300">Registered · 3 Hours ago</p>
                     </div>
-                    <button class="text-white bg-[#1f3b56] px-2 py-1 rounded">View</button>
+                    <button @click="showStaffModal = true" class="text-white bg-[#1f3b56] px-2 py-1 rounded">View</button>
                 </div>
                 <!-- Add more items as needed -->
             </div>
         </div>
     </div>
 </div>
+
+<div/>
+
+@include('components.staffAccountDetails')
