@@ -4,11 +4,11 @@
   class="fixed inset-0 bg-black/60 items-center justify-center z-50 {{ $selectedUser ? 'flex' : 'hidden' }}">
   <!-- MODAL CONTAINER -->
   @if($selectedUser)
-  <div class="bg-[#1f3b56] w-[430px] rounded-xl shadow-xl p-6 relative">
+  <div class="bg-[#1a1d29] w-[430px] rounded-xl shadow-xl p-6 relative border border-[#2a2d3a]">
 
     <!-- HEADER -->
     <h2
-      class="text-xl font-semibold text-white mb-4 border-b border-white/20 pb-2">
+      class="text-xl font-semibold text-white mb-4 border-b border-[#2a2d3a] pb-2">
       User Account Details
     </h2>
 
@@ -81,12 +81,12 @@
     <div class="flex justify-end gap-3 mt-6">
       <button
         wire:click="approveUser({{ $selectedUser->id }})"
-        class="bg-indigo-500 hover:bg-indigo-600 px-5 py-2 rounded-lg text-white">
+        class="bg-[#00d4aa] hover:bg-[#00e6b8] px-5 py-2 rounded-lg text-[#0f1117] font-semibold">
         Approve
       </button>
       <button
         wire:click="closeUser"
-        class="border border-white/30 px-5 py-2 rounded-lg text-white">
+        class="border border-[#2a2d3a] px-5 py-2 rounded-lg text-white hover:bg-[#252836]">
         Cancel
       </button>
     </div>

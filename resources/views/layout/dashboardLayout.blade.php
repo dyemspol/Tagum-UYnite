@@ -25,13 +25,13 @@
 />
 </head>
 
-<body class="bg-slate-950">
+<body class="bg-[#0f1117]">
 
     @vite("resources/js/app.js")
-    <div class="bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 flex min-h-screen w-full">
+    <div class="bg-[#0f1117] flex min-h-screen w-full">
         @auth
         <!-- Sidebar -->
-        <section class="fixed bg-[#13314f] rounded-tr-4xl rounded-br-4xl h-screen w-[12em] flex flex-col py-5 justify-between">
+        <section class="fixed bg-[#12151e] rounded-tr-4xl rounded-br-4xl h-screen w-[12em] flex flex-col py-5 justify-between">
             <!-- Top part: logo + menu -->
             <div>
 
@@ -40,7 +40,7 @@
     <img class="w-30 h-auto" src="{{ asset('img/department_logo/health.png') }}" alt="Department Logo">
 </div>
                 <div class="text-center text-white text-sm mt-3"> {{ Auth::user()->department->department_name ?? 'Admin' }} Department</div>
-                <hr class="my-5 text-[#ffffff3d]">
+                <hr class="my-5 text-[#2a2d3a]">
                 <!-- EMPLOYEE NAV MENU -->
                 <div class="flex flex-col pl-2 space-y-8">
                     @if(Auth::user()->role == 'employee')
@@ -84,14 +84,23 @@
                     @endif
                 </div>
             </div>
-            <!-- Bottom part: logout -->
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="flex items-center space-x-3 pl-2">
-                    <img class="w-6 h-6" src="{{ asset('img/Logout.png') }}" alt="">
-                    <span class="text-white font-medium">Logout</span>
+            <!-- Bottom part: dark mode + logout -->
+            <div class="flex flex-col pl-2 space-y-5 pb-2">
+                <!-- Dark Mode Toggle -->
+                <button id="darkModeToggle" type="button" class="flex items-center space-x-3">
+                    <i id="darkModeIcon" class="hgi hgi-stroke hgi-moon text-white" style="font-size: 1.4rem;"></i>
+                    <span id="darkModeLabel" class="text-white font-medium">Dark Mode</span>
                 </button>
-            </form>
+
+                <!-- Logout -->
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="flex items-center space-x-3">
+                        <i class="hgi hgi-stroke hgi-logout-01 text-white" style="font-size: 1.4rem;"></i>
+                        <span class="text-white font-medium">Logout</span>
+                    </button>
+                </form>
+            </div>
         </section>
         @endauth
         <!-- Main Content -->
@@ -119,6 +128,22 @@
 
 
     @stack('scripts')
+
+  <script>
+  const btn   = document.getElementById('darkModeToggle');
+  const icon  = document.getElementById('darkModeIcon');
+  const label = document.getElementById('darkModeLabel');
+
+  btn.onclick = () => {
+    if (label.textContent === 'Dark Mode') {
+      icon.className  = 'hgi hgi-stroke hgi-sun-01 text-white';
+      label.textContent = 'Light Mode';
+    } else {
+      icon.className  = 'hgi hgi-stroke hgi-moon text-white';
+      label.textContent = 'Dark Mode';
+    }
+  };
+</script>
 </body>
 
 </html>

@@ -4,17 +4,17 @@
       style="display: none;">
 
     <!-- Modal Panel -->
-    <div class="relative w-full max-w-md mx-4 bg-[#0f2a43] rounded-2xl shadow-2xl border border-white/10 overflow-hidden">
+    <div class="relative w-full max-w-md mx-4 bg-[#12151e] rounded-2xl shadow-2xl border border-[#2a2d3a] overflow-hidden">
 
         <!-- Header -->
-        <div class="bg-[#173a5c] px-6 py-4 flex items-center border-b border-white/10">
+        <div class="bg-[#1a1d29] px-6 py-4 flex items-center border-b border-[#2a2d3a]">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                    <i class="fa-solid fa-user text-blue-400 text-sm"></i>
+                <div class="w-8 h-8 rounded-lg bg-[#00d4aa]/20 flex items-center justify-center">
+                    <i class="fa-solid fa-user text-[#00d4aa] text-sm"></i>
                 </div>
                 <div>
                     <h3 class="text-white font-semibold text-sm">Staff Details</h3>
-                    <p class="text-blue-300 text-xs">#STF-001</p>
+                    <p class="text-[#00d4aa] text-xs">#STF-001</p>
                 </div>
             </div>
 
@@ -32,16 +32,16 @@
             <p class="text-gray-400 text-xs font-semibold uppercase tracking-wider px-1">Personal Details</p>
 
             <div class="grid grid-cols-2 gap-3">
-                <div class="flex items-start gap-3 bg-[#173a5c]/60 rounded-xl px-4 py-3">
-                    <i class="fa-solid fa-user text-blue-400 text-sm mt-0.5 w-4 flex-shrink-0"></i>
+                <div class="flex items-start gap-3 bg-[#1a1d29]/80 rounded-xl px-4 py-3">
+                    <i class="fa-solid fa-user text-[#00d4aa] text-sm mt-0.5 w-4 flex-shrink-0"></i>
                     <div>
                         <p class="text-gray-400 text-xs mb-0.5">First Name</p>
                         <p class="text-white text-sm">John</p>
                     </div>
                 </div>
 
-                <div class="flex items-start gap-3 bg-[#173a5c]/60 rounded-xl px-4 py-3">
-                    <i class="fa-solid fa-user text-blue-400 text-sm mt-0.5 w-4 flex-shrink-0"></i>
+                <div class="flex items-start gap-3 bg-[#1a1d29]/80 rounded-xl px-4 py-3">
+                    <i class="fa-solid fa-user text-[#00d4aa] text-sm mt-0.5 w-4 flex-shrink-0"></i>
                     <div>
                         <p class="text-gray-400 text-xs mb-0.5">Last Name</p>
                         <p class="text-white text-sm">Doe</p>
@@ -52,32 +52,32 @@
             <!-- Account Details Section -->
             <p class="text-gray-400 text-xs font-semibold uppercase tracking-wider px-1 mt-1">Account Details</p>
 
-            <div class="flex items-start gap-3 bg-[#173a5c]/60 rounded-xl px-4 py-3">
-                <i class="fa-solid fa-envelope text-blue-400 text-sm mt-0.5 w-4 flex-shrink-0"></i>
+            <div class="flex items-start gap-3 bg-[#1a1d29]/80 rounded-xl px-4 py-3">
+                <i class="fa-solid fa-envelope text-[#00d4aa] text-sm mt-0.5 w-4 flex-shrink-0"></i>
                 <div>
                     <p class="text-gray-400 text-xs mb-0.5">Email Address</p>
                     <p class="text-white text-sm truncate">john@example.com</p>
                 </div>
             </div>
 
-            <div class="flex items-start gap-3 bg-[#173a5c]/60 rounded-xl px-4 py-3">
-                <i class="fa-solid fa-building text-blue-400 text-sm mt-0.5 w-4 flex-shrink-0"></i>
+            <div class="flex items-start gap-3 bg-[#1a1d29]/80 rounded-xl px-4 py-3">
+                <i class="fa-solid fa-building text-[#00d4aa] text-sm mt-0.5 w-4 flex-shrink-0"></i>
                 <div>
                     <p class="text-gray-400 text-xs mb-0.5">Department</p>
                     <p class="text-white text-sm">IT</p>
                 </div>
             </div>
 
-            <div class="flex items-start gap-3 bg-[#173a5c]/60 rounded-xl px-4 py-3">
-                <i class="fa-solid fa-id-badge text-blue-400 text-sm mt-0.5 w-4 flex-shrink-0"></i>
+            <div class="flex items-start gap-3 bg-[#1a1d29]/80 rounded-xl px-4 py-3">
+                <i class="fa-solid fa-id-badge text-[#00d4aa] text-sm mt-0.5 w-4 flex-shrink-0"></i>
                 <div>
                     <p class="text-gray-400 text-xs mb-0.5">Staff ID</p>
                     <p class="text-white text-sm font-mono">#STF-001</p>
                 </div>
             </div>
 
-            <div class="flex items-start gap-3 bg-[#173a5c]/60 rounded-xl px-4 py-3">
-                <i class="fa-solid fa-calendar text-blue-400 text-sm mt-0.5 w-4 flex-shrink-0"></i>
+            <div class="flex items-start gap-3 bg-[#1a1d29]/80 rounded-xl px-4 py-3">
+                <i class="fa-solid fa-calendar text-[#00d4aa] text-sm mt-0.5 w-4 flex-shrink-0"></i>
                 <div>
                     <p class="text-gray-400 text-xs mb-0.5">Date Created</p>
                     <p class="text-white text-sm">2026-02-25</p>
@@ -88,7 +88,7 @@
         <!-- Footer -->
         <div class="px-6 pb-6">
             <button @click="showStaffModal = false"
-                    class="w-full py-2.5 rounded-xl bg-[#173a5c] hover:bg-[#1e4a73] text-gray-300 hover:text-white text-sm font-medium border border-white/10">
+                    class="w-full py-2.5 rounded-xl bg-[#1a1d29] hover:bg-[#252836] text-gray-300 hover:text-white text-sm font-medium border border-[#2a2d3a]">
                 Close
             </button>
         </div>

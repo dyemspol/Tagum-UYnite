@@ -1,8 +1,8 @@
 <div>
     <h2 class="text-xl font-semibold text-white mb-10">Messages</h2>
-    <div class="bg-[#0f1f2e00] text-[#e6edf3] min-h-[600px] flex">
+    <div class="bg-[#0f1117] text-[#e6edf3] min-h-[600px] flex">
         <!-- Sidebar -->
-        <aside class="w-60 bg-[#0b1a2800] p-5 border-r border-[#1f3346] flex flex-col">
+        <aside class="w-60 bg-[#12151e] p-5 border-r border-[#2a2d3a] flex flex-col rounded-l-lg">
             <h3 class="text-[#9fb3c8] text-sm mb-4 font-semibold">City Mayor's Office</h3>
             <ul class="space-y-2">
                 <li class="cursor-pointer text-[#cbd5e1] hover:text-white">#city-hall</li>
@@ -15,7 +15,7 @@
             <div class="flex-1 overflow-y-auto p-6 messages">
                 <!-- Message 1 -->
                 <div class="flex space-x-3 mb-6">
-                    <div class="w-9 h-9 rounded-full bg-[#1f3346] flex-shrink-0"></div>
+                    <div class="w-9 h-9 rounded-full bg-[#252836] flex-shrink-0"></div>
                     <div>
                         <div class="text-xs text-[#9fb3c8] font-semibold mb-1">City Engineering · 9:00</div>
                         <p class="text-sm leading-relaxed max-w-lg">
@@ -48,14 +48,14 @@
             </div>
 
             <!-- Input bar -->
-            <form class="flex gap-3 p-4 bg-[#0b1a2800] border-t border-[#1f3346]">
+            <form class="flex gap-3 p-4 bg-[#12151e] border-t border-[#2a2d3a]">
                 <input
                     type="text"
                     placeholder="Message #city-hall"
-                    class="flex-1 rounded-md bg-[#0f1f2e] border border-[#1f3346] px-4 py-2 text-[#e6edf3] focus:outline-none focus:ring-2 focus:ring-[#2563eb]" />
+                    class="flex-1 rounded-md bg-[#1a1d29] border border-[#2a2d3a] px-4 py-2 text-[#e6edf3] focus:outline-none focus:ring-2 focus:ring-[#00d4aa]" />
                 <button
                     type="submit"
-                    class="bg-[#2563eb] px-5 py-2 rounded-md text-white font-semibold hover:bg-[#1e40af] transition">
+                    class="bg-[#00d4aa] px-5 py-2 rounded-md text-[#0f1117] font-semibold hover:bg-[#00e6b8] transition">
                     Send
                 </button>
             </form>

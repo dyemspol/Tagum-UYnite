@@ -10,11 +10,11 @@
         </h2>
 
         <button type="button" @click="showCreateModal = true"
-            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-1 rounded-lg transition-all duration-300">
+            class="bg-[#00d4aa] hover:bg-[#00e6b8] text-[#0f1117] font-semibold px-6 py-1 rounded-lg transition-all duration-300">
             Create Account
         </button>
     </div>
-    <div id="staffAccountsSection" class="bg-[#173a5c] p-6 rounded-2xl shadow-lg overflow-auto">
+    <div id="staffAccountsSection" class="bg-[#1a1d29] p-6 rounded-2xl shadow-lg overflow-auto border border-[#2a2d3a]">
         @if (session()->has('success'))
         <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)"
             class="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center justify-between transition-all duration-300">
@@ -32,7 +32,7 @@
         @endif
         <table class="w-full text-sm text-left text-gray-200">
             <thead>
-                <tr class="bg-[#244c72] text-white rounded-lg">
+                <tr class="bg-[#252836] text-white rounded-lg">
                     <th class="px-4 py-3 rounded-l-lg">Staff ID</th>
                     <th class="px-4 py-3">Full Name</th>
                     <th class="px-4 py-3">Email</th>
@@ -43,8 +43,8 @@
 
             <tbody>
                 @foreach ($users as $user)
-                <tr class="border-t border-[#ffffff1a]">
-                    <td class="px-4 py-4 text-blue-300">#STF-{{ $user->id }}</td>
+                <tr class="border-t border-[#2a2d3a]">
+                    <td class="px-4 py-4 text-[#00d4aa]">#STF-{{ $user->id }}</td>
                     <td class="px-4 py-4">{{ $user->first_name . ' ' . $user->last_name }}</td>
                     <td class="px-4 py-4">{{ $user->email }}</td>
                     <td class="px-4 py-4">{{ $user->department?->department_name ?? 'N/A' }}</td>

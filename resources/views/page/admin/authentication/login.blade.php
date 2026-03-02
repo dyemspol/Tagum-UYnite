@@ -7,10 +7,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
+<body class="min-h-screen flex items-center justify-center bg-[#0f1117]">
 
   <!-- Login Card -->
-  <div class="w-full max-w-md bg-slate-900/85 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-blue-900/40">
+  <div class="w-full max-w-md bg-[#1a1d29] backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-[#2a2d3a]">
 
     <!-- Header -->
     <div class="text-center mb-8">
@@ -18,7 +18,7 @@
       {{-- <h1 class="text-3xl font-bold text-white tracking-wide">
         Tagum Unite
       </h1> --}}
-      <p class="text-blue-400 text-sm mt-1">
+      <p class="text-[#00d4aa] text-sm mt-1">
         Admin Portal
       </p>
       <span class="inline-block mt-3 px-3 py-1 text-xs rounded-full bg-red-900/40 text-red-400 border border-red-800">
@@ -31,35 +31,35 @@
 
       <!-- Staff ID / Email -->
       <div>
-        <label class="block text-sm text-blue-300 mb-1">
+        <label class="block text-sm text-gray-300 mb-1">
           Staff ID or Email
         </label>
         <input
           type="text"
           placeholder="Enter your staff ID"
-          class="w-full px-4 py-3 rounded-lg bg-slate-950 text-white border border-blue-900/50 focus:outline-none focus:ring-2 focus:ring-blue-600"
+          class="w-full px-4 py-3 rounded-lg bg-[#12151e] text-white border border-[#2a2d3a] focus:outline-none focus:ring-2 focus:ring-[#00d4aa]"
         />
       </div>
 
       <!-- Password -->
       <div>
-        <label class="block text-sm text-blue-300 mb-1">
+        <label class="block text-sm text-gray-300 mb-1">
           Password
         </label>
         <input
           type="password"
           placeholder="Enter your password"
-          class="w-full px-4 py-3 rounded-lg bg-slate-950 text-white border border-blue-900/50 focus:outline-none focus:ring-2 focus:ring-blue-600"
+          class="w-full px-4 py-3 rounded-lg bg-[#12151e] text-white border border-[#2a2d3a] focus:outline-none focus:ring-2 focus:ring-[#00d4aa]"
         />
       </div>
 
       <!-- Options -->
       <div class="flex items-center justify-between text-sm">
-        <label class="flex items-center gap-2 text-blue-300">
-          <input type="checkbox" class="accent-blue-600" />
+        <label class="flex items-center gap-2 text-gray-300">
+          <input type="checkbox" class="accent-[#00d4aa]" />
           Remember device
         </label>
-        <a href="#" class="text-blue-500 hover:text-blue-400">
+        <a href="#" class="text-[#00d4aa] hover:text-[#00e6b8]">
           Forgot password?
         </a>
       </div>
@@ -67,14 +67,14 @@
       <!-- Login Button -->
       <button
         type="submit"
-        class="w-full py-3 rounded-lg bg-blue-700 hover:bg-blue-600 transition font-semibold text-white shadow-lg shadow-blue-900/40"
+        class="w-full py-3 rounded-lg bg-[#00d4aa] hover:bg-[#00e6b8] transition font-semibold text-[#0f1117] shadow-lg shadow-[#00d4aa]/20"
       >
         Secure Login
       </button>
     </form>
 
     <!-- Footer -->
-    <div class="mt-6 text-center text-xs text-blue-400 space-y-1">
+    <div class="mt-6 text-center text-xs text-gray-400 space-y-1">
       <p>For official use only</p>
       <p>Unauthorized access is prohibited</p>
     </div>

@@ -3,10 +3,10 @@
      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
      style="display: none;">
   <!-- MODAL CONTAINER -->
-  <div class="bg-[#1f3b56] w-full max-w-md rounded-xl shadow-xl p-6 relative">
+  <div class="bg-[#1a1d29] w-full max-w-md rounded-xl shadow-xl p-6 relative border border-[#2a2d3a]">
 
     <!-- HEADER -->
-    <h2 class="text-lg text-white mb-5 border-b border-white/20 pb-2">
+    <h2 class="text-lg text-white mb-5 border-b border-[#2a2d3a] pb-2">
       Issue Details
     </h2>
 
@@ -81,14 +81,14 @@
     <!-- FOOTER BUTTONS -->
     <!-- FOOTER BUTTONS -->
 <div class="flex justify-end gap-3 mt-6">
-  <button class="bg-indigo-500 hover:bg-indigo-600 px-4 py-2 rounded-lg text-white">
+  <button class="bg-[#00d4aa] hover:bg-[#00e6b8] px-4 py-2 rounded-lg text-[#0f1117] font-semibold">
     Respond
   </button>
   <button class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-white">
     Take Down
   </button>
   <button @click="showIssueModal = false"
-          class="border border-white/30 px-4 py-2 rounded-lg text-white">
+          class="border border-[#2a2d3a] px-4 py-2 rounded-lg text-white hover:bg-[#252836]">
     Cancel
   </button>
 </div>
