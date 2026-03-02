@@ -87,10 +87,10 @@
             <!-- Bottom part: dark mode + logout -->
             <div class="flex flex-col pl-2 space-y-5 pb-2">
                 <!-- Dark Mode Toggle -->
-                <button id="darkModeToggle" type="button" class="flex items-center space-x-3">
+                <!-- <button id="darkModeToggle" type="button" class="flex items-center space-x-3">
                     <i id="darkModeIcon" class="hgi hgi-stroke hgi-moon text-white" style="font-size: 1.4rem;"></i>
                     <span id="darkModeLabel" class="text-white font-medium">Dark Mode</span>
-                </button>
+                </button> -->
 
                 <!-- Logout -->
                 <form action="{{ route('logout') }}" method="POST">
@@ -143,6 +143,24 @@
       label.textContent = 'Dark Mode';
     }
   };
+
+   // Load saved theme from localStorage
+        if (localStorage.getItem('theme') === 'dark') {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+
+        // Toggle theme
+        toggleBtn.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
 </script>
 </body>
 

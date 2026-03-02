@@ -87,7 +87,7 @@
                     @foreach($low as $report)
                     <div data-id="{{ $report->id }}" wire:key="low-{{ $report->id }}" class="bg-[#12151e] border border-[#2a2d3a] rounded-xl p-4 cursor-grab hover:border-green-400/40 transition-all duration-200">
                         <div class="flex items-start justify-between mb-3">
-                            <span class="text-xs bg-blue-500/15 text-blue-400 border border-blue-500/25 px-2 py-0.5 rounded-full">{{ $categories }}</span>
+                            <span class="text-xs bg-[#00d4aa]/15 text-[#00d4aa] border border-[#00d4aa]/25 px-2 py-0.5 rounded-full">{{ $categories }}</span>
                             <span class="text-[#00d4aa] text-xs font-mono">{{ $report->report_id }}</span>
                         </div>
                         <p class="text-white text-sm font-medium mb-1">{{ $report->title }}</p>
