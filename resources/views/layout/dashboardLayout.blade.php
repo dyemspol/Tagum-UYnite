@@ -20,9 +20,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
-/>
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 </head>
 
 <body class="bg-[#0f1117]">
@@ -35,10 +34,10 @@
             <!-- Top part: logo + menu -->
             <div>
 
-               <div class="flex pl-2 justify-center items-center mb-4 gap-4">
-    {{-- <img class="w-15 h-auto" src="{{ asset('img/LOGO.png') }}" alt="Main Logo"> --}}
-    <img class="w-30 h-auto" src="{{ asset('img/department_logo/health.png') }}" alt="Department Logo">
-</div>
+                <div class="flex pl-2 justify-center items-center mb-4 gap-4">
+                    {{-- <img class="w-15 h-auto" src="{{ asset('img/LOGO.png') }}" alt="Main Logo"> --}}
+                    <img class="w-30 h-auto" src="{{ asset('img/department_logo/health.png') }}" alt="Department Logo">
+                </div>
                 <div class="text-center text-white text-sm mt-3"> {{ Auth::user()->department->department_name ?? 'Admin' }} Department</div>
                 <hr class="my-5 text-[#2a2d3a]">
                 <!-- EMPLOYEE NAV MENU -->
@@ -109,8 +108,8 @@
         </div>
 
     </div>
-    @include('components.viewIssueModal')
-    
+
+
     @vite('js/charts/barchart.js')
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -129,22 +128,22 @@
 
     @stack('scripts')
 
-  <script>
-  const btn   = document.getElementById('darkModeToggle');
-  const icon  = document.getElementById('darkModeIcon');
-  const label = document.getElementById('darkModeLabel');
+    <script>
+        const btn = document.getElementById('darkModeToggle');
+        const icon = document.getElementById('darkModeIcon');
+        const label = document.getElementById('darkModeLabel');
 
-  btn.onclick = () => {
-    if (label.textContent === 'Dark Mode') {
-      icon.className  = 'hgi hgi-stroke hgi-sun-01 text-white';
-      label.textContent = 'Light Mode';
-    } else {
-      icon.className  = 'hgi hgi-stroke hgi-moon text-white';
-      label.textContent = 'Dark Mode';
-    }
-  };
+        btn.onclick = () => {
+            if (label.textContent === 'Dark Mode') {
+                icon.className = 'hgi hgi-stroke hgi-sun-01 text-white';
+                label.textContent = 'Light Mode';
+            } else {
+                icon.className = 'hgi hgi-stroke hgi-moon text-white';
+                label.textContent = 'Dark Mode';
+            }
+        };
 
-   // Load saved theme from localStorage
+        // Load saved theme from localStorage
         if (localStorage.getItem('theme') === 'dark') {
             html.classList.add('dark');
         } else {
@@ -161,7 +160,7 @@
                 localStorage.setItem('theme', 'dark');
             }
         });
-</script>
+    </script>
 </body>
 
 </html>

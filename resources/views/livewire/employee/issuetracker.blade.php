@@ -5,6 +5,14 @@
     <div>
         <h2 class="text-xl font-semibold text-white mb-6">Issue Tracker</h2>
 
+        <div class="mb-4">
+            @if(session()->has('success'))
+            <div class="bg-green-500/20 text-green-400 border border-green-500/30 px-2 py-0.5 rounded-full font-medium">{{ session('success') }}</div>
+            @endif
+            @if(session()->has('error'))
+            <div class="bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded-full font-medium">{{ session('error') }}</div>
+            @endif
+        </div>
         <!-- Kanban Board -->
         <div class="grid grid-cols-3 gap-4">
 
@@ -32,7 +40,7 @@
                         <p class="text-gray-400 text-xs mb-3">Reported by <span class="text-gray-300">{{ $report->user->first_name }} {{ $report->user->last_name }}</span></p>
                         <div class="flex items-center justify-between">
                             <span class="text-gray-500 text-xs">{{ $report->created_at->format('d/m/Y') }}</span>
-                            <i @click="showIssueModal = true" class="hgi hgi-stroke hgi-view text-lg text-gray-400 hover:text-[#00d4aa] cursor-pointer transition-colors"></i>
+                            <i wire:click="viewIssue({{ $report->id }})" class="hgi hgi-stroke hgi-view text-lg text-gray-400 hover:text-[#00d4aa] cursor-pointer transition-colors"></i>
                         </div>
                     </div>
                     @endforeach
@@ -63,7 +71,7 @@
                         <p class="text-gray-400 text-xs mb-3">Reported by <span class="text-gray-300">{{ $report->user->first_name }} {{ $report->user->last_name }}</span></p>
                         <div class="flex items-center justify-between">
                             <span class="text-gray-500 text-xs">{{ $report->created_at->format('d/m/Y') }}</span>
-                            <i @click="showIssueModal = true" class="hgi hgi-stroke hgi-view text-lg text-gray-400 hover:text-[#00d4aa] cursor-pointer transition-colors"></i>
+                            <i wire:click="viewIssue({{ $report->id }})" class="hgi hgi-stroke hgi-view text-lg text-gray-400 hover:text-[#00d4aa] cursor-pointer transition-colors"></i>
                         </div>
                     </div>
                     @endforeach
@@ -94,17 +102,19 @@
                         <p class="text-gray-400 text-xs mb-3">Reported by <span class="text-gray-300">{{ $report->user->first_name }} {{ $report->user->last_name }}</span></p>
                         <div class="flex items-center justify-between">
                             <span class="text-gray-500 text-xs">{{ $report->created_at->format('d/m/Y') }}</span>
-                            <i @click="showIssueModal = true" class="hgi hgi-stroke hgi-view text-lg text-gray-400 hover:text-[#00d4aa] cursor-pointer transition-colors"></i>
+                            <i wire:click="viewIssue({{ $report->id }})" class="hgi hgi-stroke hgi-view text-lg text-gray-400 hover:text-[#00d4aa] cursor-pointer transition-colors"></i>
                         </div>
                     </div>
                     @endforeach
                 </div>
             </div>
-
         </div>
+
+        @include('components.viewIssueModal', ['selectedReport' => $selectedReport])
+
+
     </div>
 
-    @include('components.viewIssueModal')
 
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     @script
