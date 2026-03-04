@@ -123,7 +123,7 @@
     @vite("resources/js/map.js")
 
     @vite("resources/js/track_issue_sections.js")
-
+    @vite("resources/js/swipper.js")
 
 
 
