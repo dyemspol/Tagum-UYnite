@@ -2,5 +2,6 @@
 @section('title', 'Messages')
 
 @section('content')
-<livewire:employee.message />
+<livewire:employee.messagesz />
+
 @endsection
