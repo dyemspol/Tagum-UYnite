@@ -1,11 +1,26 @@
 <!-- MODAL BACKDROP -->
+
 <div
   id="viewIssueModal"
   class="fixed inset-0 bg-black/60 items-center justify-center z-50 {{ $selectedReport ? 'flex' : 'hidden' }}">
   @if($selectedReport)
 
   <!-- MODAL CONTAINER -->
-  <div class="bg-[#1a1d29] w-full max-w-md rounded-xl shadow-xl p-6 relative border border-[#2a2d3a]">
+  <div class="bg-[#1a1d29] w-full max-w-md rounded-xl shadow-xl p-6 relative border border-[#2a2d3a]"
+       x-data
+       x-init="$nextTick(() => {
+    new Swiper('.mySwiper', {
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+})">
     <!-- HEADER -->
     <h2 class="text-lg text-white mb-5 border-b border-[#2a2d3a] pb-2">
       Issue Details
@@ -74,7 +89,6 @@
       </div>
     </div>
 
-    <!-- FOOTER BUTTONS -->
     <!-- FOOTER BUTTONS -->
     <div class="flex justify-end gap-3 mt-6">
       <button wire:click="resolved({{ $selectedReport->id }})" class="bg-[#00d4aa] hover:bg-[#00e6b8] px-4 py-2 rounded-lg text-[#0f1117] font-semibold ">
