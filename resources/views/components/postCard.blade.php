@@ -143,7 +143,8 @@
                 :class="reaction === 'like' ? 'bg-[#31A871] bg-opacity-20' : 'bg-[#354a5c00] hover:bg-[#354a5c]'">
 
                 <svg class="w-6 h-6" :class="reaction === 'like' ? 'text-[#31A871]' : 'text-[#31A871]'"
-                    :fill="reaction === 'like' ? 'currentColor' : 'none'" stroke-width="1.5" stroke="currentColor"
+                   :fill="'none'"  
+                    :stroke="reaction === 'like' ? 'white' : '#31A871'"
                     viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="m15 11.25-3-3m0 0-3 3m3-3v7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
@@ -152,17 +153,18 @@
             </button>
             <!-- Dislike Button -->
             <button @click="update('dislike'); $wire.toggleReaction('dislike')"
-                class="flex space-x-0.5 items-center rounded-xl px-2 py-1 cursor-pointer transition-all duration-150"
-                :class="reaction === 'dislike' ? 'bg-red-900 bg-opacity-20' : 'bg-[#354a5c00] hover:bg-[#354a5c]'">
+    class="flex space-x-0.5 items-center rounded-xl px-2 py-1 cursor-pointer transition-all duration-150"
+    :class="reaction === 'dislike' ? 'bg-red-900 bg-opacity-20' : 'bg-[#354a5c00] hover:bg-[#354a5c]'">
 
-                <svg class="w-6 h-6" :class="reaction === 'dislike' ? 'text-red-500' : 'text-[#31A871]'"
-                    :fill="reaction === 'dislike' ? 'currentColor' : 'none'" stroke-width="1.5" stroke="currentColor"
-                    viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="m9 12.75 3 3m0 0 3-3m-3 3v-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
-                </svg>
-                <span class="text-white text-sm" x-text="dislikes"></span>
-            </button>
+    <svg class="w-6 h-6"
+     :stroke="reaction === 'dislike' ? 'white' : '#31A871'"   
+     :fill="'none'"  
+     stroke-width="1.5" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round"
+        d="m9 12.75 3 3m0 0 3-3m-3 3v-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+</svg>
+    <span class="text-white text-sm" x-text="dislikes"></span>
+</button>
             <button type="button"
             id="commentModalBtn"
             wire:click="$dispatch('openCommentModal', { postId: {{ $post->id }} })"
