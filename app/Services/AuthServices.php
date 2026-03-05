@@ -86,7 +86,7 @@ class AuthServices
 
     public function createUser(array $data)
     {
-        if ($data['department_id'] == null) {
+        if (empty($data['department_id'])) {
             $validator = $this->validateRegister($data);
         } else {
             $validator = $this->validatEMPLOYEE($data);
@@ -99,7 +99,7 @@ class AuthServices
             ];
         }
 
-        if ($data['department_id'] == null) {
+        if (empty($data['department_id'])) {
             try {
 
                 DB::beginTransaction();
