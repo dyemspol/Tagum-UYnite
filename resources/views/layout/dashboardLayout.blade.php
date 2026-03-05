@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title',"Dashboard")</title>
+    <title>@yield('title', 'Dashboard')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://use.hugeicons.com/font/icons.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -19,88 +19,90 @@
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 </head>
 
 <body class="bg-[#0f1117]">
 
-    @vite("resources/js/app.js")
+    @vite('resources/js/app.js')
     <div class="bg-[#0f1117] flex min-h-screen w-full">
         @auth
-        <!-- Sidebar -->
-        <section class="fixed bg-[#12151e] rounded-tr-4xl rounded-br-4xl h-screen w-[12em] flex flex-col py-5 justify-between">
-            <!-- Top part: logo + menu -->
-            <div>
+            <!-- Sidebar -->
+            <section
+                class="fixed bg-[#12151e] rounded-tr-4xl rounded-br-4xl h-screen w-[12em] flex flex-col py-5 justify-between">
+                <!-- Top part: logo + menu -->
+                <div>
 
-                <div class="flex pl-2 justify-center items-center mb-4 gap-4">
-                    {{-- <img class="w-15 h-auto" src="{{ asset('img/LOGO.png') }}" alt="Main Logo"> --}}
-                    <img class="w-30 h-auto" src="{{ asset('img/department_logo/health.png') }}" alt="Department Logo">
+                    <div class="flex pl-2 justify-center items-center mb-4 gap-4">
+                        {{-- <img class="w-15 h-auto" src="{{ asset('img/LOGO.png') }}" alt="Main Logo"> --}}
+                        <img class="w-30 h-auto" src="{{ asset('img/department_logo/health.png') }}" alt="Department Logo">
+                    </div>
+                    <div class="text-center text-white text-sm mt-3">
+                        {{ Auth::user()->department->department_name ?? 'Admin' }} Department</div>
+                    <hr class="my-5 text-[#2a2d3a]">
+                    <!-- EMPLOYEE NAV MENU -->
+                    <div class="flex flex-col pl-2 space-y-8">
+                        @if (Auth::user()->role == 'employee')
+                            <a href="{{ route('employee.dashboard') }}" class="flex items-center space-x-2">
+
+                                <img class="w-7 h-7" src="{{ asset('img/dashboardIcon.png') }}" alt="">
+                                <span
+                                    class="{{ request()->routeIs('employee.dashboard') ? 'text-green-500' : 'text-white' }} font-medium">
+                                    Dashboard
+                                </span>
+                            </a>
+                            <a href="{{ route('tracker') }}" class="flex items-center space-x-3">
+                                <img class="w-6 h-6" src="{{ asset('img/track_issue_logo.png') }}" alt="">
+                                <span  class="{{ request()->routeIs('tracker') ? 'text-green-500' : 'text-white' }} font-medium">Issues</span>
+                            </a>
+                            <a href="{{ route('map') }}" class="flex items-center space-x-3">
+                                <img class="w-6 h-6" src="{{ asset('img/Location.png') }}" alt="">
+                                <span class="{{ request()->routeIs('map') ? 'text-green-500' : 'text-white' }} font-medium">Map</span>
+                            </a>
+                            <a href="{{ route('messages') }}" class="flex items-center space-x-3 pl-1">
+                                <i class="fa-regular fa-comment text-white" style="font-size: 1.25rem;"></i>
+                                <span class="{{ request()->routeIs('messages') ? 'text-green-500' : 'text-white' }} font-medium">Messages</span>
+                            </a>
+                            <a href="{{ route('reports') }}" class="flex items-center space-x-3 pl-1">
+                                <i class="hgi hgi-stroke hgi-account-setting-01 text-white" style="font-size: 1.25rem;"></i>
+                                {{-- <i class="fa-regular fa-comment text-white" style="font-size: 1.25rem;"></i> --}}
+                                <span class="{{ request()->routeIs('reports') ? 'text-green-500' : 'text-white' }} font-medium">Reports</span>
+                            </a>
+                        @elseif(Auth::user()->role == 'superadmin')
+                            <!-- SUPERADMIN NAV MENU -->
+                            <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
+                                <img class="w-7 h-7" src="{{ asset('img/dashboardIcon.png') }}" alt="">
+                                <span class="{{ request()->routeIs('dashboard') ? 'text-green-500' : 'text-white' }} font-medium">Dashboard</span>
+                            </a>
+                            <a href="{{ route('staffAccounts') }}" class="flex items-center space-x-3">
+                                <img class="w-6 h-6" src="{{ asset('img/Survey.png') }}" alt="">
+                                <span class="{{ request()->routeIs('staffAccounts') ? 'text-green-500' : 'text-white' }} font-medium">Accounts</span>
+                            </a>
+                            <a href="{{ route('accountReview') }}" class="flex items-center space-x-3">
+                                <img class="w-6 h-6" src="{{ asset('img/Person.png') }}" alt="">
+                                <span class="{{ request()->routeIs('accountReview') ? 'text-green-500' : 'text-white' }} font-medium">Review</span>
+                            </a>
+                        @endif
+                    </div>
                 </div>
-                <div class="text-center text-white text-sm mt-3"> {{ Auth::user()->department->department_name ?? 'Admin' }} Department</div>
-                <hr class="my-5 text-[#2a2d3a]">
-                <!-- EMPLOYEE NAV MENU -->
-                <div class="flex flex-col pl-2 space-y-8">
-                    @if(Auth::user()->role == 'employee')
-                    <a href="{{ route('employee.dashboard') }}" class="flex items-center space-x-2">
-                        <img class="w-7 h-7" src="{{ asset('img/dashboardIcon.png') }}" alt="">
-                        <span class="text-white font-medium">Dashboard</span>
-                    </a>
-                    <a href="{{ route('tracker') }}" class="flex items-center space-x-3">
-                        <img class="w-6 h-6" src="{{ asset('img/track_issue_logo.png') }}" alt="">
-                        <span class="text-white font-medium">Issues</span>
-                    </a>
-                    <a href="{{ route('map') }}" class="flex items-center space-x-3">
-                        <img class="w-6 h-6" src="{{ asset('img/Location.png') }}" alt="">
-                        <span class="text-white font-medium">Map</span>
-                    </a>
-                    <a href="{{ route('messages') }}" class="flex items-center space-x-3 pl-1">
-                        <i class="fa-regular fa-comment text-white" style="font-size: 1.25rem;"></i>
-                        <span class="text-white font-medium">Messages</span>
-                    </a>
-                    <a href="{{ route('reports') }}" class="flex items-center space-x-3 pl-1">
-                        <i class="hgi hgi-stroke hgi-account-setting-01 text-white" style="font-size: 1.25rem;"></i>
-                        {{-- <i class="fa-regular fa-comment text-white" style="font-size: 1.25rem;"></i> --}}
-                        <span class="text-white font-medium">Reports</span>
-                    </a>
+                <!-- Bottom part: dark mode + logout -->
+                <div class="flex flex-col pl-2 space-y-5 pb-2">
+                    <!-- Dark Mode Toggle -->
+                    <!-- <button id="darkModeToggle" type="button" class="flex items-center space-x-3">
+                        <i id="darkModeIcon" class="hgi hgi-stroke hgi-moon text-white" style="font-size: 1.4rem;"></i>
+                        <span id="darkModeLabel" class="text-white font-medium">Dark Mode</span>
+                    </button> -->
 
-                    @elseif(Auth::user()->role == 'superadmin')
-
-                    <!-- SUPERADMIN NAV MENU -->
-                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
-                        <img class="w-7 h-7" src="{{ asset('img/dashboardIcon.png') }}" alt="">
-                        <span class="text-white font-medium">Dashboard</span>
-                    </a>
-                    <a href="{{ route('staffAccounts') }}" class="flex items-center space-x-3">
-                        <img class="w-6 h-6" src="{{ asset('img/Survey.png') }}" alt="">
-                        <span class="text-white font-medium">Accounts</span>
-                    </a>
-                    <a href="{{ route('accountReview') }}" class="flex items-center space-x-3">
-                        <img class="w-6 h-6" src="{{ asset('img/Person.png') }}" alt="">
-                        <span class="text-white font-medium">Review</span>
-                    </a>
-                    @endif
+                    <!-- Logout -->
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="flex items-center space-x-3">
+                            <i class="hgi hgi-stroke hgi-logout-01 text-white" style="font-size: 1.4rem;"></i>
+                            <span class="text-white font-medium">Logout</span>
+                        </button>
+                    </form>
                 </div>
-            </div>
-            <!-- Bottom part: dark mode + logout -->
-            <div class="flex flex-col pl-2 space-y-5 pb-2">
-                <!-- Dark Mode Toggle -->
-                <!-- <button id="darkModeToggle" type="button" class="flex items-center space-x-3">
-                    <i id="darkModeIcon" class="hgi hgi-stroke hgi-moon text-white" style="font-size: 1.4rem;"></i>
-                    <span id="darkModeLabel" class="text-white font-medium">Dark Mode</span>
-                </button> -->
-
-                <!-- Logout -->
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="flex items-center space-x-3">
-                        <i class="hgi hgi-stroke hgi-logout-01 text-white" style="font-size: 1.4rem;"></i>
-                        <span class="text-white font-medium">Logout</span>
-                    </button>
-                </form>
-            </div>
-        </section>
+            </section>
         @endauth
         <!-- Main Content -->
         <div class="ml-[12em] flex-1 overflow-y-auto h-screen p-6">
@@ -113,16 +115,16 @@
     @vite('js/charts/barchart.js')
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    @vite("resources/js/app.js")
-    @vite("resources/js/track_issue_sections.js")
+    @vite('resources/js/app.js')
+    @vite('resources/js/track_issue_sections.js')
     {{-- @vite('js/charts/barchart.js') --}}
     <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    @vite("resources/js/map.js")
+    @vite('resources/js/map.js')
 
-    @vite("resources/js/track_issue_sections.js")
-    @vite("resources/js/swipper.js")
+    @vite('resources/js/track_issue_sections.js')
+    @vite('resources/js/swipper.js')
 
 
 

@@ -16,6 +16,7 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     @livewireStyles
 
 </head>
@@ -77,6 +78,7 @@
     <!-- @vite('resources/js/commentModal.js') -->
     @vite('resources/js/postPreview.js')
     @vite('resources/js/autocompleteLocation.js')
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     @stack('scripts')
     <script>
         // Global store to toggle the shared comment modal from any component

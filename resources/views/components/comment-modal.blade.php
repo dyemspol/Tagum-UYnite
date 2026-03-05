@@ -49,34 +49,52 @@
                     </p>
                 </div>
 
-                <!-- Post Media (Carousel Placeholder) -->
-                <div class="w-full bg-black/20 flex flex-col items-center justify-center mb-2 relative group overflow-hidden">
-                    @if ($post->postImages && $post->postImages->count() > 0)
-                    <!-- If there is only one image, just show it -->
-                    @if ($post->postImages->count() == 1)
-                    <div class="w-full h-80">
-                        @if (str_contains($post->postImages->first()->mime_type, 'video'))
-                        <video src="{{ $post->postImages->first()->cdn_url }}" controls class="w-full h-full object-contain bg-black"></video>
-                        @else
-                        <img src="{{ $post->postImages->first()->cdn_url }}" class="w-full h-full object-contain bg-black">
+                <!-- Post Media (Swiper Carousel) -->
+                @if ($post->postImages && $post->postImages->count() > 0)
+                <div class="w-full mb-2"
+                     x-data
+                     x-init="$nextTick(() => {
+                         const el = $el.querySelector('.swiper');
+                         if (el) {
+                             if (el.swiper) { el.swiper.destroy(true, true); }
+                             new Swiper(el, {
+                                 loop: true,
+                                 slidesPerView: 1,
+                                 spaceBetween: 10,
+                                 pagination: {
+                                     el: el.querySelector('.swiper-pagination'),
+                                     clickable: true,
+                                 },
+                                 navigation: {
+                                     nextEl: el.querySelector('.swiper-button-next'),
+                                     prevEl: el.querySelector('.swiper-button-prev'),
+                                 },
+                             });
+                         }
+                     })">
+                    <div class="swiper h-80 w-full">
+                        <div class="swiper-wrapper">
+                            @foreach ($post->postImages as $image)
+                            <div class="swiper-slide flex items-center justify-center bg-black/20">
+                                @if (str_contains($image->mime_type, 'video'))
+                                <video src="{{ $image->cdn_url }}" controls class="w-full h-full object-contain bg-black"></video>
+                                @else
+                                <img src="{{ $image->cdn_url }}" class="w-full h-full object-contain bg-black">
+                                @endif
+                            </div>
+                            @endforeach
+                        </div>
+
+                        @if ($post->postImages->count() > 1)
+                        <!-- Pagination -->
+                        <div class="swiper-pagination"></div>
+                        <!-- Navigation Buttons -->
+                        <div class="swiper-button-next !scale-50 !opacity-50 hover:!opacity-80 transition-opacity"></div>
+                        <div class="swiper-button-prev !scale-50 !opacity-50 hover:!opacity-80 transition-opacity"></div>
                         @endif
                     </div>
-                    @else
-                    <!-- If there are multiple, you can loop or use a simple scroll container -->
-                    <div class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar h-80 w-full">
-                        @foreach ($post->postImages as $image)
-                        <div class="snap-center shrink-0 w-full h-full">
-                            @if (str_contains($image->mime_type, 'video'))
-                            <video src="{{ $image->cdn_url }}" controls class="w-full h-full object-contain bg-black"></video>
-                            @else
-                            <img src="{{ $image->cdn_url }}" class="w-full h-full object-contain bg-black">
-                            @endif
-                        </div>
-                        @endforeach
-                    </div>
-                    @endif
-                    @endif
                 </div>
+                @endif
 
                 <!-- Like/Dislike Counts (Visual Only, No Buttons) -->
                 <div class="px-5 py-2 flex items-center space-x-4">

@@ -37,16 +37,32 @@
             </p>
         </div>
 
-        <!-- Carousel Container -->
+        <!-- Swiper Carousel -->
         @if ($post->postImages && $post->postImages->count() > 0)
-            <div class="relative w-full carousel-container group" id="carousel-{{ $post->id }}">
-                <div class="carousel-wrapper overflow-hidden relative">
-                    <div class="carousel-track flex transition-transform duration-300 ease-in-out"
-                        style="transform: translateX(0%)">
-                        <!-- Carousel Items -->
+            <div x-data
+                 x-init="$nextTick(() => {
+                     const el = $el.querySelector('.swiper');
+                     if (el) {
+                         if (el.swiper) { el.swiper.destroy(true, true); }
+                         new Swiper(el, {
+                             loop: true,
+                             slidesPerView: 1,
+                             spaceBetween: 10,
+                             pagination: {
+                                 el: el.querySelector('.swiper-pagination'),
+                                 clickable: true,
+                             },
+                             navigation: {
+                                 nextEl: el.querySelector('.swiper-button-next'),
+                                 prevEl: el.querySelector('.swiper-button-prev'),
+                             },
+                         });
+                     }
+                 })">
+                <div class="swiper h-80 w-full">
+                    <div class="swiper-wrapper">
                         @foreach ($post->postImages as $image)
-                            <div
-                                class="carousel-slide w-full flex-shrink-0 bg-black/20 flex items-center justify-center h-80">
+                            <div class="swiper-slide flex items-center justify-center bg-black/20">
                                 @if (str_contains($image->mime_type, 'video'))
                                     <video src="{{ $image->cdn_url }}" controls class="max-h-full max-w-full"></video>
                                 @else
@@ -56,34 +72,15 @@
                             </div>
                         @endforeach
                     </div>
+
+                    @if ($post->postImages->count() > 1)
+                        <!-- Pagination -->
+                        <div class="swiper-pagination"></div>
+                        <!-- Navigation Buttons -->
+                        <div class="swiper-button-next !scale-50 !opacity-50 hover:!opacity-80 transition-opacity"></div>
+                        <div class="swiper-button-prev !scale-50 !opacity-50 hover:!opacity-80 transition-opacity"></div>
+                    @endif
                 </div>
-
-                @if ($post->postImages->count() > 1)
-                    <!-- Navigation Arrows -->
-                    <button
-                        class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white rounded-full p-2 z-10 transition-all opacity-0 group-hover:opacity-100">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
-                            </path>
-                        </svg>
-                    </button>
-                    <button
-                        class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white rounded-full p-2 z-10 transition-all opacity-0 group-hover:opacity-100">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
-                            </path>
-                        </svg>
-                    </button>
-
-                    <!-- Dots Indicator -->
-                    <div class="carousel-dots flex justify-center gap-2 absolute bottom-2 left-0 right-0">
-                        @foreach ($post->postImages as $index => $image)
-                            <button
-                                class="carousel-dot w-2 h-2 rounded-full {{ $index === 0 ? 'bg-[#31A871]' : 'bg-gray-600' }} transition-all shadow-sm"
-                                data-slide="{{ $index }}"></button>
-                        @endforeach
-                    </div>
-                @endif
             </div>
         @endif
 
@@ -218,50 +215,37 @@
     </div>
 </div>
 
-<script>
-    // Carousel logic (same as before)
-    document.querySelectorAll('.carousel-container').forEach((container) => {
-        const track = container.querySelector('.carousel-track');
-        const slides = container.querySelectorAll('.carousel-slide');
-        const prevBtn = container.querySelector('.carousel-prev');
-        const nextBtn = container.querySelector('.carousel-next');
-        const dots = container.querySelectorAll('.carousel-dot');
+<div x-data="{ open: false, startIndex: 0 }"
+     x-show="open"
+     @keydown.escape.window="open = false"
+     class="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4"
+     style="display: none;">
 
-        let currentSlide = 0;
-        const totalSlides = slides.length;
+    <!-- Close Button -->
+    <button @click="open = false"
+            class="absolute top-4 right-4 text-white text-3xl z-50">&times;</button>
 
-        function updateCarousel() {
-            if (!track) return;
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
-            dots.forEach((dot, index) => {
-                if (index === currentSlide) {
-                    dot.classList.remove('bg-gray-600');
-                    dot.classList.add('bg-[#31A871]');
-                } else {
-                    dot.classList.remove('bg-[#31A871]');
-                    dot.classList.add('bg-gray-600');
-                }
-            });
-            if (prevBtn) prevBtn.style.opacity = currentSlide === 0 ? '0.5' : '1';
-            if (nextBtn) nextBtn.style.opacity = currentSlide === totalSlides - 1 ? '0.5' : '1';
-        }
+    <!-- Fullscreen Swiper -->
+    <div class="swiper-fullscreen w-full max-w-4xl h-full">
+        <div class="swiper-wrapper">
+            @foreach($post->postImages as $image)
+            <div class="swiper-slide flex items-center justify-center">
+                @if(str_contains($image->mime_type, 'video'))
+                    <video src="{{ $image->cdn_url }}" controls class="max-h-full max-w-full"></video>
+                @else
+                    <img src="{{ $image->cdn_url }}" alt="Post Image"
+                         class="max-h-full max-w-full object-contain">
+                @endif
+            </div>
+            @endforeach
+        </div>
 
-        if (prevBtn) prevBtn.addEventListener('click', () => {
-            if (currentSlide > 0) {
-                currentSlide--;
-                updateCarousel();
-            }
-        });
-        if (nextBtn) nextBtn.addEventListener('click', () => {
-            if (currentSlide < totalSlides - 1) {
-                currentSlide++;
-                updateCarousel();
-            }
-        });
-        dots.forEach((dot, index) => dot.addEventListener('click', () => {
-            currentSlide = index;
-            updateCarousel();
-        }));
-        updateCarousel();
-    });
-</script>
+        <!-- Pagination -->
+        @if($post->postImages->count() > 1)
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        @endif
+    </div>
+</div>
+
