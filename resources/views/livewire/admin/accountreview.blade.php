@@ -3,13 +3,23 @@
         Account Review
     </h2>
 
-    @if (session()->has('success'))
-    <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)"
-        class="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center justify-between transition-all duration-300">
-        <span>{{ session('success') }}</span>
-        <button @click="show = false" class="ml-4 text-white/50 hover:text-white">&times;</button>
+    <div class="fixed top-20 right-5 z-[10000] flex flex-col gap-3 min-w-[300px]">
+        @if (session()->has('success'))
+        <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)"
+            class="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center justify-between transition-all duration-300">
+            <span>{{ session('success') }}</span>
+            <button @click="show = false" class="ml-4 text-white/50 hover:text-white">&times;</button>
+        </div>
+        @endif
+
+        @if (session()->has('error'))
+        <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)"
+            class="bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center justify-between transition-all duration-300">
+            <span>{{ session('error') }}</span>
+            <button @click="show = false" class="ml-4 text-white/50 hover:text-white">&times;</button>
+        </div>
+        @endif
     </div>
-    @endif
 
     <div id="userAccountsSection" class="bg-[#1a1d29] p-6 rounded-2xl shadow-lg overflow-auto border border-[#2a2d3a]">
 

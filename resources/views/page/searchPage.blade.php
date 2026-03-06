@@ -1,11 +1,12 @@
 @extends('layout.app')
 @section('title', 'Search Results')
 @section('content')
-  <div class="mb-4 text-white">
-      <h2 class="text-xl font-bold">Search Results for: "{{ $searchQuery }}"</h2>
-  </div>
+  
   
   <div class="">
+    <div class="mb-4 text-white">
+      <h2 class="text-xl font-bold">Search Results for: "{{ $searchQuery }}"</h2>
+  </div>
     @foreach($posts as $post)
        <livewire:latest-post :post="$post" :key="$post->id"/>
     @endforeach

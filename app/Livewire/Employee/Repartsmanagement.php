@@ -13,6 +13,8 @@ class Repartsmanagement extends Component
     public $totalPending;
     public $totalResolved;
     public $totalOngoing;
+    public $statusFilter = 'all';
+
     public function render()
     {
         return view('livewire.employee.repartsmanagement');
@@ -24,6 +26,7 @@ class Repartsmanagement extends Component
     }
     public function filterReports($status)
     {
+        $this->statusFilter = $status;
         $user = Auth::user();
         if ($status == 'all') {
             $this->loadReports();

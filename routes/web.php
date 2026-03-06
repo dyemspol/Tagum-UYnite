@@ -51,7 +51,9 @@ Route::middleware(['auth', 'admin:employee,superadmin', 'preventbackhistory'])->
         Route::get('/messages', [EmployeeController::class, 'message'])->name('messages');
         Route::get('/Reports', [EmployeeController::class, 'reports'])->name('reports');
         Route::get('/tracker', [EmployeeController::class, 'tracker'])->name('tracker');
+        Route::get('/settings', [EmployeeController::class, 'settings'])->name('settings');
         Route::get('/dashboard', [EmployeeController::class, 'dashboard'])->name('employee.dashboard');
+        
     });
 
 

@@ -39,4 +39,9 @@ class EmployeeController extends Controller
     {
         return view('page.admin.IssueTracker');
     }
+
+    public function settings()
+    {
+        return view('page.admin.settings');
+    }
 }

@@ -25,6 +25,20 @@
             </button>
         </div>
 
+        <!-- Avatar Section -->
+        <div class="flex flex-col items-center py-5 border-b border-[#2a2d3a] bg-[#12151e]">
+            <div class="relative">
+                <div class="w-20 h-20 rounded-full bg-[#1a1d29] border-2 border-[#00d4aa]/40 flex items-center justify-center overflow-hidden">
+                    <i class="fa-solid fa-user text-[#00d4aa] text-3xl"></i>
+                </div>
+                {{-- <div class="absolute bottom-0 right-0 w-5 h-5 rounded-full bg-[#00d4aa] border-2 border-[#12151e] flex items-center justify-center">
+                    <i class="fa-solid fa-check text-[#12151e] text-[8px]"></i>
+                </div> --}}
+            </div>
+            <p class="text-white font-semibold text-sm mt-3">John Doe</p>
+            <p class="text-[#00d4aa] text-xs mt-0.5">IT Department</p>
+        </div>
+
         <!-- Info Grid -->
         <div class="px-6 py-4 grid grid-cols-1 gap-3">
 

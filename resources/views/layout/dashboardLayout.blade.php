@@ -47,40 +47,46 @@
 
                                 <img class="w-7 h-7" src="{{ asset('img/dashboardIcon.png') }}" alt="">
                                 <span
-                                    class="{{ request()->routeIs('employee.dashboard') ? 'text-green-500' : 'text-white' }} font-medium">
+                                    class="{{ request()->routeIs('employee.dashboard') ? 'text-green-500' : 'text-white' }} font-medium  hover:text-green-500 transition duration-300">
                                     Dashboard
                                 </span>
                             </a>
                             <a href="{{ route('tracker') }}" class="flex items-center space-x-3">
                                 <img class="w-6 h-6" src="{{ asset('img/track_issue_logo.png') }}" alt="">
-                                <span  class="{{ request()->routeIs('tracker') ? 'text-green-500' : 'text-white' }} font-medium">Issues</span>
+                                <span  class="{{ request()->routeIs('tracker') ? 'text-green-500' : 'text-white' }} font-medium hover:text-green-500 transition duration-300">Issues</span>
                             </a>
                             <a href="{{ route('map') }}" class="flex items-center space-x-3">
                                 <img class="w-6 h-6" src="{{ asset('img/Location.png') }}" alt="">
-                                <span class="{{ request()->routeIs('map') ? 'text-green-500' : 'text-white' }} font-medium">Map</span>
+                                <span class="{{ request()->routeIs('map') ? 'text-green-500' : 'text-white' }} font-medium hover:text-green-500 transition duration-300">Map</span>
                             </a>
                             <a href="{{ route('messages') }}" class="flex items-center space-x-3 pl-1">
                                 <i class="fa-regular fa-comment text-white" style="font-size: 1.25rem;"></i>
-                                <span class="{{ request()->routeIs('messages') ? 'text-green-500' : 'text-white' }} font-medium">Messages</span>
+                                <span class="{{ request()->routeIs('messages') ? 'text-green-500' : 'text-white' }} font-medium hover:text-green-500 transition duration-300">Messages</span>
                             </a>
                             <a href="{{ route('reports') }}" class="flex items-center space-x-3 pl-1">
                                 <i class="hgi hgi-stroke hgi-account-setting-01 text-white" style="font-size: 1.25rem;"></i>
                                 {{-- <i class="fa-regular fa-comment text-white" style="font-size: 1.25rem;"></i> --}}
-                                <span class="{{ request()->routeIs('reports') ? 'text-green-500' : 'text-white' }} font-medium">Reports</span>
+                                <span class="{{ request()->routeIs('reports') ? 'text-green-500' : 'text-white' }} font-medium hover:text-green-500 transition duration-300">Reports</span>
+                            </a>
+
+                             <a href="{{ route('settings') }}" class="flex items-center space-x-3 pl-1">
+                                <i class="hgi hgi-stroke hgi-setting-07 text-white" style="font-size: 1.25rem;"></i>
+                                {{-- <i class="fa-regular fa-comment text-white" style="font-size: 1.25rem;"></i> --}}
+                                <span class="{{ request()->routeIs('settings') ? 'text-green-500' : 'text-white' }} font-medium hover:text-green-500 transition duration-300">Staff Profile</span>
                             </a>
                         @elseif(Auth::user()->role == 'superadmin')
                             <!-- SUPERADMIN NAV MENU -->
                             <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
                                 <img class="w-7 h-7" src="{{ asset('img/dashboardIcon.png') }}" alt="">
-                                <span class="{{ request()->routeIs('dashboard') ? 'text-green-500' : 'text-white' }} font-medium">Dashboard</span>
+                                <span class="{{ request()->routeIs('dashboard') ? 'text-green-500' : 'text-white' }} font-medium hover:text-green-500 transition duration-300">Dashboard</span>
                             </a>
                             <a href="{{ route('staffAccounts') }}" class="flex items-center space-x-3">
                                 <img class="w-6 h-6" src="{{ asset('img/Survey.png') }}" alt="">
-                                <span class="{{ request()->routeIs('staffAccounts') ? 'text-green-500' : 'text-white' }} font-medium">Accounts</span>
+                                <span class="{{ request()->routeIs('staffAccounts') ? 'text-green-500' : 'text-white' }} font-medium hover:text-green-500 transition duration-300">Accounts</span>
                             </a>
                             <a href="{{ route('accountReview') }}" class="flex items-center space-x-3">
                                 <img class="w-6 h-6" src="{{ asset('img/Person.png') }}" alt="">
-                                <span class="{{ request()->routeIs('accountReview') ? 'text-green-500' : 'text-white' }} font-medium">Review</span>
+                                <span class="{{ request()->routeIs('accountReview') ? 'text-green-500' : 'text-white' }} font-medium hover:text-green-500 transition duration-300">Review</span>
                             </a>
                         @endif
                     </div>
@@ -98,7 +104,7 @@
                         @csrf
                         <button type="submit" class="flex items-center space-x-3">
                             <i class="hgi hgi-stroke hgi-logout-01 text-white" style="font-size: 1.4rem;"></i>
-                            <span class="text-white font-medium">Logout</span>
+                            <span class="text-white font-medium  hover:text-green-500 transition duration-300 ">Logout</span>
                         </button>
                     </form>
                 </div>

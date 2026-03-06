@@ -49,9 +49,9 @@
                     <td class="px-4 py-4">{{ $user->email }}</td>
                     <td class="px-4 py-4">{{ $user->department?->department_name ?? 'N/A' }}</td>
 
-                    <td class="px-4 py-4 flex gap-2 items-center">
+                    <td class="px-4 py-4 flex gap-3 items-center">
                         <i @click="showStaffModal = true"
-                        class="fa-solid fa-eye text-2xl  hover:text-[#00c41a] transition-800"></i>
+                        class="hgi hgi-stroke hgi-view text-2xl  hover:text-[#00c41a] transition-800"></i>
                         <i class="hgi hgi-stroke hgi-delete-01 text-2xl text-red-500 hover:text-red-300 cursor-pointer"></i>
                     </td>
                 </tr> 

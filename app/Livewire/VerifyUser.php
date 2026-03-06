@@ -44,9 +44,9 @@ class VerifyUser extends Component
 
         if ($verifyUser) {
             Log::info('Verification success for user: ' . $user->id);
-            return redirect('/profile')->with('success', 'Your verification request has been submitted and is now pending review.');
+            return redirect('/profile')->with('success', 'Verification request is now under review');
         }
 
-        session()->flash('error', 'Failed to submit verification request. Please try again.');
+        session()->flash('error', 'Submission failed. Try again.');
     }
 }

@@ -17,7 +17,7 @@
     {{-- Navbar --}}
     <livewire:verify-user />
     @include('components.navbar')
-    @include('components.postCardModal')
+   
     <livewire:edit-profile :user="$user" />
     @if (!Auth::check())
     <livewire:login-form />
