@@ -23,10 +23,13 @@
                     </p>
                 </div>
             </div>
-            <div class="">
+            <div class="flex items-center gap-2">
                 <p class="text-sm {{ $post->report_status == 'resolved' ? 'bg-lime-500' : 'bg-amber-400' }} rounded-2xl px-2 py-0.5 text-black font-medium">
                     {{ ucfirst(str_replace('_', ' ', $post->report_status)) }}
                 </p>
+                @if($isProfilePage || $isProfileRoute)
+                    <i wire:click="deletePost({{ $post->id }})" wire:confirm="Are you sure you want to delete this post?" class="hgi hgi-stroke hgi-delete-01 text-xl text-[#31A871] hover:text-red-300 cursor-pointer"></i>
+                @endif
             </div>
         </div>
 

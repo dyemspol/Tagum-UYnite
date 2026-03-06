@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Community')</title>
     @vite('resources/css/app.css')
+    <link rel="stylesheet" href="https://use.hugeicons.com/font/icons.css" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -118,7 +120,7 @@
                 <div id="trackIssueSection" x-show="activeTab === 'track'" class="flex flex-col justify-center"
                     style="display: none;">
                     @forelse($user->reports as $post)
-                    <div class="bg-[#0f1f2f] border border-[#1e3246] px-3 py-3 rounded-lg w-full max-w-[50em]">
+                    <div class="bg-[#0f1f2f] border border-[#1e3246] px-3 py-3 mb-2 rounded-lg w-full max-w-[50em]">
                         <div class="flex items-center justify-between gap-3 mb-2">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10">
@@ -135,10 +137,14 @@
                                 </div>
 
                             </div>
-                            <span
-                                class="text-sm {{ $post->report_status == 'resolved' ? 'bg-lime-500' : 'bg-amber-400' }} text-[#122333] px-3 py-1 rounded-2xl">
-                                {{ ucfirst(str_replace('_', ' ', $post->report_status)) }}
-                            </span>
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="text-sm {{ $post->report_status == 'resolved' ? 'bg-lime-500' : 'bg-amber-400' }} text-[#122333] px-3 py-1 rounded-2xl">
+                                    {{ ucfirst(str_replace('_', ' ', $post->report_status)) }}
+                                </span>
+                                <i class="hgi hgi-stroke hgi-delete-01 text-xl text-[#31A871] hover:text-red-300 cursor-pointer"></i>
+                            </div>
+                            
                         </div>
                         <p class="text-white text-base">{{ $post->content }}</p>
                     </div>
