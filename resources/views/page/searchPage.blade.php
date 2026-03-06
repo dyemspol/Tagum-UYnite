@@ -4,8 +4,10 @@
   
   
   <div class="">
-    <div class="mb-4 text-white">
+  <div class="flex justify-center my-4">
+    <div class="w-[85%] max-w-[45em] lg:w-[41%] xl:w-[50%] text-white">
       <h2 class="text-xl font-bold">Search Results for: "{{ $searchQuery }}"</h2>
+    </div>
   </div>
     @foreach($posts as $post)
        <livewire:latest-post :post="$post" :key="$post->id"/>
