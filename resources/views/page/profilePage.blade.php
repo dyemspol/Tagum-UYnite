@@ -19,7 +19,7 @@
     {{-- Navbar --}}
     <livewire:verify-user />
     @include('components.navbar')
-   
+
     <livewire:edit-profile :user="$user" />
     @if (!Auth::check())
     <livewire:login-form />
@@ -144,7 +144,7 @@
                                 </span>
                                 <i class="hgi hgi-stroke hgi-delete-01 text-xl text-[#31A871] hover:text-red-300 cursor-pointer"></i>
                             </div>
-                            
+
                         </div>
                         <p class="text-white text-base">{{ $post->content }}</p>
                     </div>

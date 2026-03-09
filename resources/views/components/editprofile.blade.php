@@ -14,16 +14,19 @@
         </div>
 
         @if (session()->has('error'))
-            <div class="bg-red-500/20 border border-red-500 text-red-100 px-4 py-2 rounded mb-4 text-sm">
-                {{ session('error') }}
-            </div>
+        <div class="bg-red-500/20 border border-red-500 text-red-100 px-4 py-2 rounded mb-4 text-sm">
+            {{ session('error') }}
+        </div>
         @endif
 
         <!-- Profile Photo -->
         <div class="flex flex-col items-center mb-6">
-            <div class="w-32 h-32 rounded-full overflow-hidden mb-3 bg-gray-700">
+            <div class="relative w-32 h-32 rounded-full overflow-hidden mb-3 bg-gray-700">
                 <img src="{{ $photo ? $photo->temporaryUrl() : ($user->profile_photo ? asset($user->profile_photo) : asset('img/noprofile.jpg')) }}"
                     alt="Profile" class="w-full h-full object-cover" />
+                <div wire:loading wire:target="photo" class="absolute inset-0 bg-black/50 flex items-center justify-center">
+                    <div class="animate-spin h-6 w-6 border-2 border-white border-t-transparent rounded-full"></div>
+                </div>
             </div>
             <label for="uploadPhoto"
                 class="text-white border border-white px-4 py-1 rounded text-sm hover:bg-blue-800 cursor-pointer transition">
@@ -36,29 +39,29 @@
         <div class="mb-4">
             <label class="text-white text-sm mb-2 block">First Name</label>
             <input type="text"
-         class="w-full bg-transparent border-[0.5px] border-white rounded px-4 py-2 text-white focus:outline-none focus:border-blue-300" wire:model="first_name" />
+                class="w-full bg-transparent border-[0.5px] border-white rounded px-4 py-2 text-white focus:outline-none focus:border-blue-300" wire:model="first_name" />
             @error('first_name') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
         </div>
         <!-- Last Name -->
         <div class="mb-4">
             <label class="text-white text-sm mb-2 block">Last Name</label>
             <input type="text"
-             class="w-full bg-transparent border-[0.5px] border-white rounded px-4 py-2 text-white focus:outline-none focus:border-blue-300" wire:model="last_name"  />
+                class="w-full bg-transparent border-[0.5px] border-white rounded px-4 py-2 text-white focus:outline-none focus:border-blue-300" wire:model="last_name" />
             @error('last_name') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
         </div>
 
         <!-- Barangay -->
         <div class="mb-4">
             <label class="text-white text-sm mb-2 block">Barangay</label>
-            <select wire:model="barangay_id"  class="w-full bg-[#1F486C] border-[0.5px] border-white rounded px-4 py-2 text-white focus:outline-none focus:border-blue-300">
+            <select wire:model="barangay_id" class="w-full bg-[#1F486C] border-[0.5px] border-white rounded px-4 py-2 text-white focus:outline-none focus:border-blue-300">
                 <option value="" disabled>Select Barangay</option>
                 @foreach ($barangays ?? [] as $barangay)
-                    <option value="{{ $barangay->id }}" class="bg-[#0F1F2C] text-white">
-                        {{ $barangay->barangay_name }}
-                    </option>
+                <option value="{{ $barangay->id }}" class="bg-[#0F1F2C] text-white">
+                    {{ $barangay->barangay_name }}
+                </option>
                 @endforeach
             </select>
-             @error('barangay_id') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            @error('barangay_id') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
         </div>
         <!-- Email -->
         <div class="mb-6">
@@ -78,7 +81,7 @@
                 class="w-full bg-transparent border border-white rounded px-4 py-2 text-white focus:outline-none focus:border-blue-300" wire:model="current_password" />
         </div>
         @error('current_password')
-            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
         @enderror
 
         <!-- New Password -->
@@ -90,15 +93,30 @@
         </div>
 
         <!-- Confirm Password -->
-        <div class="mb-6">  
+        <div class="mb-6">
             <label class="text-white text-sm mb-2 block">Confirm Password</label>
             <input type="password"
                 class="w-full bg-transparent border border-white rounded px-4 py-2 text-white focus:outline-none focus:border-blue-300" wire:model="password_confirmation" />
         </div>
 
         <!-- Save Button -->
-        <button class="w-full bg-[#31A871] hover:bg-green-600 text-white font-semibold py-3 rounded transition" wire:click="updateProfile">
-            Save Change
+        <button
+            class="w-full bg-[#31A871] hover:bg-green-600 text-white font-semibold py-3 rounded transition 
+           disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center min-h-[56px]"
+            wire:click="updateProfile"
+            wire:loading.attr="disabled"
+            wire:target="updateProfile, photo">
+            <!-- State 1: Ready to Save -->
+            <span wire:loading.remove wire:target="updateProfile, photo">
+                Save Changes
+            </span>
+
+            <!-- State 2: Busy/Loading (Centered Row) -->
+            <div wire:loading wire:target="updateProfile, photo" class="flex items-center gap-2">
+                <div class="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div>
+                <span>Updating Profile...</span>
+            </div>
         </button>
+
     </div>
 </div>

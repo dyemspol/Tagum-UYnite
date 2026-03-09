@@ -3,53 +3,56 @@
     <div class="bg-[#0f1117] text-[#e6edf3] min-h-[600px] flex">
         <!-- Sidebar -->
         <aside class="w-60 bg-[#12151e] p-5 border-r border-[#2a2d3a] flex flex-col rounded-l-lg">
-            <h3 class="text-[#9fb3c8] text-sm mb-4 font-semibold">City Mayor's Office</h3>
+            <h3 class="text-[#9fb3c8] text-sm mb-4 font-semibold">Residents </h3>
             <ul class="space-y-2">
-                <li class="cursor-pointer text-[#cbd5e1] hover:text-white">#city-hall</li>
-                <li class="cursor-pointer text-[#718096]">#engineering</li>
+                @foreach ($conversations as $conversation)
+                <li class="cursor-pointer text-[#cbd5e1] hover:text-white" wire:click="selectedConversation({{ $conversation->id }})">{{ ucfirst($conversation->user->first_name) }} {{ ucfirst($conversation->user->last_name) }}</li>
+                @endforeach
             </ul>
         </aside>
 
         <!-- Main Chat -->
         <main class="flex-1 flex flex-col">
             <div class="flex-1 overflow-y-auto p-6 messages">
-                <!-- Message 1 -->
-                <div class="flex space-x-3 mb-6">
-                    <div class="w-9 h-9 rounded-full bg-[#252836] flex-shrink-0"></div>
-                    <div>
-                        <div class="text-xs text-[#9fb3c8] font-semibold mb-1">City Engineering · 9:00</div>
-                        <p class="text-sm leading-relaxed max-w-lg">
-                            Received 3 new pothole reports from downtown. Logging them as high priority for tonight’s field team.
-                        </p>
-                    </div>
+                @if(!$selectedConversationId)
+                <div class="flex items-center justify-center h-full">
+                    <p class="text-gray-500">Select a conversation to start messaging</p>
                 </div>
+                @else
+                @foreach($chatMessages as $message)
+                <div class="flex items-start space-x-3 {{ $message->sender_id === Auth::id() ? 'flex-row-reverse space-x-reverse' : '' }}">
+                    <!-- Avatar -->
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 {{ $message->sender_id === Auth::id() ? 'bg-green-500' : 'bg-yellow-500' }}">
+                        @if($message->sender?->profile_photo)
+                        <img src="{{ $message->sender?->profile_photo ?? '' }}" class="w-full h-full rounded-full object-cover">
+                        @else
+                        <span class="text-white text-xs font-bold">
+                            {{ substr($message->sender?->first_name ?? 'U', 0, 1) }}
+                        </span>
+                        @endif
+                    </div>
 
-                <!-- Message 2 -->
-                <div class="flex space-x-3 mb-6">
-                    <div class="w-9 h-9 rounded-full bg-[#1f3346] flex-shrink-0"></div>
-                    <div>
-                        <div class="text-xs text-[#9fb3c8] font-semibold mb-1">Traffic Management · 9:23</div>
-                        <p class="text-sm leading-relaxed max-w-lg">
-                            Will deploy an advisory to redirect vehicles between 8PM–10PM while works are ongoing.
+                    <!-- Content -->
+                    <div class="{{ $message->sender_id === Auth::id() ? 'text-right' : 'text-left' }}">
+                        <div class="flex items-center space-x-2 {{ $message->sender_id === Auth::id() ? 'flex-row-reverse space-x-reverse' : '' }}">
+                            <span class="font-semibold {{ $message->sender_id === Auth::id() ? 'text-green-500' : 'text-yellow-500' }}">
+                                {{ ucfirst($message->sender?->first_name ?? 'You') }}
+                            </span>
+                            <span class="text-gray-500 text-xs">{{ $message->created_at->format('g:i A') }}</span>
+                        </div>
+                        <p class="text-gray-300 text-sm mt-1 bg-[#0d1f2d] p-2 rounded-lg inline-block text-left">
+                            {{ $message->message }}
                         </p>
                     </div>
                 </div>
-
-                <!-- Message 3 -->
-                <div class="flex space-x-3 mb-6">
-                    <div class="w-9 h-9 rounded-full bg-[#1f3346] flex-shrink-0"></div>
-                    <div>
-                        <div class="text-xs text-[#9fb3c8] font-semibold mb-1">You · 9:25</div>
-                        <p class="text-sm leading-relaxed max-w-lg">
-                            Please also update the Tagum Unify feed once the repair is marked resolved so residents are notified.
-                        </p>
-                    </div>
-                </div>
+                @endforeach
+                @endif
             </div>
 
             <!-- Input bar -->
-            <form class="flex gap-3 p-4 bg-[#12151e] border-t border-[#2a2d3a]">
+            <form wire:submit.prevent="sendMessage" class="flex gap-3 p-4 bg-[#12151e] border-t border-[#2a2d3a]">
                 <input
+                    wire:model="newMessage"
                     type="text"
                     placeholder="Message #city-hall"
                     class="flex-1 rounded-md bg-[#1a1d29] border border-[#2a2d3a] px-4 py-2 text-[#e6edf3] focus:outline-none focus:ring-2 focus:ring-[#00d4aa]" />

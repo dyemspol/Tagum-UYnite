@@ -32,12 +32,19 @@
 
                     <div class="border-b border-r border-[#2a2d3a] p-4">
                         <label class="block text-xs text-gray-500 mb-1">Username</label>
-                        <input type="text" value="{{ $user->username ?? '' }}" class="w-full bg-transparent text-white outline-none border-none focus:ring-1 focus:ring-green-500 p-1.5 -ml-1.5 rounded">
+                        <input wire:model="username" type="text" class="w-full bg-transparent text-white outline-none border-none focus:ring-1 focus:ring-green-500 p-1.5 -ml-1.5 rounded">
                     </div>
+                    @if($user->email == null)
                     <div class="border-b border-[#2a2d3a] p-4">
                         <label class="block text-xs text-gray-500 mb-1">Email Address</label>
-                        <input type="email" value="{{ $user->email ?? '' }}" class="w-full bg-transparent text-white outline-none border-none focus:ring-1 focus:ring-green-500 p-1.5 -ml-1.5 rounded" readonly disabled>
+                        <input wire:model="email" type="email" value="{{ $user->email ?? '' }}" class="w-full bg-transparent text-white outline-none border-none focus:ring-1 focus:ring-green-500 p-1.5 -ml-1.5 rounded">
                     </div>
+                    @else
+                    <div class="border-b border-[#2a2d3a] p-4">
+                        <label class="block text-xs text-gray-500 mb-1">Email Address</label>
+                        <input wire:model="email" type="email" value="{{ $user->email ?? '' }}" class="w-full bg-transparent text-white outline-none border-none focus:ring-1 focus:ring-green-500 p-1.5 -ml-1.5 rounded" readonly disabled>
+                    </div>
+                    @endif
 
                     <div class="border-r border-[#2a2d3a] p-4">
                         <label class="block text-xs text-gray-500 mb-1">Department</label>
@@ -109,6 +116,7 @@
                 SAVE CHANGES
             </button>
         </div>
+
 
     </div>
 </div>

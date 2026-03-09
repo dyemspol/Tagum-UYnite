@@ -132,6 +132,7 @@ class EditProfile extends Component
             $this->dispatch('profile-updated');
             $this->dispatch('close-edit-profile');
 
+            session()->flash('success', 'Profile updated successfully!');
             return redirect()->route('profile');
         } catch (\Exception $e) {
             DB::rollBack();

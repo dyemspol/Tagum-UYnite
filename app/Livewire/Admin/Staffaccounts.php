@@ -16,6 +16,8 @@ class Staffaccounts extends Component
     public $username;
     public $department_id;
 
+    public $selectedStaff = null;
+
     public function render()
     {
         return view('livewire.admin.staffaccounts', [
@@ -43,6 +45,14 @@ class Staffaccounts extends Component
         } else {
             session()->flash('error', "Failed to create staff account");
         }
+    }
+    public function showStaffModal($id)
+    {
+        $this->selectedStaff = User::where('id', $id)->first();
+    }
+    public function closeStaff()
+    {
+        $this->selectedStaff = null;
     }
 
     public function updatedDepartmentId($value)

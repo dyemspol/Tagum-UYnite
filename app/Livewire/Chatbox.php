@@ -75,7 +75,7 @@ class Chatbox extends Component
                 'message' => $this->newMessage,
             ]);
 
-            \Illuminate\Support\Facades\Log::info('Message saved successfully!');
+            Log::info('Message saved successfully!');
 
             $this->newMessage = '';
             $this->chatMessages = Message::where('conversation_id', $this->selectedConversation)->get();
