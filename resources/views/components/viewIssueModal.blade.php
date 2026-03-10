@@ -148,13 +148,21 @@
                 <button wire:click="updateStatus" class="w-full bg-[#00d4aa] py-3 rounded-xl text-[#0f1117] font-bold hover:bg-[#00e6b8] transition-all transform active:scale-95 shadow-lg shadow-[#00d4aa]/10">
                     Update Report
                 </button>
-                <div class="flex gap-2">
-                    <button wire:click="takedown({{ $selectedReport->id }})" class="flex-1 py-2.5 rounded-xl border border-red-500/30 text-red-500 text-[10px] font-bold hover:bg-red-500/10 transition-all">
-                        Take Down
-                    </button>
-                    <button wire:click="closeIssue" class="flex-1 py-2.5 rounded-xl border border-[#2a2d3a] text-gray-500 text-[10px] font-bold hover:bg-[#252836] hover:text-white transition-all">
-                        Cancel
-                    </button>
+                <div class="space-y-3 pt-4 border-t border-[#2a2d3a]/50">
+                    <label class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Takedown Action</label>
+                    <textarea 
+                        wire:model="takedownReason"
+                        placeholder="Reason for takedown (optional)..." 
+                        class="w-full bg-[#12151e] border border-[#2a2d3a] rounded-xl p-3 text-[11px] text-white focus:outline-none focus:ring-1 focus:ring-red-500/50 min-h-[60px] transition-all resize-none"
+                    ></textarea>
+                    <div class="flex gap-2">
+                        <button wire:click="takedown({{ $selectedReport->id }})" class="flex-1 py-2.5 rounded-xl border border-red-500/30 text-red-500 text-[10px] font-bold hover:bg-red-500/10 transition-all">
+                            Confirm Take Down
+                        </button>
+                        <button wire:click="closeIssue" class="flex-1 py-2.5 rounded-xl border border-[#2a2d3a] text-gray-500 text-[10px] font-bold hover:bg-[#252836] hover:text-white transition-all">
+                            Cancel
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -17,6 +17,7 @@ class Repartsmanagement extends Component
     public $selectedReport = null;
     public $staffComment = '';
     public $statusUpdate = '';
+    public $takedownReason = '';
 
     public function render()
     {
@@ -93,8 +94,9 @@ class Repartsmanagement extends Component
 
     public function takedown($id, \App\Services\Employee\EmployeePost $EmployeePost)
     {
-        if ($EmployeePost->takedown($id)) {
+        if ($EmployeePost->takedown($id, $this->takedownReason)) {
             $this->selectedReport = null;
+            $this->takedownReason = '';
             $this->loadReports();
             $this->loadKPI();
             session()->flash('success', 'Report taken down successfully.');

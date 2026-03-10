@@ -10,11 +10,14 @@ use Exception;
 
 class EmployeePost
 {
-    public function takedown($takedownReportId)
+    public function takedown($takedownReportId, $reason = null)
     {
         try {
             $report = Report::find($takedownReportId);
             $report->post_status = 'removed';
+            if ($reason) {
+                $report->takedown_reason = $reason;
+            }
             $report->save();
             return true;
         } catch (\Exception $e) {
