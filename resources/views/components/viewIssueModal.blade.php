@@ -19,6 +19,11 @@
         },
     });
 })">
+        <!-- CLOSE BUTTON -->
+        <button wire:click="closeIssue" class="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-[#12151e] border border-[#2a2d3a] text-gray-400 hover:text-white hover:bg-[#2a2d3a] transition-all z-20">
+            <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+
 
         <!-- LEFT PANE: PRIMARY DETAILS -->
         <div class="w-[55%] p-8 border-r border-[#2a2d3a] overflow-y-auto hide-scrollbar max-h-[90vh]">
@@ -160,12 +165,10 @@
                             <option value="Resolved outside the platform">Resolved outside the platform</option>
                         </select>
                         <div class="flex gap-2">
-                            <button wire:click="takedown({{ $selectedReport->id }})" class="flex-1 py-2.5 rounded-xl border border-red-500/30 text-red-500 text-[10px] font-bold hover:bg-red-500/10 transition-all">
+                            <button wire:click="takedown({{ $selectedReport->id }})" class="w-full py-2.5 rounded-xl border border-red-500/30 text-red-500 text-[10px] font-bold hover:bg-red-500/10 transition-all">
                                 Confirm Take Down
                             </button>
-                            <button wire:click="closeIssue" class="flex-1 py-2.5 rounded-xl border border-[#2a2d3a] text-gray-500 text-[10px] font-bold hover:bg-[#252836] hover:text-white transition-all">
-                                Cancel
-                            </button>
+
                         </div>
                     </div>
                 </div>

@@ -19,6 +19,11 @@
         },
     });
 })">
+        <!-- CLOSE BUTTON -->
+        <button wire:click="closeIssue" class="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-[#12151e] border border-[#2a2d3a] text-gray-400 hover:text-white hover:bg-[#2a2d3a] transition-all z-20">
+            <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+
 
         <!-- LEFT PANE: PRIMARY DETAILS -->
         <div class="w-[55%] p-8 border-r border-[#2a2d3a] overflow-y-auto hide-scrollbar max-h-[90vh]">
