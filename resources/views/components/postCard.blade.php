@@ -25,14 +25,32 @@
                 </div>
             </div>
             <div class="flex items-center gap-2">
-                <p class="text-sm {{ $post->report_status == 'resolved' ? 'bg-lime-500' : 'bg-amber-400' }} rounded-2xl px-2 py-0.5 text-black font-medium">
-                    {{ ucfirst(str_replace('_', ' ', $post->report_status)) }}
-                </p>
+                @if($post->post_status == 'removed')
+                    <p class="text-sm bg-red-500 rounded-2xl px-2 py-0.5 text-white font-medium">
+                        Taken Down
+                    </p>
+                @else
+                    <p class="text-sm {{ $post->report_status == 'resolved' ? 'bg-lime-500' : 'bg-amber-400' }} rounded-2xl px-2 py-0.5 text-black font-medium">
+                        {{ ucfirst(str_replace('_', ' ', $post->report_status)) }}
+                    </p>
+                @endif
                 @if($isProfilePage || $isProfileRoute)
                     <i wire:click="deletePost({{ $post->id }})" wire:confirm="Are you sure you want to delete this post?" class="hgi hgi-stroke hgi-delete-01 text-xl text-[#31A871] hover:text-red-300 cursor-pointer"></i>
                 @endif
             </div>
         </div>
+
+        @if($post->post_status == 'removed' && $post->takedown_reason)
+            <div class="px-3 mb-2">
+                <div class="bg-red-500/10 border border-red-500/20 rounded-lg p-2 flex items-start gap-2">
+                    <i class="fa-solid fa-circle-info text-red-500 mt-0.5 text-xs"></i>
+                    <div>
+                        <p class="text-[10px] text-red-500 font-bold uppercase tracking-wider">Takedown Reason</p>
+                        <p class="text-[11px] text-gray-300">{{ $post->takedown_reason }}</p>
+                    </div>
+                </div>
+            </div>
+        @endif
 
         <div class="px-3 pb-2">
             <h3 class="text-white font-bold text-sm mb-1">{{ $post->title }}</h3>

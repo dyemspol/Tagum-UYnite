@@ -22,6 +22,7 @@ class Report extends Model
         'priority_level',
         'reviewed_by',
         'report_id',
+        'takedown_reason',
     ];
     public function user()
     {

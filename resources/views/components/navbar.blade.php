@@ -27,6 +27,7 @@
             @auth
 
             <div class="flex items-center gap-5">
+                <i class="hgi hgi-stroke hgi-sun-01 text-2xl text-[#31A871]"></i>
                 <a href="{{ route('message') }}"><i class="fa-regular fa-message text-[#31A871] text-2xl group-hover:text-white cursor-pointer "></i></a>
                 
                 <i id="notifIcon" @click="$store.notificationModal.toggle()" class="fa-regular fa-bell text-[#31A871] text-2xl text-normal group-hover:text-white cursor-pointer"></i>

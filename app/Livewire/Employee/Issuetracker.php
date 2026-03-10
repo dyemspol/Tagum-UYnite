@@ -19,6 +19,7 @@ class Issuetracker extends Component
     public $selectedReport = null;
     public $staffComment = '';
     public $statusUpdate = '';
+    public $takedownReason = '';
     public function mount()
     {
         $this->LOADREPORTS();
@@ -99,10 +100,11 @@ class Issuetracker extends Component
     public function takedown($takedownReportId, EmployeePost $EmployeePost)
     {
         $report = Report::find($takedownReportId);
-        $takedownReport = $EmployeePost->takedown($report->id);
+        $takedownReport = $EmployeePost->takedown($report->id, $this->takedownReason);
 
         if ($takedownReport) {
             $this->selectedReport = null;
+            $this->takedownReason = '';
             session()->flash('success', 'Report taken down successfully.');
             $this->LOADREPORTS();
         } else {
