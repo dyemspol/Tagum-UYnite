@@ -150,11 +150,18 @@
                 </button>
                 <div class="space-y-3 pt-4 border-t border-[#2a2d3a]/50">
                     <label class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Takedown Action</label>
-                    <textarea 
+                    <select 
                         wire:model="takedownReason"
-                        placeholder="Reason for takedown (optional)..." 
-                        class="w-full bg-[#12151e] border border-[#2a2d3a] rounded-xl p-3 text-[11px] text-white focus:outline-none focus:ring-1 focus:ring-red-500/50 min-h-[60px] transition-all resize-none"
-                    ></textarea>
+                        class="w-full bg-[#12151e] border border-[#2a2d3a] rounded-xl p-3 text-[11px] text-white focus:outline-none focus:ring-1 focus:ring-red-500/50 transition-all custom-select"
+                    >
+                        <option value="">Select a reason...</option>
+                        <option value="Inappropriate Content">Inappropriate Content</option>
+                        <option value="False Information">False Information</option>
+                        <option value="Duplicate Report">Duplicate Report</option>
+                        <option value="Spam">Spam</option>
+                        <option value="Violation of Community Guidelines">Violation of Community Guidelines</option>
+                        <option value="Resolved outside the platform">Resolved outside the platform</option>
+                    </select>
                     <div class="flex gap-2">
                         <button wire:click="takedown({{ $selectedReport->id }})" class="flex-1 py-2.5 rounded-xl border border-red-500/30 text-red-500 text-[10px] font-bold hover:bg-red-500/10 transition-all">
                             Confirm Take Down
