@@ -2,7 +2,7 @@
         showCreateModal: false, 
         showStaffModal: false, 
         selectedStaff: null 
-    }" 
+    }"
     @close-modal.window="showCreateModal = false">
     <div class="flex justify-between items-center  mb-10">
         <h2 class="text-xl font-semibold text-white">
@@ -41,31 +41,39 @@
                 </tr>
             </thead>
 
-            <tbody>
-                @foreach ($users as $user)
-                <tr class="border-t border-[#2a2d3a]">
-                    <td class="px-4 py-4 text-[#00d4aa]">#STF-{{ $user->id }}</td>
-                    <td class="px-4 py-4">{{ $user->first_name . ' ' . $user->last_name }}</td>
-                    <td class="px-4 py-4">{{ $user->email }}</td>
-                    <td class="px-4 py-4">{{ $user->department?->department_name ?? 'N/A' }}</td>
+           <tbody>
+@foreach ($users as $user)
+<tr class="border-t border-[#2a2d3a]">
 
-                    <td class="px-4 py-4 flex gap-3 items-center">
-                        <i @click="showStaffModal = true; selectedStaff = { 
-                            id: '{{ $user->id }}', 
-                            first_name: '{{ addslashes($user->first_name) }}', 
-                            last_name: '{{ addslashes($user->last_name) }}', 
-                            email: '{{ $user->email }}', 
-                            department: '{{ $user->department?->department_name ?? 'N/A' }}',
-                            profile_photo: '{{ $user->profile_photo }}',
-                            created_at: '{{ $user->created_at?->format('Y-m-d') ?? 'N/A' }}'
-                        }"
-                        class="hgi hgi-stroke hgi-view text-2xl  hover:text-[#00c41a] transition-800 cursor-pointer"></i>
-                        <i class="hgi hgi-stroke hgi-delete-01 text-2xl text-red-500 hover:text-red-300 cursor-pointer"></i>
-                    </td>
-                </tr> 
-                @endforeach
+<td class="px-4 py-4 text-[#00d4aa]">#STF-{{ $user->id }}</td>
+<td class="px-4 py-4">{{ $user->first_name }} {{ $user->last_name }}</td>
+<td class="px-4 py-4">{{ $user->email }}</td>
+<td class="px-4 py-4">{{ $user->department?->department_name ?? 'N/A' }}</td>
 
-            </tbody>
+<td class="px-4 py-4 flex gap-3 items-center">
+
+<i
+@click="
+showStaffModal = true;
+selectedStaff = @js([
+'id' => $user->id,
+'first_name' => $user->first_name,
+'last_name' => $user->last_name,
+'email' => $user->email,
+'department' => $user->department?->department_name ?? 'N/A',
+'profile_photo' => $user->profile_photo,
+'created_at' => $user->created_at?->format('Y-m-d') ?? 'N/A'
+])
+"
+class="hgi hgi-stroke hgi-view text-2xl hover:text-[#00c41a] transition-800 cursor-pointer"></i>
+
+<i class="hgi hgi-stroke hgi-delete-01 text-2xl text-red-500 hover:text-red-300 cursor-pointer"></i>
+
+</td>
+
+</tr>
+@endforeach
+</tbody>
         </table>
 
     </div>

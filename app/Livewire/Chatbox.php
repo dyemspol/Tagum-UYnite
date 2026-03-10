@@ -1,18 +1,20 @@
 <?php
 
 namespace App\Livewire;
+
 use App\Models\Department;
 use App\Models\Conversation;
 use App\Models\Message;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Illuminate\Support\Facades\Log;
 
 class Chatbox extends Component
 {
     public $departments;
     public $chatMessages = [];
     public $selectedConversation = null;
-    public $selectedDepartmentId = null; 
+    public $selectedDepartmentId = null;
     public $newMessage;
 
     public function render()
@@ -26,7 +28,7 @@ class Chatbox extends Component
     }
     public function refreshMessages()
     {
-        \Illuminate\Support\Facades\Log::info('Real-time message listener triggered for conversation: ' . $this->selectedConversation);
+        Log::info('Real-time message listener triggered for conversation: ' . $this->selectedConversation);
         $this->chatMessages = Message::where('conversation_id', $this->selectedConversation)->get();
         $this->dispatch('message-received-log');
     }
@@ -34,18 +36,18 @@ class Chatbox extends Component
     public function selectDepartment($departmentId)
     {
         $this->selectedDepartmentId = $departmentId;
-        
-        
+
+
         $conversation = Conversation::where('user_id', Auth::id())
-                        ->where('department_id', $departmentId)
-                        ->first();
+            ->where('department_id', $departmentId)
+            ->first();
 
         if ($conversation) {
             $this->selectedConversation = $conversation->id;
             $this->chatMessages = Message::where('conversation_id', $conversation->id)->get();
         } else {
             $this->selectedConversation = null;
-            $this->chatMessages = []; 
+            $this->chatMessages = [];
         }
     }
 
@@ -57,7 +59,7 @@ class Chatbox extends Component
         ]);
 
         if (!$this->selectedConversation && $this->selectedDepartmentId) {
-             $conversation = Conversation::firstOrCreate([
+            $conversation = Conversation::firstOrCreate([
                 'user_id' => Auth::id(),
                 'department_id' => $this->selectedDepartmentId
             ]);
@@ -73,16 +75,14 @@ class Chatbox extends Component
                 'message' => $this->newMessage,
             ]);
 
-            \Illuminate\Support\Facades\Log::info('Message saved successfully!');
+            Log::info('Message saved successfully!');
 
             $this->newMessage = '';
             $this->chatMessages = Message::where('conversation_id', $this->selectedConversation)->get();
             $this->dispatch('message-received-log');
-
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('CHAT ERROR: ' . $e->getMessage());
             $this->addError('newMessage', 'Failed to send message. ' . $e->getMessage());
         }
     }
-
 }

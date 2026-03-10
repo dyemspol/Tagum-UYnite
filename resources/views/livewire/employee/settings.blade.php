@@ -1,10 +1,26 @@
 <div>
     <div class="max-w-4xl mx-auto w-full">
-        <h2 class="text-2xl font-semibold text-white mb-2">Staff Account Settings</h2>
-        <p class="text-gray-400 mb-8">Manage the details and basic information for your staff account.</p>
+        <h2 class="text-2xl font-semibold text-white mb-2">Staff Profile</h2>
+        <p class="text-gray-400 mb-8">Manage your personal information and account security.</p>
 
-        <!-- Profile Box Section -->
-        <div class="mb-10 bg-[#12151e] border border-[#2a2d3a] rounded-xl p-6 flex items-center gap-6 shadow-lg shadow-black/20">
+        <!-- Flash Messages -->
+        <div class="mb-6">
+            @if(session()->has('success'))
+                <div class="bg-green-500/10 border border-green-500/30 text-green-400 px-4 py-3 rounded-xl flex items-center gap-3">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <p class="text-sm font-medium">{{ session('success') }}</p>
+                </div>
+            @endif
+            @if(session()->has('error'))
+                <div class="bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-3 rounded-xl flex items-center gap-3">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <p class="text-sm font-medium">{{ session('error') }}</p>
+                </div>
+            @endif
+        </div>
+
+        <!-- Profile Bar Section -->
+        <div class="mb-10 bg-[#12151e] border border-[#2a2d3a] rounded-2xl p-6 flex items-center gap-6 shadow-xl shadow-black/20">
             <div class="relative flex-shrink-0">
                 <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-[#2a2d3a] bg-[#0f1117]">
                     <img src="{{ Auth::user()->profile_photo ? asset('storage/' . Auth::user()->profile_photo) : asset('img/noprofile.jpg') }}" alt="Profile" class="w-full h-full object-cover">
@@ -17,93 +33,81 @@
             
             <div class="flex-1">
                 <div class="flex items-center gap-3 mb-1">
-                    <h1 class="text-2xl font-bold text-white">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h1>
-                    <span class="text-[9px] bg-[#00d4aa]/10 text-[#00d4aa] px-2 py-0.5 rounded-full border border-[#00d4aa]/20 font-bold tracking-tight uppercase">Verified</span>
+                    <h1 class="text-2xl font-bold text-white tracking-tight">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h1>
+                    
                 </div>
                 <p class="text-gray-400 text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-building text-xs text-gray-500"></i>
                     {{ Auth::user()->department->department_name ?? 'Staff Member' }}
                 </p>
-                <div class="mt-3 flex gap-2">
-                    <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{{ Auth::user()->role }}</span>
+                <div class="mt-4 flex gap-4">
+                    <!-- <div class="flex flex-col">
+                        <span class="text-[10px] text-gray-500 uppercase font-bold tracking-widest">Employee Role</span>
+                        <span class="text-sm font-semibold text-white capitalize">{{ Auth::user()->role }}</span>
+                    </div> -->
                 </div>
             </div>
         </div>
 
-        <!-- Account Details Section -->
-        <div class="mb-10 ">
-            <div class="mb-4">
-                <h3 class="text-lg font-medium text-white">Account Information</h3>
-                <p class="text-sm text-gray-400">Basic information about your staff profile</p>
+        <!-- Settings Info -->
+        <div class="space-y-4 gap-10">
+            <!-- Left: Labels -->
+            <div class="md:col-span-1">
+                <h3 class="text-lg font-semibold text-white mb-1">Account Information</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Update your public profile information like your username and email address.</p>
             </div>
-            
-            <div class="bg-[#12151e] border border-[#2a2d3a] rounded-sm overflow-hidden">
-                <div class="grid grid-cols-2">
-                    <div class="border-b border-r border-[#2a2d3a] p-4">
-                        <label class="block text-xs text-gray-500 mb-1">First Name</label>
-                        <input type="text" value="{{ Auth::user()->first_name ?? '' }}" class="w-full bg-transparent text-white outline-none border-none focus:ring-1 focus:ring-green-500 p-1.5 -ml-1.5 rounded">
-                    </div>
-                    <div class="border-b border-[#2a2d3a] p-4">
-                        <label class="block text-xs text-gray-500 mb-1">Last Name</label>
-                        <input type="text" value="{{ Auth::user()->last_name ?? '' }}" class="w-full bg-transparent text-white outline-none border-none focus:ring-1 focus:ring-green-500 p-1.5 -ml-1.5 rounded">
-                    </div>
-                    
-                    <div class="border-b border-r border-[#2a2d3a] p-4">
-                        <label class="block text-xs text-gray-500 mb-1">Username</label>
-                        <input type="text" value="{{ Auth::user()->username ?? '' }}" class="w-full bg-transparent text-white outline-none border-none focus:ring-1 focus:ring-green-500 p-1.5 -ml-1.5 rounded">
-                    </div>
-                    <div class="border-b border-[#2a2d3a] p-4">
-                        <label class="block text-xs text-gray-500 mb-1">Email Address</label>
-                        <input type="email" value="{{ Auth::user()->email ?? '' }}" class="w-full bg-transparent text-white outline-none border-none focus:ring-1 focus:ring-green-500 p-1.5 -ml-1.5 rounded">
-                    </div>
 
-                    <div class="border-r border-[#2a2d3a] p-4">
-                        <label class="block text-xs text-gray-500 mb-1">Department</label>
-                        <input type="text" value="{{ Auth::user()->department->department_name ?? 'Assigned Department' }}" class="w-full bg-transparent text-gray-500 outline-none border-none p-1.5 -ml-1.5 rounded cursor-not-allowed" readonly disabled>
-                    </div>
-                    <div class="p-4">
-                        <label class="block text-xs text-gray-500 mb-1">Role</label>
-                        <input type="text" value="{{ ucfirst(Auth::user()->role ?? 'Employee') }}" class="w-full bg-transparent text-gray-500 outline-none border-none p-1.5 -ml-1.5 rounded cursor-not-allowed" readonly disabled>
+            <!-- Right: Form -->
+            <div class="md:col-span-2 space-y-6">
+                <div class="bg-[#12151e] border border-[#2a2d3a] rounded-2xl overflow-hidden shadow-sm">
+                    <div class="grid grid-cols-2">
+                        <div class="border-b border-r border-[#2a2d3a] p-5">
+                            <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5">First Name</label>
+                            <input type="text" value="{{ $user->first_name ?? '' }}" class="w-full bg-transparent text-gray-400 outline-none border-none p-0 cursor-not-allowed" readonly disabled>
+                        </div>
+                        <div class="border-b border-[#2a2d3a] p-5">
+                            <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5">Last Name</label>
+                            <input type="text" value="{{ $user->last_name ?? '' }}" class="w-full bg-transparent text-gray-400 outline-none border-none p-0 cursor-not-allowed" readonly disabled>
+                        </div>
+                        
+                        <div class="border-b border-r border-[#2a2d3a] p-5">
+                            <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5">Username</label>
+                            <input wire:model="username" type="text" class="w-full bg-transparent text-white outline-none border-none p-0 focus:ring-0 placeholder-gray-700">
+                        </div>
+                        <div class="border-b border-[#2a2d3a] p-5">
+                            <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5">Email Address</label>
+                            @if($user->email == null)
+                                <input wire:model="email" type="email" class="w-full bg-transparent text-white outline-none border-none p-0 focus:ring-0 placeholder-gray-700">
+                            @else
+                                <input type="email" value="{{ $user->email }}" class="w-full bg-transparent text-gray-400 outline-none border-none p-0 cursor-not-allowed" readonly disabled>
+                            @endif
+                        </div>
+
+                        <div class="border-r border-[#2a2d3a] p-5">
+                            <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5">Department</label>
+                            <input type="text" value="{{ $user->department->department_name ?? 'N/A' }}" class="w-full bg-transparent text-gray-500 outline-none border-none p-0 cursor-not-allowed" readonly disabled>
+                        </div>
+                        <div class="p-5">
+                            <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5">Account ID</label>
+                            <input type="text" value="#STF-{{ $user->id }}" class="w-full bg-transparent text-gray-500 outline-none border-none p-0 cursor-not-allowed font-mono" readonly disabled>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Contact Section -->
-        <!-- <div class="mb-8">
-            <div class="mb-4">
-                <h3 class="text-lg font-medium text-white">Contact & Address</h3>
-                <p class="text-sm text-gray-400">Additional contact information</p>
-            </div>
-            
-            <div class="bg-[#12151e] border border-[#2a2d3a] rounded-sm overflow-hidden">
-                <div class="grid grid-cols-2">
-                    <div class="border-b border-r border-[#2a2d3a] p-4 col-span-2 md:col-span-1">
-                        <label class="block text-xs text-gray-500 mb-1">Address</label>
-                        <input type="text" value="{{ Auth::user()->address ?? '' }}" placeholder="Enter your full address" class="w-full bg-transparent text-white outline-none border-none focus:ring-1 focus:ring-green-500 p-1.5 -ml-1.5 rounded">
-                    </div>
-                    
-                    <div class="border-b border-[#2a2d3a] p-4 col-span-2 md:col-span-1">
-                        <label class="block text-xs text-gray-500 mb-1">Barangay</label>
-                        <input type="text" value="{{ Auth::user()->barangay->name ?? '' }}" placeholder="Select Barangay" class="w-full bg-transparent text-white outline-none border-none focus:ring-1 focus:ring-green-500 p-1.5 -ml-1.5 rounded">
-                    </div>
+        <hr class="my-12 border-[#2a2d3a]">
 
-                    <div class="border-r border-[#2a2d3a] p-4">
-                        <label class="block text-xs text-gray-500 mb-1">Phone Number</label>
-                        <input type="text" placeholder="Phone Number" class="w-full bg-transparent text-white outline-none border-none focus:ring-1 focus:ring-green-500 p-1.5 -ml-1.5 rounded placeholder-gray-700">
-                    </div>
-                    <div class="p-4">
-                        <label class="block text-xs text-gray-500 mb-1">Date of Birth</label>
-                        <input type="date" value="{{ Auth::user()->date_of_birth ? \Carbon\Carbon::parse(Auth::user()->date_of_birth)->format('Y-m-d') : '' }}" class="w-full bg-transparent text-white outline-none border-none focus:ring-1 focus:ring-green-500 p-1.5 -ml-1.5 rounded" style="color-scheme: dark;">
-                    </div>
-                </div>
-            </div>
-        </div> -->
 
-        <div class="flex">
-            <button type="button" class="bg-[#c2c4cb] hover:bg-white text-gray-800 font-bold py-2 px-6 rounded shadow transition duration-200">
-                SAVE CHANGES
+
+        <!-- Footer -->
+        <div class="mt-12 flex justify-end pb-10">
+            <button wire:click="updateProfile" type="button" class="group relative px-8 py-3 bg-[#00d4aa] hover:bg-[#00e6b8] text-[#0f1117] font-bold rounded-xl transition-all shadow-lg shadow-[#00d4aa]/10 hover:shadow-[#00d4aa]/20 overflow-hidden">
+                <span class="relative z-10 flex items-center gap-2">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    SAVE CHANGES
+                </span>
             </button>
         </div>
-
     </div>
 </div>

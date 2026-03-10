@@ -6,12 +6,14 @@ use App\Models\Conversation;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use App\Models\Message;
+use Illuminate\Support\Facades\Log;
 
 class Messagesz extends Component
 {
     public $conversations;
     public $chatMessages = [];
-    public $selectedConversation;
+    public $selectedConversationId = null;
+    public $newMessage;
     public function render()
     {
         return view('livewire.employee.message');
@@ -36,13 +38,38 @@ class Messagesz extends Component
             ->first();
 
         if ($chat) {
-            $this->selectedConversation = $chat->id;
+            $this->selectedConversationId = $chat->id;
             $this->chatMessages = Message::where('conversation_id', $chat->id)
-                ->oldest()
                 ->get();
         } else {
-            $this->selectedConversation = null;
+            $this->selectedConversationId = null;
             $this->chatMessages = collect();
+        }
+    }
+    public function sendMessage()
+    {
+        $this->validate([
+            'newMessage' => 'required',
+            'selectedConversationId' => 'required|exists:conversations,id'
+        ]);
+
+        if (!$this->selectedConversationId) return;
+
+        try {
+            $message = Message::create([
+                'conversation_id' => $this->selectedConversationId,
+                'sender_id' => Auth::id(),
+                'message' => $this->newMessage,
+            ]);
+
+            Log::info('Message saved successfully!');
+
+            $this->newMessage = '';
+            $this->chatMessages = Message::where('conversation_id', $this->selectedConversationId)->get();
+            $this->dispatch('message-received-log');
+        } catch (\Exception $e) {
+            Log::error('CHAT ERROR: ' . $e->getMessage());
+            $this->addError('newMessage', 'Failed to send message. ' . $e->getMessage());
         }
     }
 }
