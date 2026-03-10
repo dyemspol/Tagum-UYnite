@@ -13,7 +13,7 @@
             <a wire:click="selectDepartment({{ $department->id }})"
                 class="relative group cursor-pointer flex items-center p-3 rounded-xl transition-all duration-200 
                        {{ $selectedDepartmentId == $department->id ? 'bg-[#31A871]/10 ring-1 ring-[#31A871]/20 shadow-[0_4px_12px_rgba(49,168,113,0.1)]' : 'hover:bg-[#234156]/50' }}">
-                
+
                 <!-- Left Accent -->
                 @if($selectedDepartmentId == $department->id)
                 <div class="absolute left-0 w-1 h-8 bg-[#31A871] rounded-r-full"></div>
@@ -23,11 +23,11 @@
                 <div class="relative flex-shrink-0">
                     <div class="w-11 h-11 rounded-full border-2 {{ $selectedDepartmentId == $department->id ? 'border-[#31A871]/50' : 'border-[#ffffff10]' }} overflow-hidden bg-[#122333] shadow-inner">
                         @if($department->department_photo)
-                            <img src="{{ asset($department->department_photo) }}" class="w-full h-full object-cover">
+                        <img src="{{ asset($department->department_photo) }}" class="w-full h-full object-cover">
                         @else
-                            <div class="w-full h-full flex items-center justify-center text-[#31A871] font-bold text-lg bg-gradient-to-br from-[#122333] to-[#1f3548]">
-                                {{ substr($department->department_name, 0, 1) }}
-                            </div>
+                        <div class="w-full h-full flex items-center justify-center text-[#31A871] font-bold text-lg bg-gradient-to-br from-[#122333] to-[#1f3548]">
+                            {{ substr($department->department_name, 0, 1) }}
+                        </div>
                         @endif
                     </div>
                     <!-- Status dot -->
@@ -55,15 +55,20 @@
         <!-- Header -->
         <div class="border-b border-[#ffffff10] p-5 bg-[#1a3447]/50 backdrop-blur-md sticky top-0 z-10">
             <div class="flex items-center space-x-4">
+                {{--
+                <a href="/" class="text-white/60 hover:text-white transition-colors mr-2">
+                    <i class="fa-solid fa-arrow-left-long"></i>
+                </a>
+                --}}
                 @if($selectedDepartmentId)
                 @php $currentDept = $departments->find($selectedDepartmentId); @endphp
                 <div class="w-10 h-10 rounded-full border border-[#ffffff10] overflow-hidden bg-[#122333]">
                     @if($currentDept->department_photo)
-                        <img src="{{ asset($currentDept->department_photo) }}" class="w-full h-full object-cover">
+                    <img src="{{ asset($currentDept->department_photo) }}" class="w-full h-full object-cover">
                     @else
-                        <div class="w-full h-full flex items-center justify-center text-[#31A871] font-bold bg-gradient-to-br from-[#122333] to-[#1f3548]">
-                            {{ substr($currentDept->department_name, 0, 1) }}
-                        </div>
+                    <div class="w-full h-full flex items-center justify-center text-[#31A871] font-bold bg-gradient-to-br from-[#122333] to-[#1f3548]">
+                        {{ substr($currentDept->department_name, 0, 1) }}
+                    </div>
                     @endif
                 </div>
                 <div>
@@ -84,9 +89,9 @@
             @if(!$selectedDepartmentId)
             <div class="flex h-full flex-col items-center justify-center space-y-4 opacity-50">
                 <div class="w-20 h-20 bg-[#31A871]/10 rounded-full flex items-center justify-center">
-                   <svg class="w-10 h-10 text-[#31A871]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                   </svg>
+                    <svg class="w-10 h-10 text-[#31A871]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                    </svg>
                 </div>
                 <p class="text-white font-medium">Select a department to start chatting</p>
             </div>
@@ -140,7 +145,7 @@
                     wire:model="newMessage"
                     placeholder="Message #{{ $selectedDepartmentId ? str_replace(' ', '', $departments->find($selectedDepartmentId)->category) : 'channel' }}..."
                     class="flex-1 bg-transparent text-white text-sm px-4 py-2.5 focus:outline-none placeholder-[#ffffff30]">
-                
+
                 <button type="submit" class="bg-[#31A871] hover:bg-[#288a5c] text-white p-2.5 rounded-xl transition-all duration-200 shadow-lg shadow-[#31A871]/20 flex items-center justify-center group">
                     <svg class="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>

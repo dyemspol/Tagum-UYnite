@@ -73,5 +73,5 @@
 
 
     </div>
-    @include('components.viewIssueModal')
+    @include('components.viewOnlyIssueModal')
 </div>

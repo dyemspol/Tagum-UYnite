@@ -14,6 +14,7 @@ class Messagesz extends Component
     public $chatMessages = [];
     public $selectedConversationId = null;
     public $newMessage;
+    public $activeConversation;
     public function render()
     {
         return view('livewire.employee.message');
@@ -39,6 +40,7 @@ class Messagesz extends Component
 
         if ($chat) {
             $this->selectedConversationId = $chat->id;
+            $this->activeConversation = $chat;
             $this->chatMessages = Message::where('conversation_id', $chat->id)
                 ->get();
         } else {
@@ -56,6 +58,8 @@ class Messagesz extends Component
         if (!$this->selectedConversationId) return;
 
         try {
+            Conversation::find($this->selectedConversationId)->touch();
+
             $message = Message::create([
                 'conversation_id' => $this->selectedConversationId,
                 'sender_id' => Auth::id(),
@@ -63,7 +67,7 @@ class Messagesz extends Component
             ]);
 
             Log::info('Message saved successfully!');
-
+            $this->mount();
             $this->newMessage = '';
             $this->chatMessages = Message::where('conversation_id', $this->selectedConversationId)->get();
             $this->dispatch('message-received-log');

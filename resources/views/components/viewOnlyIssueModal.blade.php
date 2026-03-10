@@ -117,7 +117,7 @@
             </div>
 
             <!-- COMMENT INPUT (SIMPLE LAYOUT) -->
-            <div class="mb-6">
+            <!-- <div class="mb-6">
                 <div class="relative group">
                     <textarea
                         wire:model="staffComment"
@@ -129,10 +129,10 @@
                         <i class="fa-solid fa-paper-plane text-xs"></i>
                     </button>
                 </div>
-            </div>
+            </div> -->
 
             <!-- COMPACT CONTROLS -->
-            <div class="space-y-4 bg-[#1a1d29] p-6 rounded-3xl border border-[#2a2d3a] shadow-2xl">
+            <!-- <div class="space-y-4 bg-[#1a1d29] p-6 rounded-3xl border border-[#2a2d3a] shadow-2xl">
                 <div>
                     <label class="text-[10px] text-gray-500 font-bold uppercase mb-2 block tracking-widest">Mark Status</label>
                     <select wire:model="statusUpdate" class="w-full bg-[#12151e] border border-[#2a2d3a] rounded-xl p-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#00d4aa]/30 transition-all">
@@ -155,7 +155,7 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <!-- FULLSCREEN VIEWER -->

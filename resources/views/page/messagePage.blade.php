@@ -1,5 +1,5 @@
 @php
-    $isProfilePage = request()->routeIs('profile'); // true if on profile page
+$isProfilePage = request()->routeIs('profile'); // true if on profile page
 @endphp
 
 <!DOCTYPE html>
@@ -29,33 +29,44 @@
 
 
     @include('components.navbar')
-    
-    
+
+
     <livewire:notif-modal />
-<a href="/" class="text-white flex items-center gap-2">  <i class="fa-solid fa-less-than text-xs"></i>
-    <p>Back</p>
-</a>
-  
+    {{--
+    <a href="/" class="text-white/60 hover:text-white transition-all duration-200 flex items-center gap-2 mb-6 group">
+        <i class="fa-solid fa-arrow-left-long group-hover:-translate-x-1 transition-transform"></i>
+        <span class="text-sm font-medium">Back to Home</span>
+    </a> 
+    --}}
+
 
     <livewire:chatbox />
     <livewire:edit-profile />
-   
 
 
-    
-    
+
+
+
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.store('commentModal', {
                 open: false,
-                show() { this.open = true; },
-                hide() { this.open = false; }
+                show() {
+                    this.open = true;
+                },
+                hide() {
+                    this.open = false;
+                }
             });
 
             Alpine.store('notificationModal', {
                 open: false,
-                toggle() { this.open = !this.open; },
-                close() { this.open = false; }
+                toggle() {
+                    this.open = !this.open;
+                },
+                close() {
+                    this.open = false;
+                }
             });
         });
     </script>
@@ -66,7 +77,7 @@
 
     @livewireScripts
     @guest
-        @vite('resources/js/Homepage.js')
+    @vite('resources/js/Homepage.js')
     @endguest
 </body>
 

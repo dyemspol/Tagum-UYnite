@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Department;
 use App\Services\Employee\EmployeePost;
 use Illuminate\Support\Facades\Log;
+use App\Models\Comment;
 
 class Issuetracker extends Component
 {
@@ -69,7 +70,7 @@ class Issuetracker extends Component
             'staffComment' => 'required|string|max:1000',
         ]);
 
-        \App\Models\Comment::create([
+        Comment::create([
             'report_id' => $this->selectedReport->id,
             'user_id' => Auth::id(),
             'comment_text' => $this->staffComment,
@@ -86,6 +87,7 @@ class Issuetracker extends Component
             'report_status' => $this->statusUpdate
         ]);
 
+        $this->selectedReport = null;
         $this->LOADREPORTS();
         session()->flash('success', 'Status updated successfully.');
     }

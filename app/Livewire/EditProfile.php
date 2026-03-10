@@ -58,7 +58,8 @@ class EditProfile extends Component
 
         // If nothing changed, simply close the modal nd stop here
         if (!$hasChanges) {
-            $this->dispatch('close-edit-profile');
+            session()->flash('error', 'No changes detected.');
+
             return;
         }
 

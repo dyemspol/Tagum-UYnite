@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Livewire;
+
 use App\Models\Report;
 use App\Models\Comment;
 use App\Models\Reaction;
@@ -20,10 +21,10 @@ class NotifModal extends Component
         $user = Auth::user();
         if (!$user) return;
 
-        
+
         $myPostIds = Report::where('user_id', $user->id)->pluck('id');
 
-        
+
         $comments = Comment::whereIn('report_id', $myPostIds)
             ->where('user_id', '!=', $user->id)
             ->with(['user', 'report'])
@@ -47,7 +48,28 @@ class NotifModal extends Component
                 return $item;
             });
 
-        $this->notifications = $comments->merge($reactions)
+        $resolved = Report::whereIn('id', $myPostIds)
+            ->where('report_status', 'resolved')
+            ->with('user')
+            ->latest()
+            ->take(20)
+            ->get()
+            ->map(function ($item) {
+                $item->type = 'resolved';
+                return $item;
+            });
+        $takedown = Report::whereIn('id', $myPostIds)
+            ->where('post_status', 'takedown')
+            ->with('user')
+            ->latest()
+            ->take(20)
+            ->get()
+            ->map(function ($item) {
+                $item->type = 'takedown';
+                return $item;
+            });
+
+        $this->notifications = $comments->merge($reactions)->merge($resolved)->merge($takedown)
             ->sortByDesc('created_at')
             ->take(20)
             ->values()
