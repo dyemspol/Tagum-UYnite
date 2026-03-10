@@ -50,8 +50,16 @@
                     <td class="px-4 py-4">{{ $user->department?->department_name ?? 'N/A' }}</td>
 
                     <td class="px-4 py-4 flex gap-3 items-center">
-                        <i @click="showStaffModal = true"
-                        class="hgi hgi-stroke hgi-view text-2xl  hover:text-[#00c41a] transition-800"></i>
+                        <i @click="showStaffModal = true; selectedStaff = { 
+                            id: '{{ $user->id }}', 
+                            first_name: '{{ addslashes($user->first_name) }}', 
+                            last_name: '{{ addslashes($user->last_name) }}', 
+                            email: '{{ $user->email }}', 
+                            department: '{{ $user->department?->department_name ?? 'N/A' }}',
+                            profile_photo: '{{ $user->profile_photo }}',
+                            created_at: '{{ $user->created_at?->format('Y-m-d') ?? 'N/A' }}'
+                        }"
+                        class="hgi hgi-stroke hgi-view text-2xl  hover:text-[#00c41a] transition-800 cursor-pointer"></i>
                         <i class="hgi hgi-stroke hgi-delete-01 text-2xl text-red-500 hover:text-red-300 cursor-pointer"></i>
                     </td>
                 </tr> 

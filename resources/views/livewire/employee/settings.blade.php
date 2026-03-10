@@ -3,6 +3,33 @@
         <h2 class="text-2xl font-semibold text-white mb-2">Staff Account Settings</h2>
         <p class="text-gray-400 mb-8">Manage the details and basic information for your staff account.</p>
 
+        <!-- Profile Box Section -->
+        <div class="mb-10 bg-[#12151e] border border-[#2a2d3a] rounded-xl p-6 flex items-center gap-6 shadow-lg shadow-black/20">
+            <div class="relative flex-shrink-0">
+                <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-[#2a2d3a] bg-[#0f1117]">
+                    <img src="{{ Auth::user()->profile_photo ? asset('storage/' . Auth::user()->profile_photo) : asset('img/noprofile.jpg') }}" alt="Profile" class="w-full h-full object-cover">
+                </div>
+                <label for="avatar-input" class="absolute bottom-0 right-0 w-8 h-8 bg-[#00d4aa] rounded-full flex items-center justify-center text-[#0f1117] border-4 border-[#12151e] cursor-pointer hover:bg-[#00e6b8] transition-all">
+                    <i class="fa-solid fa-camera text-[10px]"></i>
+                    <input id="avatar-input" type="file" class="hidden">
+                </label>
+            </div>
+            
+            <div class="flex-1">
+                <div class="flex items-center gap-3 mb-1">
+                    <h1 class="text-2xl font-bold text-white">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h1>
+                    <span class="text-[9px] bg-[#00d4aa]/10 text-[#00d4aa] px-2 py-0.5 rounded-full border border-[#00d4aa]/20 font-bold tracking-tight uppercase">Verified</span>
+                </div>
+                <p class="text-gray-400 text-sm flex items-center gap-2">
+                    
+                    {{ Auth::user()->department->department_name ?? 'Staff Member' }}
+                </p>
+                <div class="mt-3 flex gap-2">
+                    <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{{ Auth::user()->role }}</span>
+                </div>
+            </div>
+        </div>
+
         <!-- Account Details Section -->
         <div class="mb-10 ">
             <div class="mb-4">
@@ -43,7 +70,7 @@
         </div>
 
         <!-- Contact Section -->
-        <div class="mb-8">
+        <!-- <div class="mb-8">
             <div class="mb-4">
                 <h3 class="text-lg font-medium text-white">Contact & Address</h3>
                 <p class="text-sm text-gray-400">Additional contact information</p>
@@ -71,7 +98,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="flex">
             <button type="button" class="bg-[#c2c4cb] hover:bg-white text-gray-800 font-bold py-2 px-6 rounded shadow transition duration-200">

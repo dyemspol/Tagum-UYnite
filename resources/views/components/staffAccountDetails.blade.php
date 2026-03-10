@@ -14,7 +14,7 @@
                 </div>
                 <div>
                     <h3 class="text-white font-semibold text-sm">Staff Details</h3>
-                    <p class="text-[#00d4aa] text-xs">#STF-001</p>
+                    <p class="text-[#00d4aa] text-xs" x-text="'#STF-' + (selectedStaff?.id || '000')"></p>
                 </div>
             </div>
 
@@ -27,16 +27,17 @@
 
         <!-- Avatar Section -->
         <div class="flex flex-col items-center py-5 border-b border-[#2a2d3a] bg-[#12151e]">
-            <div class="relative">
-                <div class="w-20 h-20 rounded-full bg-[#1a1d29] border-2 border-[#00d4aa]/40 flex items-center justify-center overflow-hidden">
-                    <i class="fa-solid fa-user text-[#00d4aa] text-3xl"></i>
-                </div>
-                {{-- <div class="absolute bottom-0 right-0 w-5 h-5 rounded-full bg-[#00d4aa] border-2 border-[#12151e] flex items-center justify-center">
-                    <i class="fa-solid fa-check text-[#12151e] text-[8px]"></i>
-                </div> --}}
-            </div>
-            <p class="text-white font-semibold text-sm mt-3">John Doe</p>
-            <p class="text-[#00d4aa] text-xs mt-0.5">IT Department</p>
+           <div class="relative">
+    <div class="w-20 h-20 rounded-full bg-[#1a1d29] border-2 border-[#00d4aa]/40 flex items-center justify-center overflow-hidden">
+        <img :src="selectedStaff?.profile_photo ? '/storage/' + selectedStaff.profile_photo : '/img/noprofile.jpg'" alt="Profile" class="w-full h-full object-cover">
+    </div>
+
+    {{-- <div class="absolute bottom-0 right-0 w-5 h-5 rounded-full bg-[#00d4aa] border-2 border-[#12151e] flex items-center justify-center">
+        <i class="fa-solid fa-check text-[#12151e] text-[8px]"></i>
+    </div> --}}
+</div>
+            <p class="text-white font-semibold text-sm mt-3" x-text="(selectedStaff?.first_name || '') + ' ' + (selectedStaff?.last_name || '')"></p>
+            <p class="text-[#00d4aa] text-xs mt-0.5" x-text="(selectedStaff?.department || 'N/A') + ' Department'"></p>
         </div>
 
         <!-- Info Grid -->
@@ -50,7 +51,7 @@
                     <i class="fa-solid fa-user text-[#00d4aa] text-sm mt-0.5 w-4 flex-shrink-0"></i>
                     <div>
                         <p class="text-gray-400 text-xs mb-0.5">First Name</p>
-                        <p class="text-white text-sm">John</p>
+                        <p class="text-white text-sm" x-text="selectedStaff?.first_name || 'N/A'"></p>
                     </div>
                 </div>
 
@@ -58,7 +59,7 @@
                     <i class="fa-solid fa-user text-[#00d4aa] text-sm mt-0.5 w-4 flex-shrink-0"></i>
                     <div>
                         <p class="text-gray-400 text-xs mb-0.5">Last Name</p>
-                        <p class="text-white text-sm">Doe</p>
+                        <p class="text-white text-sm" x-text="selectedStaff?.last_name || 'N/A'"></p>
                     </div>
                 </div>
             </div>
@@ -70,7 +71,7 @@
                 <i class="fa-solid fa-envelope text-[#00d4aa] text-sm mt-0.5 w-4 flex-shrink-0"></i>
                 <div>
                     <p class="text-gray-400 text-xs mb-0.5">Email Address</p>
-                    <p class="text-white text-sm truncate">john@example.com</p>
+                    <p class="text-white text-sm truncate" x-text="selectedStaff?.email || 'N/A'"></p>
                 </div>
             </div>
 
@@ -78,7 +79,7 @@
                 <i class="fa-solid fa-building text-[#00d4aa] text-sm mt-0.5 w-4 flex-shrink-0"></i>
                 <div>
                     <p class="text-gray-400 text-xs mb-0.5">Department</p>
-                    <p class="text-white text-sm">IT</p>
+                    <p class="text-white text-sm" x-text="selectedStaff?.department || 'N/A'"></p>
                 </div>
             </div>
 
@@ -86,7 +87,7 @@
                 <i class="fa-solid fa-id-badge text-[#00d4aa] text-sm mt-0.5 w-4 flex-shrink-0"></i>
                 <div>
                     <p class="text-gray-400 text-xs mb-0.5">Staff ID</p>
-                    <p class="text-white text-sm font-mono">#STF-001</p>
+                    <p class="text-white text-sm font-mono" x-text="'#STF-' + (selectedStaff?.id || '000')"></p>
                 </div>
             </div>
 
@@ -94,7 +95,7 @@
                 <i class="fa-solid fa-calendar text-[#00d4aa] text-sm mt-0.5 w-4 flex-shrink-0"></i>
                 <div>
                     <p class="text-gray-400 text-xs mb-0.5">Date Created</p>
-                    <p class="text-white text-sm">2026-02-25</p>
+                    <p class="text-white text-sm" x-text="selectedStaff?.created_at || 'N/A'"></p>
                 </div>
             </div>
         </div>
