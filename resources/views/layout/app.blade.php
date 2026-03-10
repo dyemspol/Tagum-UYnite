@@ -22,6 +22,9 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
     @livewireStyles
 
 </head>

@@ -102,8 +102,8 @@
                         <!-- Pagination -->
                         <div class="swiper-pagination"></div>
                         <!-- Navigation Buttons -->
-                        <div class="swiper-button-next !scale-50 !opacity-50 hover:!opacity-80 transition-opacity"></div>
-                        <div class="swiper-button-prev !scale-50 !opacity-50 hover:!opacity-80 transition-opacity"></div>
+                        <div class="swiper-button-next !text-white !w-8 !h-8 !bg-black/20 !rounded-full after:!text-[10px]"></div>
+                        <div class="swiper-button-prev !text-white !w-8 !h-8 !bg-black/20 !rounded-full after:!text-[10px]"></div>
                     @endif
                 </div>
             </div>

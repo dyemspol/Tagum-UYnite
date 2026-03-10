@@ -38,10 +38,19 @@
             <!-- Top part: logo + menu -->
             <div>
 
-                <div class="flex pl-2 justify-center items-center mb-4 gap-4">
-                    {{-- <img class="w-15 h-auto" src="{{ asset('img/LOGO.png') }}" alt="Main Logo"> --}}
-                    <img class="w-30 h-auto" src="{{ Auth::user()->department->department_photo ?? asset('img/LOGO.png') }}" alt="Department Logo">
+                <div class="flex justify-center items-center mb-4">
+                    <div class="relative inline-block group">
+                        <img class="w-24 h-24 rounded-2xl object-cover border border-[#2a2d3a] shadow-2xl transition-all duration-300 group-hover:opacity-80" 
+                             src="{{ Auth::user()->department->department_photo ? asset('storage/' . Auth::user()->department->department_photo) : asset('img/LOGO.png') }}" 
+                             alt="Department Logo">
+                        <label for="dept_photo_input" class="absolute -bottom-2 -right-2 bg-[#00d4aa] w-8 h-8 rounded-full flex items-center justify-center text-[#0f1117] shadow-lg border-2 border-[#12151e] cursor-pointer hover:scale-110 active:scale-95 transition-all">
+                            <i class="fa-solid fa-camera text-xs"></i>
+                        </label>
+                        <input type="file" id="dept_photo_input" class="hidden" accept="image/*">
+                    </div>
                 </div>
+
+
                 <div class="text-center text-white text-sm mt-3">
                     {{ Auth::user()->department->department_name ?? 'Admin' }} Department
                 </div>
