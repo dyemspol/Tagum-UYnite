@@ -21,7 +21,6 @@
                     <span class="text-[9px] bg-[#00d4aa]/10 text-[#00d4aa] px-2 py-0.5 rounded-full border border-[#00d4aa]/20 font-bold tracking-tight uppercase">Verified</span>
                 </div>
                 <p class="text-gray-400 text-sm flex items-center gap-2">
-                    
                     {{ Auth::user()->department->department_name ?? 'Staff Member' }}
                 </p>
                 <div class="mt-3 flex gap-2">
