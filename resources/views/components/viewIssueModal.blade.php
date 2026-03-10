@@ -64,7 +64,7 @@
                 <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-1">Location</p>
                 <div class="flex items-center gap-2 text-gray-200">
                     <i class="fa-solid fa-location-dot text-[#00d4aa]"></i>
-                    <p class="font-medium">{{ $selectedReport->street_purok }}, {{ $selectedReport->barangay?->barangay_name ?? 'N/A' }}</p>
+                    <p class="font-medium">{{ $selectedReport->Street_Purok }}, {{ $selectedReport->barangay?->barangay_name ?? 'N/A' }}</p>
                 </div>
             </div>
         </div>
@@ -138,7 +138,7 @@
                 <label class="text-[10px] text-gray-500 font-bold uppercase mb-2 block tracking-widest">Mark Status</label>
                 <select wire:model="statusUpdate" class="w-full bg-[#12151e] border border-[#2a2d3a] rounded-xl p-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#00d4aa]/30 transition-all">
                     <option value="pending">Pending</option>
-                    <option value="ongoing">Ongoing</option>
+                    <option value="in_review">Ongoing</option>
                     <option value="resolved">Resolved</option>
                 </select>
             </div>

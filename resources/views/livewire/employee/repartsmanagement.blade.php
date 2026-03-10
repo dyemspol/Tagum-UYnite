@@ -58,8 +58,8 @@
                                 {{ ucfirst($report->report_status == 'in_review' ? 'Ongoing' : ($report->report_status == 'resolved' ? 'Completed' : $report->report_status)) }}
                             </td>
                             <td class="px-4 py-4 flex gap-2">
-                                <i class="hgi hgi-stroke hgi-view text-2xl hover:text-[#00d4aa] transition-all duration-300"></i>
-                                <i class="hgi hgi-stroke hgi-delete-01 text-2xl text-red-500 hover:text-red-300"></i>
+                                <i wire:click="viewReport({{ $report->id }})" class="hgi hgi-stroke hgi-view text-2xl hover:text-[#00d4aa] transition-all duration-300 cursor-pointer"></i>
+                                <i wire:click="takedown({{ $report->id }})" class="hgi hgi-stroke hgi-delete-01 text-2xl text-red-500 hover:text-red-300 cursor-pointer"></i>
                             </td>
                         </tr>
                         @endforeach
@@ -73,4 +73,5 @@
 
 
     </div>
+    @include('components.viewIssueModal')
 </div>

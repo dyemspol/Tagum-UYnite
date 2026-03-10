@@ -9,10 +9,7 @@ use App\Models\Baranggay;
 class Settings extends Component
 {
     public $user;
-    public $barangay_id;
     public $email;
-    public $address;
-    public $date_of_birth;
     public $username;
     public $password;
     public $password_confirmation;
@@ -25,18 +22,13 @@ class Settings extends Component
     public function mount($user = null)
     {
         $this->user = $user ?? Auth::user();
-        $this->barangay_id = $this->user->barangay_id;
-        $this->address = $this->user->address;
-        $this->date_of_birth = $this->user->date_of_birth;
+
         $this->username = $this->user->username;
         $this->email = $this->user->email;
     }
     public function updateProfile()
     {
         $hasChanges = false;
-        if ($this->barangay_id != $this->user->barangay_id) $hasChanges = true;
-        if ($this->address != $this->user->address) $hasChanges = true;
-        if ($this->date_of_birth != $this->user->date_of_birth) $hasChanges = true;
         if ($this->username != $this->user->username) $hasChanges = true;
         if ($this->email != $this->user->email) $hasChanges = true;
 
@@ -45,17 +37,11 @@ class Settings extends Component
             return;
         }
         $this->validate([
-            'barangay_id' => 'required|exists:barangays,id',
-            'address' => 'required',
-            'date_of_birth' => 'required|date',
             'username' => 'required|unique:users,username,' . $this->user->id,
             'email' => 'required|email|unique:users,email,' . $this->user->id,
         ]);
         try {
             $this->user->update([
-                'barangay_id' => $this->barangay_id,
-                'address' => $this->address,
-                'date_of_birth' => $this->date_of_birth,
                 'username' => $this->username,
                 'email' => $this->email,
             ]);

@@ -14,6 +14,9 @@ class Repartsmanagement extends Component
     public $totalResolved;
     public $totalOngoing;
     public $statusFilter = 'all';
+    public $selectedReport = null;
+    public $staffComment = '';
+    public $statusUpdate = '';
 
     public function render()
     {
@@ -46,5 +49,57 @@ class Repartsmanagement extends Component
         $this->totalPending = Report::where('department_id', $user->department_id)->where('report_status', 'pending')->count();
         $this->totalResolved = Report::where('department_id', $user->department_id)->where('report_status', 'resolved')->count();
         $this->totalOngoing = Report::where('department_id', $user->department_id)->where('report_status', 'in_review')->count();
+    }
+
+    public function viewReport($id)
+    {
+        $this->selectedReport = Report::with(['user', 'comments.user', 'postImages', 'barangay'])->find($id);
+        $this->statusUpdate = $this->selectedReport->report_status;
+    }
+
+    public function closeIssue()
+    {
+        $this->selectedReport = null;
+        $this->staffComment = '';
+    }
+
+    public function addStaffComment()
+    {
+        $this->validate([
+            'staffComment' => 'required|string|max:1000',
+        ]);
+
+        \App\Models\Comment::create([
+            'report_id' => $this->selectedReport->id,
+            'user_id' => Auth::id(),
+            'comment_text' => $this->staffComment,
+        ]);
+
+        $this->staffComment = '';
+        $this->viewReport($this->selectedReport->id);
+        session()->flash('success', 'Comment added successfully.');
+    }
+
+    public function updateStatus()
+    {
+        $this->selectedReport->update([
+            'report_status' => $this->statusUpdate
+        ]);
+
+        $this->loadReports();
+        $this->loadKPI();
+        session()->flash('success', 'Status updated successfully.');
+    }
+
+    public function takedown($id, \App\Services\Employee\EmployeePost $EmployeePost)
+    {
+        if ($EmployeePost->takedown($id)) {
+            $this->selectedReport = null;
+            $this->loadReports();
+            $this->loadKPI();
+            session()->flash('success', 'Report taken down successfully.');
+        } else {
+            session()->flash('error', 'Failed to take down report.');
+        }
     }
 }

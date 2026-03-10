@@ -16,6 +16,8 @@ class Issuetracker extends Component
     public $low = [];
     public $categories;
     public $selectedReport = null;
+    public $staffComment = '';
+    public $statusUpdate = '';
     public function mount()
     {
         $this->LOADREPORTS();
@@ -57,8 +59,35 @@ class Issuetracker extends Component
     }
     public function viewIssue($reportId)
     {
-        $report = Report::with('user', 'barangay', 'postImages')->find($reportId);
-        $this->selectedReport = $report;
+        $this->selectedReport = Report::with(['user', 'comments.user', 'postImages', 'barangay'])->find($reportId);
+        $this->statusUpdate = $this->selectedReport->report_status;
+    }
+
+    public function addStaffComment()
+    {
+        $this->validate([
+            'staffComment' => 'required|string|max:1000',
+        ]);
+
+        \App\Models\Comment::create([
+            'report_id' => $this->selectedReport->id,
+            'user_id' => Auth::id(),
+            'comment_text' => $this->staffComment,
+        ]);
+
+        $this->staffComment = '';
+        $this->viewIssue($this->selectedReport->id);
+        session()->flash('success', 'Comment added successfully.');
+    }
+
+    public function updateStatus()
+    {
+        $this->selectedReport->update([
+            'report_status' => $this->statusUpdate
+        ]);
+
+        $this->LOADREPORTS();
+        session()->flash('success', 'Status updated successfully.');
     }
 
     public function closeIssue()
