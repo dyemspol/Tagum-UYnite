@@ -5,7 +5,8 @@
     $isProfileRoute = request()->routeIs('profile');
 @endphp
 
-<div class="{{ ($isProfilePage || $isProfileRoute) ? '' : 'flex items-center md:items-start justify-center lg:items-center' }} my-4">
+<div class="{{ ($isProfilePage || $isProfileRoute) ? '' : 'flex items-center md:items-start justify-center lg:items-center' }} my-4"
+     x-data="{ showFullscreen: false, fullscreenImage: '' }">
 
     <div class="bg-[#182b3cd5] py-3 rounded-lg {{ ($isProfilePage || $isProfileRoute) ? 'w-full' : 'w-[85%] max-w-[45em] lg:w-[41%] xl:w-[50%]' }}">
         <div class="flex px-3 gap-3 items-center justify-between mb-3">
@@ -64,13 +65,16 @@
                  })">
                 <div class="swiper h-80 w-full">
                     <div class="swiper-wrapper">
-                        @foreach ($post->postImages as $image)
-                            <div class="swiper-slide flex items-center justify-center bg-black/20">
+                        @foreach ($post->postImages as $index => $image)
+                            <div class="swiper-slide flex items-center justify-center bg-black/20 group cursor-zoom-in"
+                                 @if (!str_contains($image->mime_type, 'video')) 
+                                    @click="fullscreenImage = '{{ $image->cdn_url }}'; showFullscreen = true" 
+                                 @endif>
                                 @if (str_contains($image->mime_type, 'video'))
                                     <video src="{{ $image->cdn_url }}" controls class="max-h-full max-w-full"></video>
                                 @else
                                     <img src="{{ $image->cdn_url }}" alt="Post Image"
-                                        class="w-full h-full object-contain bg-black">
+                                        class="w-full h-full object-contain bg-black transition-transform duration-500 group-hover:scale-105">
                                 @endif
                             </div>
                         @endforeach
@@ -156,21 +160,21 @@
             </button>
             <!-- Dislike Button -->
             <button @click="update('dislike'); $wire.toggleReaction('dislike')"
-    class="flex space-x-0.5 items-center rounded-xl px-2 py-1 cursor-pointer transition-all duration-150"
-    :class="reaction === 'dislike' ? 'bg-red-900 bg-opacity-20' : 'bg-[#354a5c00] hover:bg-[#354a5c]'">
+                class="flex space-x-0.5 items-center rounded-xl px-2 py-1 cursor-pointer transition-all duration-150"
+                :class="reaction === 'dislike' ? 'bg-red-900 bg-opacity-20' : 'bg-[#354a5c00] hover:bg-[#354a5c]'">
 
-    <svg class="w-6 h-6"
-     :stroke="reaction === 'dislike' ? 'white' : '#31A871'"   
-     :fill="'none'"  
-     stroke-width="1.5" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round"
-        d="m9 12.75 3 3m0 0 3-3m-3 3v-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
-</svg>
-    <span class="text-white text-sm" x-text="dislikes"></span>
-</button>
+                <svg class="w-6 h-6"
+                    :stroke="reaction === 'dislike' ? 'white' : '#31A871'"   
+                    :fill="'none'"  
+                    stroke-width="1.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m9 12.75 3 3m0 0 3-3m-3 3v-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+                </svg>
+                <span class="text-white text-sm" x-text="dislikes"></span>
+            </button>
             <button type="button"
-            id="commentModalBtn"
-            wire:click="$dispatch('openCommentModal', { postId: {{ $post->id }} })"
+                id="commentModalBtn"
+                wire:click="$dispatch('openCommentModal', { postId: {{ $post->id }} })"
                 class="flex cursor-pointer items-center space-x-1 text-[#31A871] hover:text-white transition-colors px-2 py-1 rounded-xl">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -181,76 +185,33 @@
         </div>
         @endauth
 
-
-
-
-        {{-- Comment Section (Placeholder for now) --}}
-        {{-- Comment Section --}}
-        {{-- <div class="mt-3 px-3 pb-2 comment-section"> --}}
-
-            <!-- Existing comments -->
-            {{-- <div class="space-y-3 mb-3">
-                <div class="flex items-start space-x-2">
-                    <img src="{{ asset('img/default-avatar.png') }}" class="w-8 h-8 rounded-full object-cover">
-                    <div class="bg-[#1f3548] rounded-lg px-3 py-2 w-full">
-                        <p class="text-xs text-white font-medium">Username</p>
-                        <p class="text-xs text-[#ffffffc7] font-light">
-                            This is a sample comment content.
-                        </p>
-                    </div>
-                </div>
-            </div> --}}
-
-            {{-- Add comment --}}
-            {{-- <div class="flex items-center space-x-2">
-                <img src="{{ auth()->user()->profile_photo ?? asset('img/noprofile.jpg') }}"
-                    class="w-8 h-8 rounded-full object-cover">
-
-                <input type="text" placeholder="Write a comment..."
-                    class="w-full bg-[#1f3548] text-white text-xs px-3 py-2 rounded-xl outline-none focus:ring-1 focus:ring-[#31A871] placeholder:text-[#ffffff88]">
-
-                <button class="text-[#31A871] hover:text-white transition-colors text-sm font-medium">
-                    Post
-                </button>
-            </div>
-
-        </div>  --}} 
-
-
     </div>
-</div>
 
-<div x-data="{ open: false, startIndex: 0 }"
-     x-show="open"
-     @keydown.escape.window="open = false"
-     class="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4"
-     style="display: none;">
+    <!-- FULLSCREEN VIEWER -->
+    <div x-show="showFullscreen" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         @keydown.escape.window="showFullscreen = false"
+         class="fixed inset-0 z-[10000] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 sm:p-10" 
+         style="display: none;">
+        
+        <!-- CLOSE BUTTON -->
+        <button @click="showFullscreen = false"
+                class="absolute top-6 right-6 text-white hover:text-[#31A871] transition-colors z-[10001]">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
 
-    <!-- Close Button -->
-    <button @click="open = false"
-            class="absolute top-4 right-4 text-white text-3xl z-50">&times;</button>
-
-    <!-- Fullscreen Swiper -->
-    <div class="swiper-fullscreen w-full max-w-4xl h-full">
-        <div class="swiper-wrapper">
-            @foreach($post->postImages as $image)
-            <div class="swiper-slide flex items-center justify-center">
-                @if(str_contains($image->mime_type, 'video'))
-                    <video src="{{ $image->cdn_url }}" controls class="max-h-full max-w-full"></video>
-                @else
-                    <img src="{{ $image->cdn_url }}" alt="Post Image"
-                         class="max-h-full max-w-full object-contain">
-                @endif
-            </div>
-            @endforeach
+        <!-- IMAGE CONTAINER -->
+        <div class="max-w-5xl w-full h-full flex items-center justify-center" @click.outside="showFullscreen = false">
+            <img :src="fullscreenImage" 
+                 class="max-w-full max-h-full object-contain rounded-lg shadow-2xl transition-all duration-300" 
+                 alt="Post Full Resolution">
         </div>
-
-        <!-- Pagination -->
-        @if($post->postImages->count() > 1)
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-        @endif
     </div>
 </div>
-

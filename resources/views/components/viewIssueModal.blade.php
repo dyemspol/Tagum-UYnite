@@ -7,7 +7,7 @@
 
   <!-- MODAL CONTAINER -->
   <div class="bg-[#1a1d29] w-full max-w-5xl rounded-3xl shadow-2xl flex overflow-hidden border border-[#2a2d3a] relative"
-       x-data
+       x-data="{ showFullscreen: false, fullscreenImage: '' }"
        x-init="$nextTick(() => {
     new Swiper('.mySwiper', {
         loop: true,
@@ -75,8 +75,8 @@
             <div class="swiper mySwiper h-80 rounded-2xl border border-[#2a2d3a]">
                 <div class="swiper-wrapper">
                     @foreach($selectedReport->postImages as $image)
-                    <div class="swiper-slide group">
-                        <img src="{{ $image->cdn_url }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div class="swiper-slide group cursor-zoom-in" @click="fullscreenImage = '{{ $image->cdn_url }}'; showFullscreen = true">
+                        <img src="{{ $image->cdn_url }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                     </div>
                     @endforeach
                 </div>
@@ -84,6 +84,7 @@
                 <div class="swiper-button-next !text-[#00d4aa]"></div>
                 <div class="swiper-button-prev !text-[#00d4aa]"></div>
             </div>
+            <p class="text-center text-[10px] text-gray-500 mt-2 italic">Click image to view full screen</p>
         </div>
     </div>
 
@@ -156,6 +157,34 @@
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- FULLSCREEN VIEWER -->
+    <div x-show="showFullscreen" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         @keydown.escape.window="showFullscreen = false"
+         class="fixed inset-0 z-[10000] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 sm:p-10" 
+         style="display: none;">
+        
+        <!-- CLOSE BUTTON -->
+        <!-- <button @click="showFullscreen = false" 
+                class="absolute top-6 right-6 text-white hover:text-red-500 transition-colors z-[10001]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="6 18L18 6M6 6l12 12" />
+            </svg>
+        </button> -->
+
+        <!-- IMAGE CONTAINER -->
+        <div class="max-w-5xl w-full h-full flex items-center justify-center" @click.outside="showFullscreen = false">
+            <img :src="fullscreenImage" 
+                 class="max-w-full max-h-full object-contain rounded-lg shadow-2xl transition-all duration-300" 
+                 alt="Proof Full Resolution">
         </div>
     </div>
   </div>

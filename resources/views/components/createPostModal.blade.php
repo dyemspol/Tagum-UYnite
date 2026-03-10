@@ -2,7 +2,7 @@
     class="hidden fixed inset-0 w-full h-screen z-50 bg-[#070707b6] backdrop-blur-sm justify-center items-center">
 
     <div
-        class="relative overflow-y-scroll bg-linear-to-b from-[#1F486C] to-[#0F1F2C] w-[90%] max-w-[29em] rounded-xl px-5 py-5 ">
+        class="relative hide-scrollbar overflow-y-scroll bg-linear-to-b from-[#1F486C] to-[#0F1F2C] w-[90%] max-w-[29em] rounded-xl px-5 py-5 ">
 
         <div class="my-2 flex justify-between items-center">
             <div>
@@ -108,10 +108,10 @@
             <div class="flex flex-col gap-2 my-3">
                 <div class="flex justify-between items-center">
                     <label class="text-white text-sm">Upload Images or Video</label>
-                    <button id="previewMediaBtn" type="button"
+                    <!-- <button id="previewMediaBtn" type="button"
                         class="text-white text-xs bg-green-700 rounded-md py-1 px-2">
                         Preview
-                    </button>
+                    </button> -->
                 </div>
 
                 <input id="createPostMedia" type="file" accept="image/*,video/*" multiple class="hidden"
