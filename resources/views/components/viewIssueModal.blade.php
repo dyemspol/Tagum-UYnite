@@ -146,7 +146,7 @@
             
             <div class="space-y-2">
                 <button wire:click="updateStatus" class="w-full bg-[#00d4aa] py-3 rounded-xl text-[#0f1117] font-bold hover:bg-[#00e6b8] transition-all transform active:scale-95 shadow-lg shadow-[#00d4aa]/10">
-                    Update Report
+                    Update Status
                 </button>
                 <div class="space-y-3 pt-4 border-t border-[#2a2d3a]/50">
                     <label class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Takedown Action</label>
