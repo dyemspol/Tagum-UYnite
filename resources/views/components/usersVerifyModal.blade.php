@@ -4,7 +4,7 @@
   wire:ignore.self
   class="fixed hidden inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-[9999] overflow-y-auto p-4">
   <!-- MODAL CONTAINER -->
-  <div class="bg-[#1a1d29] w-full max-w-[450px] rounded-xl shadow-xl p-6 relative my-auto border border-[#2a2d3a]">
+  <div class="bg-gradient-to-b from-[#1F486C] to-[#0F1F2C] w-full max-w-[450px] rounded-xl shadow-xl p-6 relative my-auto border border-[#2a2d3a]">
 
     <!-- HEADER -->
     <h2 class="text-xl font-semibold text-white mb-4 border-b border-[#2a2d3a] pb-2">
@@ -18,7 +18,7 @@
         <input wire:model="birthday"
           type="date"
           max="{{ now()->subYears(18)->format('Y-m-d') }}"
-          class="w-full mt-1 p-2.5 rounded-lg bg-[#252836] border border-[#2a2d3a] text-white outline-none focus:ring-2 focus:ring-[#00d4aa] focus:border-transparent"
+          class="w-full mt-1 p-2.5 rounded-lg bg-white/5 border border-white/20 text-white outline-none focus:ring-2 focus:ring-[#00d4aa] focus:border-transparent"
           title="You must be at least 18 years old">
         @error('birthday')<p class="text-red-400 text-xs mt-1">{{ $message }}</p>@enderror
         <p class="text-gray-400 text-xs mt-1">You must be at least 18 years old</p>
@@ -27,7 +27,7 @@
       <div>
         <label class="text-gray-300 block mb-1">Barangay</label>
         <select wire:model="barangay_id"
-          class="w-full mt-1 p-2.5 min-h-[42px] rounded-lg bg-[#252836] border border-[#2a2d3a] text-white outline-none focus:ring-2 focus:ring-[#00d4aa] focus:border-transparent">
+          class="w-full mt-1 p-2.5 min-h-[42px] rounded-lg bg-white/5 border border-white/20 text-white outline-none focus:ring-2 focus:ring-[#00d4aa] focus:border-transparent">
           <option value="">Select Barangay</option>
           @foreach($barangays as $barangay)
           <option value="{{ $barangay->id }}">{{ $barangay->barangay_name }}</option>
@@ -41,27 +41,37 @@
         <input wire:model="address"
           type="text"
           placeholder="Enter street/purok"
-          class="w-full mt-1 p-2.5 rounded-lg bg-[#252836] border border-[#2a2d3a] text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-[#00d4aa] focus:border-transparent">
+          class="w-full mt-1 p-2.5 rounded-lg bg-white/5 border border-white/20 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-[#00d4aa] focus:border-transparent">
         @error('address')<p class="text-red-400 text-xs mt-1">{{ $message }}</p>@enderror
       </div>
 
       <div>
+    <label class="text-gray-300 block mb-1">Upload Valid ID</label>
+    <input wire:model="verification_photo"
+           type="file"
+           id="verification_photo"
+           accept="image/*"
+           multiple
+           onchange="if(this.files.length > 2){ alert('You can upload only 2 files'); this.value=''; }"
+           class="w-full mt-1 p-2 rounded-lg bg-white/5 border border-white/20 text-white outline-none 
+                  file:bg-[#31A871] file:text-white file:rounded-lg 
+                  file:px-3 file:py-1 file:border-none cursor-pointer focus:ring-2 focus:ring-[#00d4aa] focus:border-transparent">
+    <p class="text-gray-400 text-xs mt-1">You can upload 1 or 2 photos</p>
 
-        <label class="text-gray-300 block mb-1">Upload Valid ID</label>
-        <input wire:model="verification_photo"
-          type="file"
-          id="verification_photo"
-          accept="image/*"
-          multiple
-          class="w-full mt-1 p-2 rounded-lg bg-[#252836] border border-[#2a2d3a] text-white outline-none 
-               file:bg-[#31A871] file:text-white file:rounded-lg 
-               file:px-3 file:py-1 file:border-none cursor-pointer focus:ring-2 focus:ring-[#00d4aa] focus:border-transparent">
-        <p class="text-gray-400 text-xs mt-1">You can upload 1 or 2 photos</p>
-        <div wire:loading wire:target="verification_photo" class="text-[#00d4aa] text-xs mt-1">
-          Uploading photos...
+    <!-- Preview Section -->
+    @if($verification_photo)
+        <div class="mt-2 flex flex-wrap gap-2">
+            @foreach($verification_photo as $photo)
+                <img src="{{ $photo->temporaryUrl() }}" alt="Preview" class="h-20 w-20 object-cover rounded-lg border border-[#2a2d3a]">
+            @endforeach
         </div>
-        @error('verification_photo')<p class="text-red-400 text-xs mt-1">{{ $message }}</p>@enderror
-      </div>
+    @endif
+
+    <div wire:loading wire:target="verification_photo" class="text-[#00d4aa] text-xs mt-1">
+        Uploading photos...
+    </div>
+    @error('verification_photo')<p class="text-red-400 text-xs mt-1">{{ $message }}</p>@enderror
+</div>
 
       <!-- ACTION BUTTONS -->
       <div class="flex justify-end gap-3 mt-6">

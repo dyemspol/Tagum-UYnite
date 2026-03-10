@@ -1,0 +1,4 @@
+resources/views/components/staffAccountDetails.blade.php
+resources/views/livewire/admin/staffaccounts.blade.php
+resources/views/livewire/employee/message.blade.php
+resources/views/livewire/employee/settings.blade.php

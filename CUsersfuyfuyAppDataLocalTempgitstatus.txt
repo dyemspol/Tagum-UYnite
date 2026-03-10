@@ -1,0 +1,43 @@
+On branch main
+Your branch and 'origin/main' have diverged,
+and have 2 and 2 different commits each, respectively.
+  (use "git pull" if you want to integrate the remote branch with yours)
+
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Changes to be committed:
+	modified:   app/Livewire/Admin/Dashboard.php
+	modified:   app/Livewire/Admin/Staffaccounts.php
+	modified:   app/Livewire/Chatbox.php
+	modified:   app/Livewire/EditProfile.php
+	modified:   app/Livewire/Employee/Messagesz.php
+	modified:   app/Livewire/Employee/Settings.php
+	modified:   resources/views/components/editprofile.blade.php
+	new file:   resources/views/components/residentAccountDetails.blade.php
+	modified:   resources/views/layout/dashboardLayout.blade.php
+	modified:   resources/views/livewire/admin/dashboard.blade.php
+	modified:   resources/views/livewire/chatbox.blade.php
+	modified:   resources/views/page/profilePage.blade.php
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+	both modified:   resources/views/components/staffAccountDetails.blade.php
+	both modified:   resources/views/livewire/admin/staffaccounts.blade.php
+	both modified:   resources/views/livewire/employee/message.blade.php
+	both modified:   resources/views/livewire/employee/settings.blade.php
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   app/Livewire/Employee/Issuetracker.php
+	modified:   app/Livewire/Employee/Repartsmanagement.php
+	modified:   app/Livewire/Employee/Settings.php
+	modified:   resources/views/components/viewIssueModal.blade.php
+	modified:   resources/views/livewire/employee/repartsmanagement.blade.php
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	"C\357\200\272UsersfuyfuyAppDataLocalTempgitstatus.txt"
+

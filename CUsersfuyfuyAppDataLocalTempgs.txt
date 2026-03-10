@@ -1,0 +1,23 @@
+M  app/Livewire/Admin/Dashboard.php
+M  app/Livewire/Admin/Staffaccounts.php
+M  app/Livewire/Chatbox.php
+M  app/Livewire/EditProfile.php
+ M app/Livewire/Employee/Issuetracker.php
+M  app/Livewire/Employee/Messagesz.php
+ M app/Livewire/Employee/Repartsmanagement.php
+MM app/Livewire/Employee/Settings.php
+M  resources/views/components/editprofile.blade.php
+A  resources/views/components/residentAccountDetails.blade.php
+M  resources/views/components/staffAccountDetails.blade.php
+ M resources/views/components/viewIssueModal.blade.php
+M  resources/views/layout/dashboardLayout.blade.php
+M  resources/views/livewire/admin/dashboard.blade.php
+M  resources/views/livewire/admin/staffaccounts.blade.php
+M  resources/views/livewire/chatbox.blade.php
+M  resources/views/livewire/employee/message.blade.php
+ M resources/views/livewire/employee/repartsmanagement.blade.php
+M  resources/views/livewire/employee/settings.blade.php
+M  resources/views/page/profilePage.blade.php
+?? "C\357\200\272UsersfuyfuyAppDataLocalTempgitstatus.txt"
+?? "C\357\200\272UsersfuyfuyAppDataLocalTempgs.txt"
+?? "C\357\200\272UsersfuyfuyAppDataLocalTempunmerged.txt"
