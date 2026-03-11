@@ -65,7 +65,7 @@
                 class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm">
                 <option value="" disabled>Select Category</option>
                 @foreach ($departments ?? [] as $department)
-                <option value="{{ $department->id }}" class="text-black">
+                <option value="{{ $department->id }}" class="text-white">
                     {{ $department->category }}
                 </option>
                 @endforeach

@@ -59,7 +59,7 @@ class NotifModal extends Component
                 return $item;
             });
         $takedown = Report::whereIn('id', $myPostIds)
-            ->where('post_status', 'takedown')
+            ->where('post_status', 'removed')
             ->with('user')
             ->latest()
             ->take(20)

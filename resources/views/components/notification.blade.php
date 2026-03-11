@@ -1,5 +1,5 @@
 <!-- Notification Sidebar -->
-<div x-show="$store.notificationModal.open" @click.self="$store.notificationModal.close()" class="w-[14em] z-30 fixed right-10 top-20 bg-[#182b3c] h-auto p-5 rounded-md shadow-md">
+<div x-show="$store.notificationModal.open" @click.self="$store.notificationModal.close()" class="w-[17em] z-30 fixed right-10 top-20 bg-[#182b3c] h-auto p-5 rounded-md shadow-md">
   <div class="flex flex-col h-full">
 
     <!-- Header -->
@@ -23,15 +23,17 @@
         </div>
         <div>
           <p class="text-white text-xs">
+            @if(in_array($notif['type'], ['comment', 'reaction']))
             <span class="font-bold">{{ $notif['user']['username'] }}</span>
+            @endif
             @if($notif['type'] === 'comment')
             commented on your post: <span class="text-gray-400 italic">"{{ Str::limit($notif['comment_text'] ?? '', 20) }}"</span>
             @elseif($notif['type'] === 'reaction')
             liked your post
             @elseif($notif['type'] === 'resolved')
-            Report #{{ $notif['report_id'] }} has been {{ $notif['report_status'] }}
+            Report #{{ $notif['report_id'] }} has been resolved
             @elseif($notif['type'] === 'takedown')
-            Report #{{ $notif['report_id'] }} has been {{ $notif['post_status'] }}
+            Your post #{{ $notif['report_id'] }} has been taken down: <span class="text-gray-400 italic">"{{ $notif['takedown_reason'] ?? 'Violation of guidelines' }}"</span>
             @endif
           </p>
           <span class="text-gray-400 text-xs">{{ isset($notif['created_at']) ? \Carbon\Carbon::parse($notif['created_at'])->diffForHumans() : 'Just now' }}</span>
