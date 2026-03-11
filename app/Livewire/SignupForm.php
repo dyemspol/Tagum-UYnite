@@ -21,12 +21,12 @@ class SignupForm extends Component
     public $showError = false;
     public $email;
 
-    
-  
+
+
 
     public function submit(AuthServices $authServices)
-    {   
-        
+    {
+
         $data = [
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
@@ -38,29 +38,21 @@ class SignupForm extends Component
         $result = $authServices->createUser($data);
         Log::info('Signup result received.', ['success' => $result['success'] ?? false, 'message' => $result['message'] ?? '']);
         Log::info($result);
-        if($result['success']) {
+        if ($result['success']) {
             Auth::login($result['user']);
             session()->flash('success', $result['message']);
             $this->reset('firstname', 'lastname', 'username', 'password', 'confirm_password', 'email');
             return redirect('/');
-        }
-        
-
-        if(isset($result['errors'])) {
-            foreach($result['errors']->messages() as $field => $messages) {
+        } else if (isset($result['errors'])) {
+            foreach ($result['errors']->messages() as $field => $messages) {
                 $this->addError($field, $messages[0]);
-                
             }
             $this->reset('firstname', 'lastname', 'username', 'password', 'confirm_password', 'email');
-        }else{
+        } else {
             session()->flash('error', $result['message']);
             $this->reset('firstname', 'lastname', 'username', 'password', 'confirm_password', 'email');
             $this->showError = true;
         }
-
-        
-
-       
     }
     public function render()
     {
