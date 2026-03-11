@@ -8,7 +8,7 @@
         <p class="font-semibold">Notifications</p>
 
       </div>
-      <i id="notifX" class="fa-solid fa-x text-xs cursor-pointer"></i>
+      <i id="notifX" @click="$store.notificationModal.close()" class="fa-solid fa-x text-xs cursor-pointer"></i>
     </div>
 
     <!-- Scrollable Notifications -->
