@@ -8,7 +8,7 @@
 <div class="{{ ($isProfilePage || $isProfileRoute) ? '' : 'flex items-center md:items-start justify-center lg:items-center' }} my-4"
      x-data="{ showFullscreen: false, fullscreenImage: '' }">
 
-    <div class="bg-[#182b3cd5] py-3 rounded-lg {{ ($isProfilePage || $isProfileRoute) ? 'w-full' : 'w-[85%] max-w-[45em] lg:w-[41%] xl:w-[50%]' }}">
+    <div class="bg-[#182b3cd5] light:bg-white py-3 rounded-lg border border-transparent light:border-gray-200 shadow-md transition-colors {{ ($isProfilePage || $isProfileRoute) ? 'w-full' : 'w-[85%] max-w-[45em] lg:w-[41%] xl:w-[50%]' }}">
         <div class="flex px-3 gap-3 items-center justify-between mb-3">
            <div class="space-x-3 flex items-center">
              <div class="w-11 h-11 ">
@@ -17,8 +17,8 @@
                      alt="{{ $post->user->username }}">
              </div>
              <div class="">
-                 <p class="font-normal text-sm text-white">{{ $post->user->username ?? 'Unknown User' }}</p>
-                 <p class="font-light text-[#ffffffa4] text-xs">
+                 <p class="font-normal text-sm text-white light:text-gray-900">{{ $post->user->username ?? 'Unknown User' }}</p>
+                 <p class="font-light text-[#ffffffa4] light:text-gray-500 text-xs">
                     {{ $post->created_at->format('F d, Y') }}  at {{ $post->created_at->format('h:i A') }} <span>•</span> 
                         {{ $post->barangay->barangay_name ?? 'Unknown Location' }}
                     </p>
@@ -46,15 +46,15 @@
                     <i class="fa-solid fa-circle-info text-red-500 mt-0.5 text-xs"></i>
                     <div>
                         <p class="text-[10px] text-red-500 font-bold uppercase tracking-wider">Takedown Reason</p>
-                        <p class="text-[11px] text-gray-300">{{ $post->takedown_reason }}</p>
+                        <p class="text-[11px] text-gray-300 light:text-gray-700">{{ $post->takedown_reason }}</p>
                     </div>
                 </div>
             </div>
         @endif
 
         <div class="px-3 pb-2">
-            <h3 class="text-white font-bold text-sm mb-1">{{ $post->title }}</h3>
-            <p class="text-xs font-light line-clamp-2 text-white">
+            <h3 class="text-white light:text-gray-900 font-bold text-sm mb-1">{{ $post->title }}</h3>
+            <p class="text-xs font-light line-clamp-2 text-white light:text-gray-700">
                 {{ $post->content }}
             </p>
         </div>
@@ -114,20 +114,20 @@
             
             <!-- Guest Like Button (Opens Login) -->
             <button onclick="document.getElementById('loginModal').classList.remove('hidden'); document.getElementById('loginModal').classList.add('flex');"
-                class="flex space-x-0.5 items-center rounded-xl px-2 py-1 cursor-pointer transition-all duration-150 bg-[#354a5c00] hover:bg-[#354a5c]">
+                class="flex space-x-0.5 items-center rounded-xl px-2 py-1 cursor-pointer transition-all duration-150 bg-[#354a5c00] hover:bg-[#354a5c] light:hover:bg-gray-100">
                 <svg class="w-6 h-6 text-[#31A871]" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m15 11.25-3-3m0 0-3 3m3-3v7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
                 </svg>
-                <span class="text-white text-sm">{{ $likes }}</span>
+                <span class="text-white light:text-gray-600 text-sm">{{ $likes }}</span>
             </button>
 
             <!-- Guest Dislike Button (Opens Login) -->
             <button onclick="document.getElementById('loginModal').classList.remove('hidden'); document.getElementById('loginModal').classList.add('flex');"
-                class="flex space-x-0.5 items-center rounded-xl px-2 py-1 cursor-pointer transition-all duration-150 bg-[#354a5c00] hover:bg-[#354a5c]">
+                class="flex space-x-0.5 items-center rounded-xl px-2 py-1 cursor-pointer transition-all duration-150 bg-[#354a5c00] hover:bg-[#354a5c] light:hover:bg-gray-100">
                 <svg class="w-6 h-6 text-[#31A871]" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m9 12.75 3 3m0 0 3-3m-3 3v-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
                 </svg>
-                <span class="text-white text-sm">{{ $dislikes }}</span>
+                <span class="text-white light:text-gray-600 text-sm">{{ $dislikes }}</span>
             </button>
 
             <button onclick="document.getElementById('loginModal').classList.remove('hidden'); document.getElementById('loginModal').classList.add('flex');"
@@ -165,7 +165,7 @@
         }">
             <button @click="update('like'); $wire.toggleReaction('like')"
                 class="flex space-x-0.5 items-center rounded-xl px-2 py-1 cursor-pointer transition-all duration-150"
-                :class="reaction === 'like' ? 'bg-[#31A871] bg-opacity-20' : 'bg-[#354a5c00] hover:bg-[#354a5c]'">
+                :class="reaction === 'like' ? 'bg-[#31A871] bg-opacity-20' : 'bg-[#354a5c00] hover:bg-[#354a5c] light:hover:bg-gray-100'">
 
                 <svg class="w-6 h-6" :class="reaction === 'like' ? 'text-[#31A871]' : 'text-[#31A871]'"
                    :fill="'none'"  
@@ -174,12 +174,12 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="m15 11.25-3-3m0 0-3 3m3-3v7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
                 </svg>
-                <span class="text-white text-sm" x-text="likes"></span>
+                <span class="text-white light:text-gray-600 text-sm" x-text="likes"></span>
             </button>
             <!-- Dislike Button -->
             <button @click="update('dislike'); $wire.toggleReaction('dislike')"
                 class="flex space-x-0.5 items-center rounded-xl px-2 py-1 cursor-pointer transition-all duration-150"
-                :class="reaction === 'dislike' ? 'bg-red-900 bg-opacity-20' : 'bg-[#354a5c00] hover:bg-[#354a5c]'">
+                :class="reaction === 'dislike' ? 'bg-red-900 bg-opacity-20' : 'bg-[#354a5c00] hover:bg-[#354a5c] light:hover:bg-gray-100'">
 
                 <svg class="w-6 h-6"
                     :stroke="reaction === 'dislike' ? 'white' : '#31A871'"   
@@ -188,7 +188,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="m9 12.75 3 3m0 0 3-3m-3 3v-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
                 </svg>
-                <span class="text-white text-sm" x-text="dislikes"></span>
+                <span class="text-white light:text-gray-600 text-sm" x-text="dislikes"></span>
             </button>
             <button type="button"
                 id="commentModalBtn"
@@ -198,7 +198,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M7 10h10M7 14h5m-9 3.5V6.8c0-1.01.82-1.8 1.84-1.8h12.32C18.18 5 19 5.79 19 6.8v8.4c0 1.01-.82 1.8-1.84 1.8H9.2L5.5 17.5Z" />
                 </svg>
-                <span class="text-white text-sm">{{ $post->comments->count() }}</span>
+                <span class="text-white light:text-gray-600 text-sm">{{ $post->comments->count() }}</span>
             </button>
         </div>
         @endauth

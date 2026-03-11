@@ -1,23 +1,23 @@
 <div id="commentModal" class="{{ (isset($commentModal) && $commentModal) ? 'flex' : 'hidden' }} fixed inset-0 z-50 items-center justify-center bg-[#000000b6] bg-opacity-70 backdrop-blur-sm px-4">
     @if(isset($post) && $post)
-    <div class="bg-[#182b3c] w-full max-w-lg md:max-w-xl rounded-xl relative shadow-2xl flex flex-col max-h-[90vh]">
+    <div class="bg-[#182b3c] light:bg-white w-full max-w-lg md:max-w-xl rounded-xl relative shadow-2xl flex flex-col max-h-[90vh]">
 
 
-        <button id="commentModalX" class="absolute top-3 right-3 text-white/70 hover:text-white text-2xl leading-none transition-colors z-30 p-2 bg-black/20 rounded-full w-8 h-8 flex items-center justify-center"
+        <button id="commentModalX" class="absolute top-3 right-3 text-white/70 light:text-black/50 hover:text-white light:hover:text-black text-2xl leading-none transition-colors z-30 p-2 bg-black/20 light:bg-black/5 rounded-full w-8 h-8 flex items-center justify-center"
             wire:click="$set('commentModal', false)">
             &times;
         </button>
 
 
-        <div class="px-5 py-3 border-b border-[#ffffff10] flex-shrink-0 bg-[#182b3c] rounded-t-xl z-20">
-            <h2 class="text-white font-bold text-lg text-center">Post Details</h2>
+        <div class="px-5 py-3 border-b border-[#ffffff10] light:border-black/10 flex-shrink-0 bg-[#182b3c] light:bg-white rounded-t-xl z-20">
+            <h2 class="text-white light:text-black font-bold text-lg text-center">Post Details</h2>
         </div>
 
 
         <div class="overflow-y-auto hide-scrollbar custom-scrollbar flex-1 p-0 relative">
 
 
-            <div class="bg-[#182b3cd5] pb-2">
+            <div class="bg-[#182b3cd5] light:bg-slate-50 pb-2">
 
 
                 <div class="flex px-5 py-3 gap-3 items-center justify-between">
@@ -28,8 +28,8 @@
                                 alt="User">
                         </div>
                         <div>
-                            <p class="font-normal text-sm text-white">{{ $post->user->first_name }} {{ $post->user->last_name }}</p>
-                            <p class="font-light text-[#ffffffa4] text-xs">
+                            <p class="font-normal text-sm text-white light:text-black">{{ $post->user->first_name }} {{ $post->user->last_name }}</p>
+                            <p class="font-light text-[#ffffffa4] light:text-black/60 text-xs">
                                 {{ $post->created_at->format('F j, Y') }} {{ $post->created_at->format('g:i A') }} <span>•</span> {{ $post->barangay->barangay_name }} , {{ $post->street_purok }}
                             </p>
                         </div>
@@ -43,8 +43,8 @@
 
                 <!-- Post Content -->
                 <div class="px-5 pb-2">
-                    <h3 class="text-white font-bold text-sm mb-1">{{ $post->title }}</h3>
-                    <p class="text-sm font-light text-white leading-relaxed line-clamp-3">
+                    <h3 class="text-white light:text-black font-bold text-sm mb-1">{{ $post->title }}</h3>
+                    <p class="text-sm font-light text-white light:text-black/80 leading-relaxed line-clamp-3">
                         {{ $post->description }}
                     </p>
                 </div>
@@ -100,12 +100,12 @@
                 <div class="px-5 py-2 flex items-center space-x-4">
 
                     <div class="flex items-center space-x-1">
-                        <span class="text-[#ffffffa4] text-xs">{{ count($post->comments) }} comments</span>
+                        <span class="text-[#ffffffa4] light:text-black/60 text-xs">{{ count($post->comments) }} comments</span>
                     </div>
                 </div>
 
                 <!-- Separator -->
-                <div class="border-b border-[#ffffff10] mx-5 mb-2"></div>
+                <div class="border-b border-[#ffffff10] light:border-black/10 mx-5 mb-2"></div>
 
                 <!-- COMMENTS SECTION (Bottom) -->
                 <div class="px-5 pt-2">
@@ -116,23 +116,23 @@
                             <img src="{{ $comment->user->profile_photo ? $comment->user->profile_photo : asset('img/noprofile.jpg') }}"
                                 class="w-8 h-8 rounded-full object-cover flex-shrink-0 mt-1">
                             <div class="flex-1">
-                                <div class="bg-[#1f3548] rounded-2xl px-3 py-2 inline-block max-w-full {{ $comment->user->role == 'employee' ? 'border-l-2 border-[#31A871]' : '' }}">
+                                <div class="bg-[#1f3548] light:bg-gray-200 rounded-2xl px-3 py-2 inline-block max-w-full {{ $comment->user->role == 'employee' ? 'border-l-2 border-[#31A871]' : '' }}">
                                     <div class="flex items-center gap-1.5 mb-0.5">
-                                        <p class="text-xs text-white font-bold hover:underline cursor-pointer">
+                                        <p class="text-xs text-white light:text-black font-bold hover:underline cursor-pointer">
                                             {{ $comment->user->first_name }} {{ $comment->user->last_name }}
                                         </p>
                                         @if($comment->user->role == 'employee')
                                         <span class="bg-[#31A871] text-white text-[9px] px-1.5 py-0.5 rounded-md font-bold uppercase tracking-wider">Staff</span>
                                         @endif
                                     </div>
-                                    <p class="text-sm text-[#ffffffdd] font-light">
+                                    <p class="text-sm text-[#ffffffdd] light:text-black/80 font-light">
                                         {{ $comment->comment_text }}
                                     </p>
                                 </div>
                                 <div class="flex items-center space-x-3 mt-1 ml-2">
-                                    <span class="text-[10px] text-[#ffffff88] font-medium cursor-pointer hover:underline">Like</span>
-                                    <span class="text-[10px] text-[#ffffff88] font-medium cursor-pointer hover:underline">Reply</span>
-                                    <span class="text-[10px] text-[#ffffff66]">{{ $comment->created_at->diffForHumans() }}</span>
+                                    <span class="text-[10px] text-[#ffffff88] light:text-black/60 font-medium cursor-pointer hover:underline">Like</span>
+                                    <span class="text-[10px] text-[#ffffff88] light:text-black/60 font-medium cursor-pointer hover:underline">Reply</span>
+                                    <span class="text-[10px] text-[#ffffff66] light:text-black/50">{{ $comment->created_at->diffForHumans() }}</span>
                                 </div>
                             </div>
                         </div>
@@ -144,15 +144,15 @@
         </div>
 
         <!-- Floating/Sticky Input Section -->
-        <div class="p-3 bg-[#182b3c] border-t border-[#ffffff10] flex-shrink-0 rounded-b-xl z-20">
+        <div class="p-3 bg-[#182b3c] light:bg-white border-t border-[#ffffff10] light:border-black/10 flex-shrink-0 rounded-b-xl z-20">
             <div class="flex items-center space-x-2">
                 <img src="{{ auth()->user()->profile_photo ?? asset('img/noprofile.jpg') }}"
                     class="w-8 h-8 rounded-full object-cover flex-shrink-0">
 
                 <div class="flex-1 relative">
                     <input type="text" placeholder="Write a comment..."
-                        class="w-full bg-[#1f3548] text-white text-sm px-4 py-2 rounded-full outline-none focus:ring-1 focus:ring-[#31A871] placeholder:text-[#ffffff88] transition-all" wire:model="comment" wire:keydown.enter="submitComment">
-                    <button class="absolute right-2 top-1/2 -translate-y-1/2 text-[#31A871] hover:text-white p-1 rounded-full aspect-square flex items-center justify-center" wire:click="submitComment">
+                        class="w-full bg-[#1f3548] light:bg-gray-100 text-white light:text-black text-sm px-4 py-2 rounded-full outline-none focus:ring-1 focus:ring-[#31A871] placeholder:text-[#ffffff88] light:placeholder:text-black/50 transition-all" wire:model="comment" wire:keydown.enter="submitComment">
+                    <button class="absolute right-2 top-1/2 -translate-y-1/2 text-[#31A871] hover:text-white light:hover:text-[#288c5d] p-1 rounded-full aspect-square flex items-center justify-center" wire:click="submitComment">
                         <svg class="w-5 h-5 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
                         </svg>

@@ -1,7 +1,7 @@
-        <nav class="bg-[#182B3C] fixed top-0 left-0 w-full z-30">
+        <nav class="bg-[#182B3C] light:bg-white border-b border-transparent light:border-gray-200 transition-colors fixed top-0 left-0 w-full z-30">
             <div class="flex h-16 justify-between w-full items-center mx-auto sm:px-10 py-2 shadow-md px-5">
                 <div class="flex justify-center items-center">
-                    <div id="menuicon" class="lg:hidden cursor-pointer"><i class="fa-solid fa-bars text-white text-xl"></i></div>
+                    <div id="menuicon" class="lg:hidden cursor-pointer"><i class="fa-solid fa-bars text-white light:text-gray-800 text-xl"></i></div>
                     <a href="/"> <div class="w-11 h-auto lg:block hidden"><img class="w-full h-full" src="{{ asset('img/LOGO.png') }}"
                             alt="logo">
                     </div></a>
@@ -9,17 +9,17 @@
                 <div class="relative flex-1 sm:flex-none sm:w-[30rem] mx-3 sm:mx-0 flex items-center">
                     <form class="w-full relative" x-data @submit.prevent="Livewire.navigate('/search?search=' + $el.querySelector('input').value)">
                         <x-heroicon-o-magnifying-glass
-                            class="absolute left-2 top-1/2 transform -translate-y-1/2 text-white w-5 h-5 z-10" />
+                            class="absolute left-2 top-1/2 transform -translate-y-1/2 text-white light:text-gray-400 w-5 h-5 z-10" />
 
                         <input type="text" placeholder="Search..."
-                            class="bg-[#122333] w-full text-white rounded-md pl-9 pr-2 py-2 focus:outline-none" />
+                            class="bg-[#122333] light:bg-[#f3f4f6] w-full text-white light:text-gray-800 border-none light:border light:border-gray-200 rounded-md pl-9 pr-2 py-2 focus:outline-none transition-colors" />
                     </form>
                 </div>
 
 
 
                 @if (!auth()->check())
-                <button id="loginBt" class="bg-[#31a87100] border-[1px] py-1 px-4 text-white rounded-sm font-light">
+                <button id="loginBt" class="bg-[#31a87100] border-[1px] border-white light:border-gray-300 py-1 px-4 text-white light:text-gray-800 rounded-sm font-light hover:bg-[#31A871] hover:text-white transition-colors">
                     Login
                 </button>
             @endif
@@ -27,7 +27,9 @@
             @auth
 
             <div class="flex items-center gap-5">
-                <i class="hgi hgi-stroke hgi-sun-01 text-2xl text-[#31A871]"></i>
+               <button id="themeToggle" class="">
+    <i id="themeIcon" class="hgi hgi-stroke hgi-sun-01 text-2xl text-[#31A871] cursor-pointer"></i>
+</button>
                 <a href="{{ route('message') }}"><i class="fa-regular fa-message text-[#31A871] text-2xl group-hover:text-white cursor-pointer "></i></a>
                 
                 <i id="notifIcon" @click="$store.notificationModal.toggle()" class="fa-regular fa-bell text-[#31A871] text-2xl text-normal group-hover:text-white cursor-pointer"></i>
@@ -50,27 +52,27 @@
         {{-- mobile version leftsidebar --}}
 
         <div id="mobileSidebar"
-            class="fixed lg:hidden mt-16 left-0 h-16 w-full h-full bg-[#0c0c0cb2] opacity-0 pointer-events-none transition-all duration-300 z-40">
+            class="fixed lg:hidden mt-16 left-0 h-16 w-full h-full bg-[#0c0c0cb2] light:bg-black/20 opacity-0 pointer-events-none transition-all duration-300 z-40">
 
-            <div class="w-[14em] bg-[#182b3c] h-[41em] p-5 rounded-br-md transform -translate-x-full transition-all duration-300"
+            <div class="w-[14em] bg-[#182b3c] light:bg-white h-[41em] p-5 rounded-br-md transform -translate-x-full transition-all duration-300 shadow-xl border-r light:border-gray-100"
                 id="sidebarPanel">
 
                 <div class="flex flex-col space-y-6">
                     <a href="/" wire:navigate
                         class="flex items-center space-x-3 transition duration-150 py-3 px-1 rounded-sm group {{ request()->routeIs('homepage') ? 'bg-[#31A871]' : 'hover:bg-[#31A871]' }}">
                         <i class="fa-solid fa-house {{ request()->routeIs('homepage') ? 'text-white' : 'text-[#31A871] group-hover:text-white' }} text-normal"></i>
-                        <span class="text-white text-sm">Home</span>
+                        <span class="text-white light:text-gray-800 text-sm">Home</span>
                 </a>
         
         
                     <a href="/latest" wire:navigate class="flex items-center space-x-4 py-2 px-1 rounded-sm group cursor-pointer {{ request()->routeIs('latest') ? 'bg-[#31A871]' : 'hover:bg-[#31A871]' }}">
                         <i class="fa-solid fa-fire-flame-curved {{ request()->routeIs('latest') ? 'text-white' : 'text-[#31A871] group-hover:text-white' }}"></i>
-                        <span class="text-white text-sm">Latest</span>
+                        <span class="text-white light:text-gray-800 text-sm">Latest</span>
                     </a>
         
                     <a href="/popular" wire:navigate class="flex items-center space-x-3 py-2 px-1 rounded-sm group cursor-pointer {{ request()->routeIs('popular') ? 'bg-[#31A871]' : 'hover:bg-[#31A871]' }}">
                         <i class="fa-solid fa-house {{ request()->routeIs('popular') ? 'text-white' : 'text-[#31A871] group-hover:text-white' }}"></i>
-                        <span class="text-white text-sm">Popular</span>
+                        <span class="text-white light:text-gray-800 text-sm">Popular</span>
                     </a>
         
                     {{-- <div class="flex items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group cursor-pointer">
@@ -81,13 +83,13 @@
                     @auth
                     <div id="createPostBtMobile" class="flex cursor-pointer items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group" @click="$dispatch('openCreatePost')">
                         <i class="fa-solid fa-plus text-[#31A871] group-hover:text-white"></i>
-                        <span  class="text-white text-sm group-hover:text-white">Create Post</span>
+                        <span class="text-white light:text-gray-800 text-sm group-hover:text-white">Create Post</span>
                     </div> 
                     @endauth
                     @guest
                         <div id="createPostBtGuest" class="flex cursor-pointer items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group" @click="$dispatch('openCreatePost')">
                         <i class="fa-solid fa-plus text-[#31A871] group-hover:text-white"></i>
-                        <span  class="text-white text-sm group-hover:text-white">Create Post</span>
+                        <span class="text-white light:text-gray-800 text-sm group-hover:text-white">Create Post</span>
                     </div>
                     @endguest
                     
@@ -99,7 +101,7 @@
                 <hr class ="mt-7 mb-4 border-gray-600">
 
                 <div class="flex flex-col gap-2 mb-4">
-                    <h1 class="text-white font-semibold">Post category</h1>
+                    <h1 class="text-white light:text-gray-800 font-semibold">Post category</h1>
                 
                     <div class="relative hidden sm:flex">
                         <x-heroicon-o-magnifying-glass
@@ -109,7 +111,7 @@
                             id="categorySearchMobile"
                             type="text"
                             placeholder="Search categories..."
-                            class="bg-[#122333] w-full text-white rounded-md pl-9 pr-2 py-1 focus:outline-none text-sm"
+                            class="bg-[#122333] light:bg-[#f3f4f6] w-full text-white light:text-gray-800 border-none light:border light:border-gray-200 rounded-md pl-9 pr-2 py-1 focus:outline-none text-sm transition-colors"
                         />
                     </div>
                 
@@ -118,7 +120,7 @@
                         @foreach($departments as $department)
                         <div class="category-item space-y-2" data-category="{{ strtolower($department->category) }}">
                             <label class="flex justify-between items-center space-y-4 cursor-pointer">
-                                <p class="text-white font-light text-sm">
+                                <p class="text-white light:text-gray-800 font-light text-sm">
                                     {{ $department->category }}
                                 </p>
                                 <input type="checkbox"
@@ -147,7 +149,7 @@
         {{-- right-[-40%] --}}
         @auth
         {{-- <div id="profilesidebar" class="fixed inset-0 flex justify-center items-center  bg-black/50 hidden"> --}}
-            <div id="profilesidebar"  class="w-[14em] fixed hidden right-10 top-18 bg-[#182b3c] p-5 rounded-br-md z-55 rounded-md shadow-md">
+            <div id="profilesidebar"  class="w-[14em] fixed hidden right-10 top-18 bg-[#182b3c] light:bg-white p-5 rounded-br-md z-55 rounded-md shadow-md border light:border-gray-200 transition-colors">
                 <div class="flex flex-col space-y-6">
                     
                     <!-- View Profile -->
@@ -157,14 +159,14 @@
                                 src="{{ Auth::user()->profile_photo ? asset(Auth::user()->profile_photo) : asset('img/noprofile.jpg') }}" 
                                 alt="Profile Photo">
                         </div>
-                        <p class="text-white text-sm">View Profile</p>
+                        <p class="text-white light:text-gray-800 text-sm">View Profile</p>
                     </a>
 
                     <!-- Recent Post (for mobile) -->
                     <a href="#" id="notifLink" 
                     class="flex lg:hidden items-center space-x-3 py-2 px-1 rounded-sm hover:bg-[#31A871] transition duration-150 cursor-pointer">
                         <i class="fa-solid fa-clock text-[#31A871]"></i>
-                        <span class="text-white text-sm">Notification</span>
+                        <span class="text-white light:text-gray-800 text-sm">Notification</span>
                     </a>
 
                     <!-- Logout -->
@@ -173,7 +175,7 @@
                         @csrf
                         <button type="submit">
                             <i class="fa-solid fa-sign-out text-[#31A871] hover:text-white"></i>
-                            <span class="text-white text-sm">Sign out</span>
+                            <span class="text-white light:text-gray-800 text-sm">Sign out</span>
                         </button>
                     </form>
 

@@ -10,6 +10,11 @@ $isProfilePage = request()->routeIs('profile'); // true if on profile page
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Community')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script>
+        if (localStorage.getItem("theme") === "light") {
+            document.documentElement.classList.add("light");
+        }
+    </script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
@@ -25,7 +30,7 @@ $isProfilePage = request()->routeIs('profile'); // true if on profile page
 
 </head>
 
-<body class="bg-[#122333] min-h-screen py-22 px-5 sm:px-10" x-data>
+<body class="bg-[#122333] light:bg-[#f8fafc] transition-colors min-h-screen py-22 px-5 sm:px-10" x-data>
 
 
     @include('components.navbar')
@@ -79,6 +84,7 @@ $isProfilePage = request()->routeIs('profile'); // true if on profile page
     @guest
     @vite('resources/js/Homepage.js')
     @endguest
+    @vite('resources/js/darkLightMode.js')
 </body>
 
 

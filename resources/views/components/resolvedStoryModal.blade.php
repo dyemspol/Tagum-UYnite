@@ -24,20 +24,20 @@ x-cloak
 @click.self="open = false"
 @keydown.escape.window="open = false">
 
-    <div class="bg-[#1a1d29] w-full max-w-lg rounded-3xl border border-[#2a2d3a] overflow-hidden relative shadow-2xl">
+    <div class="bg-[#1a1d29] light:bg-[#f8fafc] w-full max-w-lg rounded-3xl border border-[#2a2d3a] light:border-gray-200 overflow-hidden relative shadow-2xl transition-colors">
         
         <!-- CLOSE BUTTON -->
-        <button @click="open = false" class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-black/50 text-white z-50 hover:bg-black/70 transition-all">
+        <button @click="open = false" class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-black/50 light:bg-gray-100 text-white light:text-gray-800 z-50 hover:bg-black/70 light:hover:bg-gray-200 transition-all">
             <i class="fa-solid fa-xmark text-lg"></i>
         </button>
 
         <!-- HEADER -->
-        <div class="p-4 flex items-center gap-3 border-b border-[#2a2d3a]">
+        <div class="p-4 flex items-center gap-3 border-b border-[#2a2d3a] light:border-gray-200 transition-colors">
             <div class="w-10 h-10 rounded-full border-2 border-blue-500 p-0.5">
                 <img :src="story.profile" class="w-full h-full rounded-full object-cover">
             </div>
             <div>
-                <h3 class="text-white font-bold text-sm" x-text="story.name"></h3>
+                <h3 class="text-white light:text-gray-900 font-bold text-sm transition-colors" x-text="story.name"></h3>
                 <p class="text-[#00d4aa] text-[10px] font-bold uppercase tracking-widest">Resolved Story</p>
             </div>
         </div>
@@ -61,13 +61,13 @@ x-cloak
         </div>
 
         <!-- FOOTER / CONTENT AREA -->
-        <div class="p-6 bg-[#12151e]/50">
-            <h4 class="text-white font-bold text-lg mb-2">Issue Successfully Resolved</h4>
-            <p class="text-gray-400 text-xs leading-relaxed">
+        <div class="p-6 bg-[#12151e]/50 light:bg-white transition-colors">
+            <h4 class="text-white light:text-gray-900 font-bold text-lg mb-2 transition-colors">Issue Successfully Resolved</h4>
+            <p class="text-gray-400 light:text-gray-600 text-xs leading-relaxed transition-colors">
                 This report has been verified and resolved by the local authorities. Thank you for your active participation in our community safety.
             </p>
             
-            <button class="w-full mt-6 bg-[#00d4aa] text-[#12151e] font-bold py-3 rounded-xl hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-[#00d4aa]/10">
+            <button class="w-full mt-6 bg-[#31A871] text-white font-bold py-3 rounded-xl hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-[#31A871]/20">
                 View Full Details
             </button>
         </div>

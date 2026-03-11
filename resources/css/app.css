@@ -1,5 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
+
+@variant light (&:where(.light, .light *));
+
+@theme {
+  --font-sans: "Poppins", ui-sans-serif, system-ui;
+}
+
+/* body {
+  @apply bg-[#122333] text-white transition-colors duration-300;
+} */
+
 @import "@glidejs/glide/dist/css/glide.core.min.css";
 @import "@glidejs/glide/dist/css/glide.theme.min.css";
 

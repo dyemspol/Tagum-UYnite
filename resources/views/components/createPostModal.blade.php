@@ -2,23 +2,23 @@
     class="hidden fixed inset-0 w-full h-screen z-50 bg-[#070707b6] backdrop-blur-sm justify-center items-center">
 
     <div
-        class="relative hide-scrollbar overflow-y-scroll bg-linear-to-b from-[#1F486C] to-[#0F1F2C] w-[90%] max-w-[29em] rounded-xl px-5 py-5 ">
+        class="relative hide-scrollbar overflow-y-auto bg-linear-to-b from-[#1F486C] to-[#0F1F2C] light:from-white light:to-[#f8fafc] w-[95%] max-w-5xl rounded-2xl p-6 md:p-8 shadow-2xl transition-colors">
 
-        <div class="my-2 flex justify-between items-center">
+        <div class="mb-8 flex justify-between items-center border-b border-white/10 light:border-gray-200 pb-4 transition-colors">
             <div>
-                <h2 class="text-white text-lg font-medium">Create Post</h2>
-                <p class="text-xs text-white font-light opacity-70">Submit a problem in your community</p>
+                <h2 class="text-white light:text-gray-900 text-2xl font-bold tracking-tight transition-colors">Create Post</h2>
+                <p class="text-xs text-white/70 light:text-gray-500 font-medium mt-1 transition-colors">Submit a precise report to your community authorities</p>
             </div>
 
             <div id="createPostModalX"
-                class="h-6 w-6 flex justify-center items-center rounded-full bg-[#31A871] cursor-pointer text-white">
-                x
+                class="h-8 w-8 flex justify-center items-center rounded-full bg-white/10 hover:bg-red-500 light:bg-gray-100 light:hover:bg-red-100 cursor-pointer text-white light:text-gray-600 light:hover:text-red-600 transition-all">
+                <i class="fa-solid fa-xmark"></i>
             </div>
         </div>
 
 
         <div wire:loading wire:target="submit"
-            class="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm flex items-center justify-center">
+            class="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm flex items-center justify-center rounded-2xl">
             <div class="flex flex-col items-center justify-center h-full w-full">
                 <!-- Spinner -->
                 <svg class="animate-spin h-10 w-10 text-[#31A871]" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -28,128 +28,152 @@
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                 </svg>
 
-                <p class="text-white mt-4 text-sm font-medium animate-pulse text-center">
-                    Posting to your community...
+                <p class="text-white light:text-gray-900 mt-4 text-sm font-medium animate-pulse text-center">
+                    Submitting your report...
                 </p>
             </div>
         </div>
 
+        <form wire:submit.prevent="submit" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- LEFT COLUMN: Form Details -->
+            <div class="space-y-5">
 
-
-
-
-
-        <form wire:submit.prevent="submit" class="space-y-3 mt-5">
-
-            <div>
-                <label class="text-white text-sm">Title</label>
-                <input wire:model="title" required
-                    class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm"
-                    type="text" placeholder="Ex: Potholes on Main Street">
-                @error('title')
-                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div>
-                <label class="text-white text-sm">Description</label>
-                <input wire:model="description" required
-                    class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm"
-                    type="text" placeholder="Ex: There are several potholes on Main Street that need to be fixed.">
-                @error('description')
-                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <select wire:model="department_id" required
-                class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm">
-                <option value="" disabled>Select Category</option>
-                @foreach ($departments ?? [] as $department)
-                <option value="{{ $department->id }}" class="text-white">
-                    {{ $department->category }}
-                </option>
-                @endforeach
-                @error('department_id')
-                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </select>
-
-            <select wire:model="barangay_id" required
-                class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm">
-                <option value="" disabled>Select Barangay</option>
-                @foreach ($barangays ?? [] as $barangay)
-                <option value="{{ $barangay->id }}" class="text-white">
-                    {{ $barangay->barangay_name }}
-                </option>
-                @endforeach
-                @error('barangay_id')
-                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </select>
-            <div class="flex flex-col gap-2">
-                <label class="text-white text-sm">Street Purok</label>
-                <input wire:model="Street_Purok" required
-                    class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm"
-                    type="text" placeholder="Ex: Purok 1, Street 1">
-                @error('Street_Purok')
-                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-            <div class="flex flex-col gap-2">
-                <label class="text-white text-sm">Landmark</label>
-                <input wire:model="landmark" required
-                    class="bg-transparent border border-[#ffffff97] rounded-sm w-full text-white py-2 px-2 text-sm"
-                    type="text" placeholder="Ex: Near the school">
-                @error('landmark')
-                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div class="flex flex-col gap-2 my-3">
-                <div class="flex justify-between items-center">
-                    <label class="text-white text-sm">Upload Images or Video</label>
-                    <!-- <button id="previewMediaBtn" type="button"
-                        class="text-white text-xs bg-green-700 rounded-md py-1 px-2">
-                        Preview
-                    </button> -->
+                <div>
+                    <label class="block text-white/70 light:text-gray-600 text-xs font-bold uppercase tracking-widest mb-1.5 transition-colors">Title</label>
+                    <input wire:model="title" required
+                        class="bg-black/20 light:bg-white border border-white/10 light:border-gray-200 focus:border-[#31A871] light:focus:border-[#31A871] outline-none rounded-lg w-full text-white light:text-gray-900 placeholder-white/30 light:placeholder-gray-400 py-2.5 px-3 text-sm transition-all shadow-inner light:shadow-sm"
+                        type="text" placeholder="E.g., Deep potholes on main road">
+                    @error('title')
+                    <p class="text-red-400 text-xs mt-1 font-medium">{{ $message }}</p>
+                    @enderror
                 </div>
 
-                <input id="createPostMedia" type="file" accept="image/*,video/*" multiple class="hidden"
-                    wire:model="media">
-                @error('media')
-                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
-                @enderror
-                <label for="createPostMedia"
-                    class="border border-dashed border-[#5e7186] text-[#97a7b5] rounded-md w-full h-10 flex items-center justify-center cursor-pointer hover:border-[#31A871] hover:text-white transition-colors">
-                    Click to Upload
-                </label>
+                <div>
+                    <label class="block text-white/70 light:text-gray-600 text-xs font-bold uppercase tracking-widest mb-1.5 transition-colors">Description</label>
+                    <input wire:model="description" required
+                        class="bg-black/20 light:bg-white border border-white/10 light:border-gray-200 focus:border-[#31A871] light:focus:border-[#31A871] outline-none rounded-lg w-full text-white light:text-gray-900 placeholder-white/30 light:placeholder-gray-400 py-2.5 px-3 text-sm transition-all shadow-inner light:shadow-sm"
+                        type="text" placeholder="Provide clear details about the issue...">
+                    @error('description')
+                    <p class="text-red-400 text-xs mt-1 font-medium">{{ $message }}</p>
+                    @enderror
+                </div>
 
-                <div id="mediaPreviewGrid" wire:ignore class="hidden gap-2 pt-1">
-                    <!-- thumbnails injected via JS -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-white/70 light:text-gray-600 text-xs font-bold uppercase tracking-widest mb-1.5 transition-colors">Category</label>
+                        <select wire:model="department_id" required
+                            class="bg-black/20 light:bg-white border border-white/10 light:border-gray-200 focus:border-[#31A871] light:focus:border-[#31A871] outline-none rounded-lg w-full text-white light:text-gray-900 py-2.5 px-3 text-sm transition-all appearance-none shadow-inner light:shadow-sm">
+                            <option value="" disabled>Select Type</option>
+                            @foreach ($departments ?? [] as $department)
+                            <option value="{{ $department->id }}" class="text-gray-800">
+                                {{ $department->category }}
+                            </option>
+                            @endforeach
+                        </select>
+                        @error('department_id')
+                        <p class="text-red-400 text-xs mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-white/70 light:text-gray-600 text-xs font-bold uppercase tracking-widest mb-1.5 transition-colors">Barangay</label>
+                        <select wire:model="barangay_id" required
+                            class="bg-black/20 light:bg-white border border-white/10 light:border-gray-200 focus:border-[#31A871] light:focus:border-[#31A871] outline-none rounded-lg w-full text-white light:text-gray-900 py-2.5 px-3 text-sm transition-all appearance-none shadow-inner light:shadow-sm">
+                            <option value="" disabled>Select Location</option>
+                            @foreach ($barangays ?? [] as $barangay)
+                            <option value="{{ $barangay->id }}" class="text-gray-800">
+                                {{ $barangay->barangay_name }}
+                            </option>
+                            @endforeach
+                        </select>
+                        @error('barangay_id')
+                        <p class="text-red-400 text-xs mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-white/70 light:text-gray-600 text-xs font-bold uppercase tracking-widest mb-1.5 transition-colors">Street / Purok</label>
+                        <input wire:model="Street_Purok" required
+                            class="bg-black/20 light:bg-white border border-white/10 light:border-gray-200 focus:border-[#31A871] light:focus:border-[#31A871] outline-none rounded-lg w-full text-white light:text-gray-900 placeholder-white/30 light:placeholder-gray-400 py-2.5 px-3 text-sm transition-all shadow-inner light:shadow-sm"
+                            type="text" placeholder="E.g., Purok 1">
+                        @error('Street_Purok')
+                        <p class="text-red-400 text-xs mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
+                        <label class="block text-white/70 light:text-gray-600 text-xs font-bold uppercase tracking-widest mb-1.5 transition-colors">Landmark</label>
+                        <input wire:model="landmark" required
+                            class="bg-black/20 light:bg-white border border-white/10 light:border-gray-200 focus:border-[#31A871] light:focus:border-[#31A871] outline-none rounded-lg w-full text-white light:text-gray-900 placeholder-white/30 light:placeholder-gray-400 py-2.5 px-3 text-sm transition-all shadow-inner light:shadow-sm"
+                            type="text" placeholder="E.g., Near plaza">
+                        @error('landmark')
+                        <p class="text-red-400 text-xs mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-white/70 light:text-gray-600 text-xs font-bold uppercase tracking-widest mb-1.5 transition-colors">Proof (Images/Video)</label>
+                    <input id="createPostMedia" type="file" accept="image/*,video/*" multiple class="hidden" wire:model="media">
+                    
+                    <label for="createPostMedia"
+                        class="border-2 border-dashed border-white/20 light:border-gray-300 rounded-xl w-full h-24 flex flex-col items-center justify-center cursor-pointer hover:border-[#31A871] light:hover:border-[#31A871] hover:bg-[#31A871]/5 transition-all text-white/50 light:text-gray-500 hover:text-[#31A871] group">
+                        <i class="hgi hgi-stroke hgi-image-add-01 mb-1 text-2xl group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs font-semibold">Click to upload media files</span>
+                    </label>
+
+                    <!-- Preview Section -->
+                    @if($media)
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            @foreach($media as $item)
+                                @if(str_starts_with($item->getMimeType(), 'video/'))
+                                    <div class="h-16 w-16 bg-black/40 light:bg-gray-200 border border-white/10 light:border-gray-300 rounded-lg flex items-center justify-center text-white/70 light:text-gray-500 text-[10px] font-bold shadow-sm">
+                                        VIDEO
+                                    </div>
+                                @else
+                                    <img src="{{ $item->temporaryUrl() }}" alt="Preview" class="h-16 w-16 object-cover rounded-lg border border-white/10 light:border-gray-300 shadow-sm">
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
+
+                    <div wire:loading wire:target="media" class="text-[#31A871] text-xs mt-2 font-medium">
+                        Uploading files...
+                    </div>
+                    @error('media')
+                    <p class="text-red-400 text-xs mt-1 font-medium">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
 
+            <!-- RIGHT COLUMN: Map and Submit -->
+            <div class="flex flex-col h-full bg-black/10 light:bg-gray-50 rounded-xl p-2 border border-white/5 light:border-gray-200 transition-colors">
+                <div class="flex flex-col h-full">
+                    <div class="flex justify-between items-center px-1 mb-2">
+                        <label class="block text-white/70 light:text-gray-600 text-xs font-bold uppercase tracking-widest transition-colors"><i class="hgi hgi-stroke hgi-location-01 mr-1"></i>Pin Precise Location</label>
+                    </div>
+                    
+                    <div wire:ignore class="grow w-full relative group">
+                        <div id="createPostMap" class="absolute inset-0 w-full h-full rounded-lg border border-white/10 light:border-gray-300 shadow-inner overflow-hidden z-10 transition-colors"></div>
+                    </div>
+                    
+                    @error('latitude')
+                    <span class="text-red-400 text-xs mt-2 font-medium px-1 block">Please drag the pin on the map.</span>
+                    @enderror
+                    @error('longitude')
+                    <span class="text-red-400 text-xs mt-1 font-medium px-1 block">Longitude is missing.</span>
+                    @enderror
 
+                    @if ($showError)
+                    <p class="text-red-400 text-xs mt-3 font-medium px-1 text-center bg-red-400/10 py-2 rounded-lg">Please fill in all required fields correctly.</p>
+                    @endif
 
-            <!-- MAP -->
-            <div class="mt-3">
-                <p class="text-white text-sm mb-2">Pin Location</p>
-                <div wire:ignore>
-                    <div id="createPostMap" class="w-full h-45 rounded-md"></div>
+                    <button type="submit" class="w-full bg-[#31A871] hover:bg-[#2b9664] text-white font-bold tracking-wide py-3.5 rounded-lg mt-4 shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all">
+                        Submit Report
+                    </button>
                 </div>
-                @error('latitude')
-                <span class="text-red-400 text-xs block mt-1">Please select a location on the map.</span>
-                @enderror
-                @error('longitude')
-                <span class="text-red-400 text-xs block mt-1">Longitude is missing.</span>
-                @enderror
             </div>
-            @if ($showError)
-            <p class="text-red-400 text-xs mt-1">Please fill in all required fields correctly.</p>
-            @endif
-            <button class="w-full bg-[#31A871] text-white py-2 rounded-sm mt-3">
-                Submit
-            </button>
 
         </form>
     </div>
@@ -163,7 +187,6 @@
 
     function initCreatePostModal() {
         const mediaInput = document.getElementById('createPostMedia');
-        const mediaPreviewGrid = document.getElementById('mediaPreviewGrid');
         const previewMediaBtn = document.getElementById('previewMediaBtn');
 
         const modal = document.getElementById('createPostModal');
@@ -175,44 +198,10 @@
         const streetInput = document.querySelector('input[wire\\:model="Street_Purok"]');
         const landmarkInput = document.querySelector('input[wire\\:model="landmark"]');
 
-        // Media preview (small grid)
-        const renderMediaGrid = (files) => {
-            if (!mediaPreviewGrid || !files || files.length === 0) {
-                if (mediaPreviewGrid) {
-                    mediaPreviewGrid.classList.add('hidden');
-                    mediaPreviewGrid.classList.remove('grid', 'grid-cols-4');
-                }
-                return;
-            }
-
-            mediaPreviewGrid.innerHTML = '';
-            Array.from(files).forEach((file) => {
-                const isVideo = file.type.startsWith('video/');
-                const thumb = document.createElement('div');
-                thumb.className =
-                    'w-14 h-14 rounded-md overflow-hidden border border-[#2e4257] bg-[#0f1f2c] flex items-center justify-center';
-                if (isVideo) {
-                    thumb.innerHTML = `
-                            <div class="w-full h-full flex items-center justify-center bg-[#0f1f2c] text-white text-xs">VID</div>
-                        `;
-                } else {
-                    const img = document.createElement('img');
-                    img.src = URL.createObjectURL(file);
-                    img.className = 'w-full h-full object-cover';
-                    thumb.appendChild(img);
-                }
-                mediaPreviewGrid.appendChild(thumb);
-            });
-            mediaPreviewGrid.classList.remove('hidden');
-            mediaPreviewGrid.classList.add('grid', 'grid-cols-6');
-        };
-
         if (mediaInput) {
-            // Remove old listener to avoid duplicates if element is reused (rare but possible)
             mediaInput.onchange = (e) => {
                 const files = e.target.files;
                 window.uploadedFilesForPreview = Array.from(files || []);
-                renderMediaGrid(files);
                 window.dispatchEvent(new CustomEvent('updatePostPreview', {
                     detail: {
                         files: window.uploadedFilesForPreview

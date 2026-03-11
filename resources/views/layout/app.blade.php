@@ -10,9 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Community')</title>
     @vite('resources/css/app.css')
-     <script>
-        if(localStorage.getItem('theme') === 'dark') {
-            document.documentElement.classList.add('dark');
+    <script>
+        if (localStorage.getItem("theme") === "light") {
+            document.documentElement.classList.add("light");
         }
     </script>
     <link rel="stylesheet" href="https://use.hugeicons.com/font/icons.css" />
@@ -29,7 +29,7 @@
 
 </head>
 
-<body class="bg-[#122333] min-h-screen" x-data>
+<body class="light:bg-[#f8fafc] bg-[#122333] min-h-screen" x-data>
 
 
     @include('components.navbar')
@@ -83,6 +83,7 @@
     </div>
     @vite('resources/js/notifModalToggle.js')
     @vite('resources/js/passwordShow.js')
+    @vite('resources/js/darkLightMode.js')
     <!-- @vite('resources/js/commentModal.js') -->
     @vite('resources/js/postPreview.js')
     @vite('resources/js/autocompleteLocation.js')

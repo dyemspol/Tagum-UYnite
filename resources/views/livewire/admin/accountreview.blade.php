@@ -1,5 +1,5 @@
 <div>
-    <h2 class="text-xl font-semibold text-white mb-10">
+    <h2 class="text-xl font-semibold text-white light:text-gray-900 mb-10 transition-colors">
         Account Review
     </h2>
 
@@ -21,11 +21,11 @@
         @endif
     </div>
 
-    <div id="userAccountsSection" class="bg-[#1a1d29] p-6 rounded-2xl shadow-lg overflow-auto border border-[#2a2d3a]">
+    <div id="userAccountsSection" class="bg-[#1a1d29] light:bg-[#f8fafc] p-6 rounded-2xl shadow-lg overflow-auto border border-[#2a2d3a] light:border-gray-200 transition-colors">
 
-        <table class="w-full text-sm text-left text-gray-200">
+        <table class="w-full text-sm text-left text-gray-200 light:text-gray-700 transition-colors">
             <thead>
-                <tr class="bg-[#252836] text-white rounded-lg">
+                <tr class="bg-[#252836] light:bg-white text-white light:text-gray-900 rounded-lg transition-colors">
                     <th class="px-4 py-3 rounded-l-lg">User ID</th>
                     <th class="px-4 py-3">Full Name</th>
                     <th class="px-4 py-3">Email</th>
@@ -37,16 +37,16 @@
 
             <tbody>
                 @foreach ($users as $user)
-                <tr class="border-t border-[#2a2d3a]">
+                <tr class="border-t border-[#2a2d3a] light:border-gray-200 hover:bg-[#252836]/50 light:hover:bg-gray-50 transition-colors">
                     <td class="px-4 py-4 text-[#00d4aa]">#USR-{{ $user->id }}</td>
-                    <td class="px-4 py-4">{{ $user->first_name }} {{ $user->last_name }}</td>
-                    <td class="px-4 py-4">{{ $user->email }}</td>
-                    <td class="px-4 py-4">{{ $user->address }}</td>
+                    <td class="px-4 py-4 light:text-gray-900 transition-colors">{{ $user->first_name }} {{ $user->last_name }}</td>
+                    <td class="px-4 py-4 light:text-gray-900 transition-colors">{{ $user->email }}</td>
+                    <td class="px-4 py-4 light:text-gray-900 transition-colors">{{ $user->address }}</td>
                     <td class="px-4 py-4">
-                        <span class="text-green-400 font-semibold">{{ $user->verificationStatus->status }}</span>
+                        <span class="text-green-400 font-semibold transition-colors">{{ $user->verificationStatus->status }}</span>
                     </td>
                     <td wire:click="showUser({{ $user->id }})" class="px-4 py-4 flex gap-2 items-center">
-                        <i class="hgi hgi-stroke hgi-eye text-2xl text-[#00d4aa] hover:text-[#00e6b8] cursor-pointer"></i>
+                        <i class="hgi hgi-stroke hgi-eye text-2xl text-[#00d4aa] hover:text-[#00e6b8] cursor-pointer transition-colors"></i>
                     </td>
                 </tr>
                 @endforeach

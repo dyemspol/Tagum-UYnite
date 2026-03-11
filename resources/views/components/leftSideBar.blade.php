@@ -1,22 +1,21 @@
 <div class="fixed" x-data>
-    {{-- originalwidth is w-full --}}
-    <div class="w-[17.5em] bg-[#182b3cd5] h-[40em]   p-5 rounded-md">
+    <div class="w-[17.5em] bg-[#182b3cd5] light:bg-white h-[40em] p-5 rounded-md shadow-lg border border-transparent light:border-gray-200 transition-colors duration-300">
         <div class="flex flex-col space-y-6">
             <a href="/" wire:navigate
                 class="flex items-center space-x-3 transition duration-150 py-3 px-1 rounded-sm group {{ request()->routeIs('homepage') ? 'bg-[#31A871]' : 'hover:bg-[#31A871]' }}">
                 <i class="fa-solid fa-house {{ request()->routeIs('homepage') ? 'text-white' : 'text-[#31A871] group-hover:text-white' }} text-normal"></i>
-                <span class="text-white text-sm">Home</span>
+                <span class="text-white light:text-gray-800 text-sm">Home</span>
         </a>
 
 
             <a href="/latest" wire:navigate class="flex items-center space-x-4 py-2 px-1 rounded-sm group cursor-pointer {{ request()->routeIs('latest') ? 'bg-[#31A871]' : 'hover:bg-[#31A871]' }}">
                 <i class="fa-solid fa-fire-flame-curved {{ request()->routeIs('latest') ? 'text-white' : 'text-[#31A871] group-hover:text-white' }}"></i>
-                <span class="text-white text-sm">Latest</span>
+                <span class="text-white light:text-gray-800 text-sm">Latest</span>
             </a>
 
             <a href="/popular" wire:navigate class="flex items-center space-x-3 py-2 px-1 rounded-sm group cursor-pointer {{ request()->routeIs('popular') ? 'bg-[#31A871]' : 'hover:bg-[#31A871]' }}">
                 <i class="fa-solid fa-house {{ request()->routeIs('popular') ? 'text-white' : 'text-[#31A871] group-hover:text-white' }}"></i>
-                <span class="text-white text-sm">Popular</span>
+                <span class="text-white light:text-gray-800 text-sm">Popular</span>
             </a>
 
             {{-- <div class="flex items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group cursor-pointer">
@@ -27,13 +26,13 @@
             @auth
                <div id="createPostBtDesktop" class="flex cursor-pointer items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group">
                 <i class="fa-solid fa-plus text-[#31A871] group-hover:text-white"></i>
-                <span  class="text-white text-sm group-hover:text-white">Create Post</span>
+                <span  class="text-white light:text-gray-800 text-sm group-hover:text-white">Create Post</span>
             </div> 
             @endauth
             @guest
                 <div id="createPostBtGuest" class="flex cursor-pointer items-center space-x-4 py-2 px-1 rounded-sm hover:bg-[#31A871] group">
                 <i class="fa-solid fa-plus text-[#31A871] group-hover:text-white"></i>
-                <span  class="text-white text-sm group-hover:text-white">Create Post</span>
+                <span  class="text-white light:text-gray-800 text-sm group-hover:text-white">Create Post</span>
             </div>
             @endguest
             
@@ -41,20 +40,20 @@
 
 
 
-        <hr class ="mt-7 mb-4 border-gray-600">
+        <hr class ="mt-7 mb-4 border-gray-600 light:border-gray-100">
 
        <div class="flex flex-col gap-2 mb-4">
-         <h1 class="text-white font-semibold">Post category</h1>
+         <h1 class="text-white light:text-gray-800 font-semibold">Post category</h1>
         
              <div class="relative hidden sm:flex">
              <x-heroicon-o-magnifying-glass
-                 class="absolute left-2 top-1/2 transform -translate-y-1/2 text-white w-4 h-4" />
+                 class="absolute left-2 top-1/2 transform -translate-y-1/2 text-white light:text-gray-400 w-4 h-4" />
         
             <input
             id="categorySearchDesktop"
             type="text"
             placeholder="Search categories..."
-            class="bg-[#122333] w-full text-white rounded-md pl-9 pr-2 py-1 focus:outline-none text-sm"
+            class="bg-[#122333] light:bg-[#f3f4f6] w-full text-white light:text-gray-800 rounded-md pl-9 pr-2 py-1 focus:outline-none text-sm transition-colors border light:border-gray-200"
         />
     </div>
   </div>
@@ -65,7 +64,7 @@
 
     <label class="flex items-center justify-between cursor-pointer select-none">
 
-        <p class="text-white text-sm font-light">
+        <p class="text-white light:text-gray-600 text-sm font-light">
             {{ $department->category }}
         </p>
 

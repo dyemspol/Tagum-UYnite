@@ -6,7 +6,7 @@
     @if($selectedReport)
 
     <!-- MODAL CONTAINER -->
-    <div class="bg-[#1a1d29] w-full max-w-5xl rounded-3xl shadow-2xl flex overflow-hidden border border-[#2a2d3a] relative"
+    <div class="bg-[#1a1d29] light:bg-[#f8fafc] w-full max-w-5xl rounded-3xl shadow-2xl flex overflow-hidden border border-[#2a2d3a] light:border-gray-200 relative transition-colors"
         x-data="{ showFullscreen: false, fullscreenImage: '' }"
         x-init="$nextTick(() => {
     new Swiper('.mySwiper', {
@@ -20,17 +20,17 @@
     });
 })">
         <!-- CLOSE BUTTON -->
-        <button wire:click="closeIssue" class="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-[#12151e] border border-[#2a2d3a] text-gray-400 hover:text-white hover:bg-[#2a2d3a] transition-all z-20">
+        <button wire:click="closeIssue" class="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-[#12151e] light:bg-gray-100 border border-[#2a2d3a] light:border-gray-200 text-gray-400 light:text-gray-500 hover:text-white light:hover:text-gray-900 hover:bg-[#2a2d3a] light:hover:bg-gray-200 transition-all z-20">
             <i class="fa-solid fa-xmark text-lg"></i>
         </button>
 
 
         <!-- LEFT PANE: PRIMARY DETAILS -->
-        <div class="w-[55%] p-8 border-r border-[#2a2d3a] overflow-y-auto hide-scrollbar max-h-[90vh]">
+        <div class="w-[55%] p-8 border-r border-[#2a2d3a] light:border-gray-200 overflow-y-auto hide-scrollbar max-h-[90vh] transition-colors">
             <!-- HEADER -->
             <div class="flex items-center justify-between mb-8">
                 <div>
-                    <h2 class="text-2xl font-bold text-white tracking-tight">Issue Details</h2>
+                    <h2 class="text-2xl font-bold text-white light:text-gray-900 tracking-tight transition-colors">Issue Details</h2>
                     <p class="text-xs text-[#00d4aa] font-medium mt-1">#{{ $selectedReport->report_id}}</p>
                 </div>
                 <div class="px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-full">
@@ -42,32 +42,32 @@
             <div class="grid grid-cols-2 gap-8 text-sm">
                 <div class="col-span-2">
                     <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-1">Issue Name</p>
-                    <p class="text-white text-lg font-semibold">{{ $selectedReport->title }}</p>
+                    <p class="text-white light:text-gray-900 text-lg font-semibold transition-colors">{{ $selectedReport->title }}</p>
                 </div>
 
                 <div>
                     <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-1">Reported by</p>
                     <div class="flex items-center gap-2">
 
-                        <p class="text-gray-200 font-medium">{{ $selectedReport->user->first_name }} {{ $selectedReport->user->last_name }}</p>
+                        <p class="text-gray-200 light:text-gray-900 font-medium transition-colors">{{ $selectedReport->user->first_name }} {{ $selectedReport->user->last_name }}</p>
                     </div>
                 </div>
 
                 <div>
                     <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-1">Date Reported</p>
-                    <p class="text-gray-200 font-medium">{{ $selectedReport->created_at->format('M d, Y') }}</p>
+                    <p class="text-gray-200 light:text-gray-900 font-medium transition-colors">{{ $selectedReport->created_at->format('M d, Y') }}</p>
                 </div>
 
                 <div class="col-span-2">
                     <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-1">Description</p>
-                    <p class="text-gray-300 leading-relaxed bg-[#12151e] p-4 rounded-xl border border-[#2a2d3a]/50">
+                    <p class="text-gray-300 light:text-gray-800 leading-relaxed bg-[#12151e] light:bg-white p-4 rounded-xl border border-[#2a2d3a]/50 light:border-gray-200 transition-colors">
                         {{ $selectedReport->content }}
                     </p>
                 </div>
 
                 <div class="col-span-2">
                     <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-1">Location</p>
-                    <div class="flex items-center gap-2 text-gray-200">
+                    <div class="flex items-center gap-2 text-gray-200 light:text-gray-900 transition-colors">
                         <i class="fa-solid fa-location-dot text-[#00d4aa]"></i>
                         <p class="font-medium">{{ ucwords($selectedReport->street_purok) }}, {{ Str::title($selectedReport->barangay?->barangay_name) ?? 'N/A' }} , Tagum City</p>
                     </div>
@@ -77,7 +77,7 @@
             <!-- SWIPER CAROUSEL -->
             <div class="mt-8">
                 <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-3">Attached Proof</p>
-                <div class="swiper mySwiper h-80 rounded-2xl border border-[#2a2d3a]">
+                <div class="swiper mySwiper h-80 rounded-2xl border border-[#2a2d3a] light:border-gray-200 transition-colors">
                     <div class="swiper-wrapper">
                         @foreach($selectedReport->postImages as $image)
                         <div class="swiper-slide group cursor-zoom-in" @click="fullscreenImage = '{{ $image->cdn_url }}'; showFullscreen = true">
@@ -94,9 +94,9 @@
         </div>
 
         <!-- RIGHT PANE: POST COMMENTS -->
-        <div class="flex-1 bg-[#12151e]/50 p-8 flex flex-col max-h-[90vh]">
+        <div class="flex-1 bg-[#12151e]/50 light:bg-gray-100 p-8 flex flex-col max-h-[90vh] transition-colors">
             <div class="flex items-center justify-between mb-8">
-                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                <h3 class="text-lg font-bold text-white light:text-gray-900 flex items-center gap-2 transition-colors">
                     <i class="fa-solid fa-comments text-[#00d4aa] text-sm"></i>
                     Post Comments
                 </h3>
@@ -106,17 +106,17 @@
             <!-- ACTUAL COMMENTS LIST -->
             <div class="flex-1 overflow-y-auto space-y-4 mb-8 hide-scrollbar pr-1">
                 @forelse($selectedReport->comments as $comment)
-                <div class="p-4 bg-[#1a1d29] rounded-2xl border border-[#2a2d3a] shadow-sm">
+                <div class="p-4 bg-[#1a1d29] light:bg-white rounded-2xl border border-[#2a2d3a] light:border-gray-200 shadow-sm transition-colors">
                     <div class="flex justify-between items-center mb-1">
-                        <span class="text-xs font-bold text-white">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</span>
+                        <span class="text-xs font-bold text-white light:text-gray-900 transition-colors">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</span>
                         <span class="text-[10px] text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
                     </div>
-                    <p class="text-[11px] text-gray-300 leading-relaxed">{{ $comment->comment_text }}</p>
+                    <p class="text-[11px] text-gray-300 light:text-gray-700 leading-relaxed transition-colors">{{ $comment->comment_text }}</p>
                 </div>
                 @empty
-                <div class="flex flex-col items-center justify-center h-full opacity-20">
+                <div class="flex flex-col items-center justify-center h-full opacity-20 light:opacity-50 transition-opacity">
                     <i class="fa-solid fa-comment-slash text-4xl mb-2 text-gray-400"></i>
-                    <p class="text-[10px] font-bold uppercase tracking-widest text-center">No comments yet</p>
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-center light:text-gray-600 transition-colors">No comments yet</p>
                 </div>
                 @endforelse
             </div>

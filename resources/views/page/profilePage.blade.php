@@ -12,9 +12,14 @@
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <script>
+        if (localStorage.getItem("theme") === "light") {
+            document.documentElement.classList.add("light");
+        }
+    </script>
 </head>
 
-<body class="bg-[#122333] min-h-screen" x-data>
+<body class="bg-[#122333] light:bg-[#f8fafc] transition-colors min-h-screen" x-data>
 
     {{-- Navbar --}}
     <livewire:verify-user />
@@ -51,7 +56,7 @@
 
         {{-- PAGE CONTENT --}}
         <div class="flex justify-center px-5 sm:px-10">
-            <div class="text-white w-full max-w-[650px]" x-data="{ activeTab: 'posts' }">
+            <div class="text-white light:text-gray-900 w-full max-w-[650px] transition-colors" x-data="{ activeTab: 'posts' }">
 
 
                 {{-- profile name and picture section --}}
@@ -61,11 +66,11 @@
                             src="{{ $user->profile_photo ? asset($user->profile_photo) : asset('img/noprofile.jpg') }}" alt="Profile Picture">
                     </div>
                     <div class="">
-                        <p class="text-white text-3xl">{{ $user->first_name }} {{ $user->last_name }}</p>
+                        <p class="text-white light:text-gray-900 text-3xl transition-colors">{{ $user->first_name }} {{ $user->last_name }}</p>
                         <div class="flex gap-2 items-center mt-1">
-                            <p class="text-white text-sm opacity-60">{{ $user->reports->count() }} Total Post</p>
+                            <p class="text-white light:text-gray-600 text-sm opacity-60 transition-colors">{{ $user->reports->count() }} Total Post</p>
                             <button @click="$dispatch('open-edit-profile')"
-                                class="px-3 py-1 border border-white text-white text-xs rounded hover:opacity-80 transition">
+                                class="px-3 py-1 border border-white light:border-gray-400 text-white light:text-gray-700 text-xs rounded hover:opacity-80 transition">
                                 Edit
                             </button>
                             <div>
@@ -80,7 +85,7 @@
                                 <span class="text-yellow-500 text-xs">Pending</span>
                                 @else
                                 <button onclick="document.getElementById('verifyUserAccountModal').style.display='flex'"
-                                    class="px-3 py-1 border border-white text-white text-xs rounded hover:opacity-80 transition">
+                                    class="px-3 py-1 border border-white light:border-gray-400 text-white light:text-gray-700 text-xs rounded hover:opacity-80 transition">
                                     Verify Now
                                 </button>
                                 @endif
@@ -97,12 +102,12 @@
                 <div class="flex gap-12 my-3">
                     <p class="cursor-pointer pb-1 transition-all duration-200" @click="activeTab = 'posts'"
                         :class="activeTab === 'posts' ? 'text-[#31A871] border-b-2 border-[#31A871] opacity-100' :
-                            'text-white opacity-60 hover:opacity-100'">
+                            'text-white light:text-gray-500 opacity-60 hover:opacity-100'">
                         Posts
                     </p>
                     <p class="cursor-pointer pb-1 transition-all duration-200" @click="activeTab = 'track'"
                         :class="activeTab === 'track' ? 'text-[#31A871] border-b-2 border-[#31A871] opacity-100' :
-                            'text-white opacity-60 hover:opacity-100'">
+                            'text-white light:text-gray-500 opacity-60 hover:opacity-100'">
                         Track issue
                     </p>
                 </div>
@@ -111,7 +116,7 @@
                     @forelse($user->reports as $post)
                     <livewire:post-card :post="$post" :key="$post->id" />
                     @empty
-                    <div class="text-white text-center opacity-50 py-10"> You can't post if you are not verified..</div>
+                    <div class="text-white light:text-gray-500 text-center opacity-50 py-10 transition-colors"> You can't post if you are not verified..</div>
                     @endforelse
                 </div>
 
@@ -120,7 +125,7 @@
                 <div id="trackIssueSection" x-show="activeTab === 'track'" class="flex flex-col justify-center"
                     style="display: none;">
                     @forelse($user->reports as $post)
-                    <div class="bg-[#0f1f2f] border border-[#1e3246] px-3 py-3 mb-2 rounded-lg w-full max-w-[50em]">
+                    <div class="bg-[#0f1f2f] light:bg-white border border-[#1e3246] light:border-gray-200 px-3 py-3 mb-2 rounded-lg w-full max-w-[50em] shadow-sm transition-colors">
                         <div class="flex items-center justify-between gap-3 mb-2">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10">
@@ -128,8 +133,8 @@
                                         src="{{ $user->profile_photo ? $user->profile_photo : asset('img/noprofile.jpg') }}" alt="profile">
                                 </div>
                                 <div class="leading-tight">
-                                    <p class="text-white text-sm">{{ $user->first_name }} {{ $user->last_name }}</p>
-                                    <p class="text-xs text-[#9fb1c5]">
+                                    <p class="text-white light:text-gray-900 text-sm transition-colors">{{ $user->first_name }} {{ $user->last_name }}</p>
+                                    <p class="text-xs text-[#9fb1c5] light:text-gray-500 transition-colors">
                                         {{ $post->created_at->format('F j, Y') }} <span
                                             class="mx-1">•</span>
                                         {{ $post->title }}
@@ -146,10 +151,10 @@
                             </div>
 
                         </div>
-                        <p class="text-white text-base">{{ $post->content }}</p>
+                        <p class="text-white light:text-gray-800 text-base transition-colors">{{ $post->content }}</p>
                     </div>
                     @empty
-                    <div class="text-white text-center opacity-50 py-10">No posts yet.</div>
+                    <div class="text-white light:text-gray-500 text-center opacity-50 py-10 transition-colors">No posts yet.</div>
                     @endforelse
                 </div>
 
@@ -162,6 +167,7 @@
 
 
 
+    @vite('resources/js/darkLightMode.js')
     @vite('resources/js/notifModalToggle.js')
     @vite('resources/js/postPreview.js')
     @vite('resources/js/autocompleteLocation.js')

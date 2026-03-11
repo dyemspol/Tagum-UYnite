@@ -4,10 +4,10 @@
   class="fixed inset-0 bg-black/60 flex items-center justify-center z-[9999]"
   style="display: none;">
   <!-- MODAL CONTAINER -->
-  <div class="bg-[#1a1d29] w-[450px] rounded-xl shadow-xl p-6 relative border border-[#2a2d3a]">
+  <div class="bg-[#1a1d29] light:bg-white w-[450px] rounded-xl shadow-xl p-6 relative border border-[#2a2d3a] light:border-gray-200 transition-colors">
 
     <!-- HEADER -->
-    <h2 class="text-xl font-semibold text-white mb-4 border-b border-[#2a2d3a] pb-2">
+    <h2 class="text-xl font-semibold text-white light:text-gray-900 mb-4 border-b border-[#2a2d3a] light:border-gray-200 pb-2 transition-colors">
       Create Staff Account
     </h2>
 
@@ -16,31 +16,31 @@
 
 
       <div>
-        <label class="text-gray-300">First Name</label>
+        <label class="text-gray-300 light:text-gray-700 transition-colors">First Name</label>
         <input type="text" wire:model="first_name"
-          class="w-full mt-1 p-2 rounded-lg bg-[#252836] text-white outline-none focus:ring-2 focus:ring-[#00d4aa] border border-[#2a2d3a]"
+          class="w-full mt-1 p-2 rounded-lg bg-[#252836] light:bg-gray-50 text-white light:text-gray-900 outline-none focus:ring-2 focus:ring-[#00d4aa] border border-[#2a2d3a] light:border-gray-300 transition-colors"
           placeholder="Enter first name">
       </div>
 
       <div>
-        <label class="text-gray-300">Last Name</label>
+        <label class="text-gray-300 light:text-gray-700 transition-colors">Last Name</label>
         <input type="text" wire:model="last_name"
-          class="w-full mt-1 p-2 rounded-lg bg-[#252836] text-white outline-none focus:ring-2 focus:ring-[#00d4aa] border border-[#2a2d3a]"
+          class="w-full mt-1 p-2 rounded-lg bg-[#252836] light:bg-gray-50 text-white light:text-gray-900 outline-none focus:ring-2 focus:ring-[#00d4aa] border border-[#2a2d3a] light:border-gray-300 transition-colors"
           placeholder="Enter last name">
       </div>
 
 
       <div>
-        <label class="text-gray-300">Username</label>
+        <label class="text-gray-300 light:text-gray-700 transition-colors">Username</label>
         <input type="text" wire:model.live="username"
-          class="w-full mt-1 p-2 rounded-lg bg-[#252836] text-white outline-none focus:ring-2 focus:ring-[#00d4aa] border border-[#2a2d3a]"
+          class="w-full mt-1 p-2 rounded-lg bg-[#252836] light:bg-gray-50 text-white light:text-gray-900 outline-none focus:ring-2 focus:ring-[#00d4aa] border border-[#2a2d3a] light:border-gray-300 transition-colors"
           placeholder="Enter username">
       </div>
 
 
       <div>
-        <label class="text-gray-300">Department</label>
-        <select wire:model.live="department_id" class="w-full mt-1 p-2 rounded-lg bg-[#252836] text-white outline-none focus:ring-2 focus:ring-[#00d4aa] border border-[#2a2d3a]">
+        <label class="text-gray-300 light:text-gray-700 transition-colors">Department</label>
+        <select wire:model.live="department_id" class="w-full mt-1 p-2 rounded-lg bg-[#252836] light:bg-gray-50 text-white light:text-gray-900 outline-none focus:ring-2 focus:ring-[#00d4aa] border border-[#2a2d3a] light:border-gray-300 transition-colors">
           <option value="">Select Department</option>
           @foreach($departments as $department)
           <option value="{{ $department->id }}">{{ $department->department_name }}</option>
@@ -50,9 +50,9 @@
 
 
       <div>
-        <label class="text-gray-300"> Generate Password</label>
+        <label class="text-gray-300 light:text-gray-700 transition-colors"> Generate Password</label>
         <input wire:model="password" readonly
-          class="w-full mt-1 p-2 rounded-lg bg-[#252836] text-white outline-none focus:ring-2 focus:ring-[#00d4aa] border border-[#2a2d3a]"
+          class="w-full mt-1 p-2 rounded-lg bg-[#252836] light:bg-gray-50 text-white light:text-gray-900 outline-none focus:ring-2 focus:ring-[#00d4aa] border border-[#2a2d3a] light:border-gray-300 transition-colors"
           placeholder="Enter password">
       </div>
 
@@ -73,7 +73,7 @@
       </button>
       <button
         @click="showCreateModal = false"
-        class="border border-[#2a2d3a] px-5 py-2 rounded-lg text-white hover:bg-[#252836]">
+        class="border border-[#2a2d3a] light:border-gray-300 px-5 py-2 rounded-lg text-white light:text-gray-800 hover:bg-[#252836] light:hover:bg-gray-100 transition-colors">
         Cancel
       </button>
     </div>

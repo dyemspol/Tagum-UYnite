@@ -1,28 +1,28 @@
 <div>
-    <div class="bg-[#0f1117] text-[#e6edf3] h-[calc(100vh-48px)] flex overflow-hidden rounded-2xl border border-[#2a2d3a]">
+    <div class="bg-[#0f1117] light:bg-white text-[#e6edf3] light:text-gray-900 h-[calc(100vh-48px)] flex overflow-hidden rounded-2xl border border-[#2a2d3a]">
         <!-- Sidebar -->
-        <aside class="w-80 bg-[#12151e] p-5 border-r border-[#2a2d3a] flex flex-col rounded-l-lg overflow-y-auto hide-scrollbar">
+        <aside class="w-80 bg-[#12151e] light:bg-white p-5 border-r border-[#2a2d3a] flex flex-col rounded-l-lg overflow-y-auto hide-scrollbar">
             <div class="flex items-center justify-between mb-6">
-                <h2 class="text-xl font-bold text-white tracking-tight">Messages</h2>
+                <h2 class="text-xl font-bold light:text-gray-900 text-white tracking-tight">Messages</h2>
             </div>
 
             <ul class="space-y-4">
                 @forelse ($conversations as $conversation)
                 <li wire:click="selectedConversation({{ $conversation->id }})"
-                    class="flex items-center gap-3 cursor-pointer group p-3 rounded-2xl transition-all border border-transparent hover:border-[#2a2d3a] {{ $selectedConversationId == $conversation->id ? 'bg-[#1a1d29] border-[#2a2d3a]' : 'hover:bg-[#1a1d29]/50 opacity-70 hover:opacity-100' }}">
+                    class="flex items-center gap-3 cursor-pointer group p-3 rounded-2xl transition-all border border-transparent hover:border-[#2a2d3a] light:hover:border-gray-200 {{ $selectedConversationId == $conversation->id ? 'bg-[#1a1d29] light:bg-gray-100 border-[#2a2d3a] light:border-gray-200' : 'hover:bg-[#1a1d29]/50 light:hover:bg-gray-50 opacity-70 hover:opacity-100' }}">
                     <div class="relative">
-                        <div class="w-12 h-12 rounded-full border-2 border-[#2a2d3a] p-0.5">
-                            <div class="w-full h-full rounded-full overflow-hidden bg-[#1a1d29]">
+                        <div class="w-12 h-12 rounded-full border-2 border-[#2a2d3a] light:border-gray-200 p-0.5 transition-colors">
+                            <div class="w-full h-full rounded-full overflow-hidden bg-[#1a1d29] light:bg-gray-200 transition-colors">
                                 <img src="{{ $conversation->user->profile_photo ?? asset('img/noprofile.jpg') }}" alt="{{ $conversation->user->first_name }}" class="w-full h-full object-cover">
                             </div>
                         </div>
                     </div>
                     <div class="flex-1 min-w-0">
                         <div class="flex justify-between items-center mb-0.5">
-                            <h4 class="text-sm font-bold text-white truncate">{{ $conversation->user->first_name }} {{ $conversation->user->last_name }}</h4>
-                            <span class="text-[10px] text-gray-500 font-medium">{{ $conversation->updated_at->shortRelativeDiffForHumans() }}</span>
+                            <h4 class="text-sm font-bold light:text-black text-white truncate">{{ $conversation->user->first_name }} {{ $conversation->user->last_name }}</h4>
+                            <span class="text-[10px] light:text-gray-500 text-gray-500 font-medium">{{ $conversation->updated_at->shortRelativeDiffForHumans() }}</span>
                         </div>
-                        <p class="text-[11px] text-gray-500 truncate">Click to chat</p>
+                        <p class="text-[11px] light:text-gray-500 text-gray-500 truncate">Click to chat</p>
                     </div>
                 </li>
                 @empty
@@ -34,18 +34,18 @@
         </aside>
 
         <!-- Main Chat -->
-        <main class="flex-1 flex flex-col bg-[#0f1117]">
+        <main class="flex-1 flex flex-col bg-[#0f1117] light:bg-[#f8fafc] transition-colors">
             @if($selectedConversationId)
             <!-- Chat Header -->
-            <div class="p-4 border-b border-[#2a2d3a] flex items-center justify-between bg-[#12151e]">
+            <div class="p-4 border-b border-[#2a2d3a] light:border-gray-200 flex items-center justify-between bg-[#12151e] light:bg-white transition-colors">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full overflow-hidden border border-[#2a2d3a] bg-[#1a1d29]">
+                    <div class="w-10 h-10 rounded-full overflow-hidden border border-[#2a2d3a] light:border-gray-200 bg-[#1a1d29] light:bg-gray-100 transition-colors">
                         <img src="{{ $activeConversation->user?->profile_photo ?? asset('img/noprofile.jpg') }}" alt="{{ $activeConversation->user->first_name }}" class="w-full h-full object-cover">
                     </div>
                     <div>
-                        <h4 class="text-sm font-bold text-white">{{ $activeConversation->user->first_name }} {{ $activeConversation->user->last_name }}</h4>
+                        <h4 class="text-sm font-bold text-white light:text-gray-900 transition-colors">{{ $activeConversation->user->first_name }} {{ $activeConversation->user->last_name }}</h4>
                         <div class="flex items-center gap-1.5 line-clamp-1">
-                            <span class="text-[10px] text-gray-400">Department Resident</span>
+                            <span class="text-[10px] text-gray-400 light:text-gray-500 transition-colors">Department Resident</span>
                         </div>
                     </div>
                 </div>
@@ -76,14 +76,14 @@
                 @else
                 <!-- Received (Left) -->
                 <div class="flex gap-3 max-w-[80%]">
-                    <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 bg-[#252836] border border-[#2a2d3a] overflow-hidden">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 bg-[#252836] light:bg-gray-200 border border-[#2a2d3a] light:border-gray-300 overflow-hidden transition-colors">
                         <img src="{{ $activeConversation->user->profile_photo ?? asset('img/noprofile.jpg') }}" alt="User" class="w-full h-full object-cover">
                     </div>
                     <div>
-                        <div class="bg-[#252836] text-gray-200 p-4 rounded-2xl rounded-tl-none text-sm leading-relaxed shadow-sm">
+                        <div class="bg-[#252836] light:bg-gray-200 text-gray-200 light:text-gray-800 p-4 rounded-2xl rounded-tl-none text-sm leading-relaxed shadow-sm transition-colors">
                             {{ $message->message }}
                         </div>
-                        <span class="text-[10px] text-gray-500 mt-1 ml-1">{{ $message->created_at->format('g:i A') }}</span>
+                        <span class="text-[10px] text-gray-500 light:text-gray-400 mt-1 ml-1 transition-colors">{{ $message->created_at->format('g:i A') }}</span>
                     </div>
                 </div>
                 @endif
@@ -96,26 +96,26 @@
             </div>
 
             <!-- Input bar -->
-            <div class="p-6 bg-[#12151e] border-t border-[#2a2d3a]">
-                <form wire:submit.prevent="sendMessage" class="flex items-center gap-4 bg-[#1a1d29] border border-[#2a2d3a] rounded-2xl px-4 py-2 focus-within:ring-2 focus-within:ring-[#00d4aa]/30 transition-all">
-                    <i class="fa-solid fa-circle-plus text-gray-500 hover:text-[#00d4aa] cursor-pointer text-lg"></i>
+            <div class="p-6 bg-[#12151e] light:bg-white border-t border-[#2a2d3a] light:border-gray-200 transition-colors">
+                <form wire:submit.prevent="sendMessage" class="flex items-center gap-4 bg-[#1a1d29] light:bg-gray-50 border border-[#2a2d3a] light:border-gray-300 rounded-2xl px-4 py-2 focus-within:ring-2 focus-within:ring-[#00d4aa]/30 transition-all">
+                    <i class="fa-solid fa-circle-plus text-gray-500 light:text-gray-400 hover:text-[#00d4aa] cursor-pointer text-lg transition-colors"></i>
                     <input
                         wire:model="newMessage"
                         type="text"
                         placeholder="Type a message..."
-                        class="flex-1 bg-transparent border-none py-2 text-sm text-[#e6edf3] focus:outline-none placeholder-gray-600" />
-                    <button type="submit" class="w-10 h-10 bg-[#00d4aa] rounded-xl flex items-center justify-center text-[#0f1117] hover:scale-105 active:scale-95 transition-all shadow-lg shadow-[#00d4aa]/10">
+                        class="flex-1 bg-transparent border-none py-2 text-sm text-[#e6edf3] light:text-gray-900 focus:outline-none placeholder-gray-600 light:placeholder-gray-400 transition-colors" />
+                    <button type="submit" class="w-10 h-10 bg-[#00d4aa] rounded-xl flex items-center justify-center text-[#0f1117] light:text-white hover:scale-105 active:scale-95 transition-all shadow-lg shadow-[#00d4aa]/10">
                         <i class="fa-solid fa-paper-plane text-xs"></i>
                     </button>
                 </form>
             </div>
             @else
             <div class="flex-1 flex flex-col items-center justify-center text-center p-10">
-                <div class="w-20 h-20 bg-[#12151e] rounded-full flex items-center justify-center mb-6 border border-[#2a2d3a]">
-                    <i class="fa-solid fa-comments text-3xl text-gray-600"></i>
+                <div class="w-20 h-20 bg-[#12151e] light:bg-gray-100 rounded-full flex items-center justify-center mb-6 border border-[#2a2d3a] light:border-gray-300 transition-colors">
+                    <i class="fa-solid fa-comments text-3xl text-gray-600 light:text-gray-400 transition-colors"></i>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-2">Your Conversations</h3>
-                <p class="text-gray-500 max-w-xs text-sm">Select a resident from the sidebar to start a secure conversation about city reports.</p>
+                <h3 class="text-xl font-bold text-white light:text-gray-900 mb-2 transition-colors">Your Conversations</h3>
+                <p class="text-gray-500 max-w-xs text-sm transition-colors">Select a resident from the sidebar to start a secure conversation about city reports.</p>
             </div>
             @endif
         </main>
