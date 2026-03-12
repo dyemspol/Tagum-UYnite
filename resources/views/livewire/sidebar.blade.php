@@ -1,6 +1,6 @@
 <div>
     <section
-        class="fixed bg-[#12151e] light:bg-[#22a22d] border-r border-transparent light:border-gray-100 shadow-xl rounded-tr-4xl rounded-br-4xl h-screen w-[12em] flex flex-col py-5 justify-between transition-colors">
+        class="fixed bg-[#12151e] light:bg-[#006d50] border-r border-transparent light:border-gray-100 shadow-xl rounded-tr-4xl rounded-br-4xl h-screen w-[12em] flex flex-col py-5 justify-between transition-colors">
         <!-- Top part: logo + menu -->
         <div>
 
