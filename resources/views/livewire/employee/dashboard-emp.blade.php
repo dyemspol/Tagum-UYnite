@@ -55,22 +55,23 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
             <!-- Recent User Reports -->
-            <div class="col-span-2 bg-[#1a1d29] light:bg-gray-50 p-4 rounded-lg shadow max-h-[250px] overflow-y-auto hide-scrollbar]">
+            <div class="col-span-2 bg-[#1a1d29] light:bg-gray-50 p-4 rounded-lg shadow max-h-[250px] relative group overflow-hidden">
                 <h2 class="font-medium text-white light:text-gray-900 text-lg mb-4">Recent User Reports (News Feed)</h2>
-                <div class="space-y-3">
+                <div class="space-y-3 max-h-[185px] overflow-y-auto hide-scrollbar pb-8">
                     @foreach($newReports as $report)
-                    <div class="flex justify-between items-center bg-[#252836] light:bg-gray-50 p-3 rounded">
+                    <div class="flex justify-between items-center bg-[#252836] light:bg-white p-3 rounded-xl border border-[#2a2d3a] light:border-gray-200 shadow-sm transition-all hover:translate-x-1 hover:bg-[#2d3142] light:hover:bg-gray-100">
                         <div>
                             <p class="font-regular text-sm light:text-gray-900 text-white">{{ $report->title }} - {{$report->street_purok}}, {{ $report->barangay->barangay_name}}, Tagum</p>
-                            <p class="text-xs text-red-500">{{ $report->priority_level }} · {{ $report->created_at->diffForHumans() }}</p>
+                            <p class="text-xs text-red-500 font-medium">{{ $report->priority_level }} · {{ $report->created_at->diffForHumans() }}</p>
                         </div>
-                        <button class="text-white hover:text-gray-400 light:text-black">→</button>
+                        <button class="text-white hover:text-gray-400 light:text-gray-600 transition-all hover:scale-125">
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
                     </div>
                     @endforeach
-
-
-
                 </div>
+                <!-- Fade Gray Effect -->
+                <div class="absolute bottom-0 left-0 right-0 h-10 bg-linear-to-t from-[#1a1d29] light:from-gray-50 to-transparent pointer-events-none"></div>
             </div>
 
 
@@ -79,25 +80,25 @@
                 <h2 class="font-medium text-white light:text-gray-900 text-lg mb-4"><span><i class="fa-solid text-[#fd0000] pr-2 fa-exclamation"></i></span>Critical Watchlist</h2>
                 <div class="space-y-3">
                     @foreach($criticalIssues as $active)
-                    <div class="flex justify-between items-center bg-[#252836] light:bg-gray-50 p-3 rounded">
+                    <div class="flex justify-between items-center bg-[#252836] light:bg-white p-3 rounded-xl border border-[#2a2d3a] light:border-gray-200 shadow-sm transition-all hover:bg-[#2d3142] light:hover:bg-gray-100">
                         <div>
-                            <p class="text-white text-sm">{{$active-> title}} - {{$active->street_purok}}, {{$active->barangay->barangay_name}}, Tagum</p>
-                            <p class="text-xs text-red-500">{{$active->priority_level}} · {{$active->created_at->diffForHumans()}}</p>
+                            <p class="text-white light:text-gray-900 text-sm font-regular">{{$active->title}} - {{$active->street_purok}}, {{$active->barangay->barangay_name}}, Tagum</p>
+                            <p class="text-xs text-red-500 font-medium">{{$active->priority_level}} · {{$active->created_at->diffForHumans()}}</p>
                         </div>
-                        <form action={{route('tracker')}} method="GET">
+                        <form action="{{route('tracker')}}" method="GET">
                             @csrf
-                            <button type=submit class="bg-[#ff00003b]  text-[#e40000] px-2 py-1 rounded hover:bg-[#ff000050]">Resolve</button>
+                            <button type="submit" class="bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 ring-1 ring-red-500/20">Resolve</button>
                         </form>
                     </div>
                     @endforeach
                 </div>
                 @if($criticalIssues->count() > 0)
-                <form action={{route('tracker')}} method="GET">
+                <form action="{{route('tracker')}}" method="GET">
                     @csrf
-                    <button type=submit class="w-full mt-4 bg-gray-500 text-white py-2 rounded">View All →</button>
+                    <button type="submit" class="w-full mt-5 bg-gray-700 light:bg-white light:text-gray-700 light:border light:border-gray-200 text-white py-2.5 rounded-xl font-medium hover:bg-gray-600 light:hover:bg-gray-50 transition-all shadow-sm">View All →</button>
                 </form>
                 @else
-                <p class="text-gray-400 text-sm mt-1">No critical issues</p>
+                <p class="text-gray-400 text-sm mt-4 text-center">No critical issues</p>
                 @endif
             </div>
             <!-- <div class="bg-[#1a1d29] p-4 rounded-lg shadow border border-[#2a2d3a]">

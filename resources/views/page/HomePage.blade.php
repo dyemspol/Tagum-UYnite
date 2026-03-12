@@ -14,12 +14,12 @@
             <!-- STORY -->
             <div @click="Livewire.dispatch('open-modal', { id: {{ $story->id }} })"
                 class="inline-block relative w-32 h-56 rounded-2xl overflow-hidden group cursor-pointer border border-[#2a2d3a] shadow-xl hover:shadow-blue-500/10 transition-all duration-300 mr-4 align-top whitespace-normal">
-                <img src="{{ $story->postImages->first()->cdn_url }}"
+                <img src="{{ $story->postImages->first()?->cdn_url ?? asset('img/LOGO.png') }}"
                     class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80"></div>
+                <div class="absolute inset-0 bg-linear-to-b from-black/40 via-transparent to-black/80"></div>
                 <div class="absolute top-3 left-3">
                     <div class="w-10 h-10 p-0.5 rounded-full bg-green-500 shadow-lg shadow-blue-500/20">
-                        <img src="{{ $story->user->profile_photo }}"
+                        <img src="{{ $story->user?->profile_photo ?? asset('img/noprofile.jpg') }}"
                             class="w-full h-full rounded-full object-cover border-2 border-[#12151e]">
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                         <i class="fa-solid fa-check-circle"></i>{{ $story->report_status }}
                     </p>
                     <p class="text-white text-xs font-bold leading-tight line-clamp-2">
-                        {{ $story->user->first_name . ' ' . $story->user->last_name}}
+                        {{ ($story->user->first_name ?? 'Anonymous') . ' ' . ($story->user->last_name ?? '') }}
                     </p>
                 </div>
             </div>

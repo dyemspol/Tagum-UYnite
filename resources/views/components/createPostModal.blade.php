@@ -65,7 +65,7 @@
                             class="bg-black/20 light:bg-white border border-white/10 light:border-gray-200 focus:border-[#31A871] light:focus:border-[#31A871] outline-none rounded-lg w-full text-white light:text-gray-900 py-2.5 px-3 text-sm transition-all appearance-none shadow-inner light:shadow-sm">
                             <option value="" disabled>Select Type</option>
                             @foreach ($departments ?? [] as $department)
-                            <option value="{{ $department->id }}" class="text-gray-800">
+                            <option value="{{ $department->id }}" class="text-white">
                                 {{ $department->category }}
                             </option>
                             @endforeach
@@ -81,7 +81,7 @@
                             class="bg-black/20 light:bg-white border border-white/10 light:border-gray-200 focus:border-[#31A871] light:focus:border-[#31A871] outline-none rounded-lg w-full text-white light:text-gray-900 py-2.5 px-3 text-sm transition-all appearance-none shadow-inner light:shadow-sm">
                             <option value="" disabled>Select Location</option>
                             @foreach ($barangays ?? [] as $barangay)
-                            <option value="{{ $barangay->id }}" class="text-gray-800">
+                            <option value="{{ $barangay->id }}" class="text-white">
                                 {{ $barangay->barangay_name }}
                             </option>
                             @endforeach
