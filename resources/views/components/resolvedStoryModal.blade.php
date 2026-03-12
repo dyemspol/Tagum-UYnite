@@ -20,7 +20,32 @@
         </div>
 
         <!-- CAROUSEL -->
-        <div class="relative group">
+        <div class="relative group" 
+             x-data="{ 
+                 initSwiper() {
+                     this.$nextTick(() => {
+                         const swiperEl = this.$el.querySelector('.storySwiper');
+                         if (swiperEl) {
+                             if (swiperEl.swiper) swiperEl.swiper.destroy(true, true);
+                             new Swiper(swiperEl, {
+                                 loop: true,
+                                 slidesPerView: 1,
+                                 spaceBetween: 10,
+                                 pagination: {
+                                     el: this.$el.querySelector('.swiper-pagination'),
+                                     clickable: true,
+                                 },
+                                 navigation: {
+                                     nextEl: this.$el.querySelector('.swiper-button-next'),
+                                     prevEl: this.$el.querySelector('.swiper-button-prev'),
+                                 },
+                             });
+                         }
+                     });
+                 }
+             }" 
+             x-init="initSwiper()"
+             x-effect="if ('{{ $resolvedReport->id }}') initSwiper()">
             <div class="swiper storySwiper h-[500px]">
                 <div class="swiper-wrapper">
 
