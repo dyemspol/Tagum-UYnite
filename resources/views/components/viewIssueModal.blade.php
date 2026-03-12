@@ -165,7 +165,7 @@
                             <option value="Resolved outside the platform">Resolved outside the platform</option>
                         </select>
                         <div class="flex gap-2">
-                            <button wire:click="takedown({{ $selectedReport->id }})" class="w-full py-2.5 rounded-xl border border-red-500/30 text-red-500 text-[10px] font-bold hover:bg-red-500/10 transition-all">
+                            <button wire:click="takedown" class="w-full py-2.5 rounded-xl border border-red-500/30 text-red-500 text-[10px] font-bold hover:bg-red-500/10 transition-all">
                                 Confirm Take Down
                             </button>
 

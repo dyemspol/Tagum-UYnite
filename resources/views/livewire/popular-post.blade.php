@@ -1,3 +1,3 @@
 <div>
-    <x:postCard :isProfilePage="false" :post="$post" :likes="$likes" :dislikes="$dislikes" :userReaction="$userReaction"/>
+    <x:postCard :isProfilePage="false" :post="$post" :likes="$likes" :dislikes="$dislikes" :userReaction="$userReaction" :commentCounts="$commentCounts" />
 </div>

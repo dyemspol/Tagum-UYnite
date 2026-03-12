@@ -20,6 +20,7 @@ class CommentModal extends Component
     public $commentModal = false;
 
 
+
     public function render()
     {
         return view('livewire.comment-modal');
@@ -42,5 +43,14 @@ class CommentModal extends Component
         ]);
         $this->comments = Comment::with('user')->where('report_id', $this->post->id)->get();
         $this->comment = '';
+    }
+    public function closeCommentModal()
+    {
+        $postId = $this->post->id;
+        $this->commentModal = false;
+        $this->post = null;
+        $this->comments = [];
+        $this->comment = '';
+        $this->dispatch('closeCommentModal', postId: $postId);
     }
 }

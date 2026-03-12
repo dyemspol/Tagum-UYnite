@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Reaction;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 
 class PopularPost extends Component
 {
@@ -12,32 +13,33 @@ class PopularPost extends Component
     public $likes = 0;
     public $dislikes = 0;
     public $userReaction;
+    public $commentCounts;
     public function render()
     {
         return view('livewire.popular-post', [
-            
             'isProfilePage' => false
         ]);
     }
     public function mount()
     {
         $this->loadReactionCounts();
-          if(Auth::check()){
+        if (Auth::check()) {
             $reaction = Reaction::where('report_id', $this->post->id)->where('user_id', Auth::id())->first();
             $this->userReaction = $reaction ? $reaction->reaction_type : null;
         }
     }
     public function loadReactionCounts()
     {
-         $this->post->load('reactions'); 
+        $this->post->load('reactions');
         $this->likes = $this->post->reactions->where('reaction_type', 'like')->count();
         $this->dislikes = $this->post->reactions->where('reaction_type', 'dislike')->count();
+        $this->commentCounts = $this->post->comments->count();
     }
     public function toggleReaction($type)
     {
         $user = Auth::user();
         $reaction = Reaction::where('report_id', $this->post->id)->where('user_id', $user->id)->first();
-        
+
         if ($reaction) {
             if ($reaction->reaction_type === $type) {
                 $reaction->delete();
@@ -47,7 +49,7 @@ class PopularPost extends Component
                 $this->userReaction = $type;
             }
         } else {
-            
+
             Reaction::create([
                 'report_id' => $this->post->id,
                 'user_id' => Auth::id(),
@@ -56,5 +58,13 @@ class PopularPost extends Component
             $this->userReaction = $type;
         }
         $this->loadReactionCounts();
+    }
+    #[On('closeCommentModal')]
+    public function closeCommentModal($postId)
+    {
+        if ($this->post->id == $postId) {
+            $this->post->load('comments');
+            $this->loadReactionCounts();
+        }
     }
 }

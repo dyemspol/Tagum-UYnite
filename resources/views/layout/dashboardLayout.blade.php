@@ -62,22 +62,23 @@
     @stack('scripts')
 
     <script>
-    //     // Keep only component-specific logic if needed
-    //     const btn = document.getElementById('darkModeToggle');
-    //     if (btn) {
-    //         btn.onclick = () => {
-    //             const label = document.getElementById('darkModeLabel');
-    //             const icon = document.getElementById('darkModeIcon');
-    //             if (label.textContent === 'Dark Mode') {
-    //                 icon.className = 'hgi hgi-stroke hgi-sun-01 text-white';
-    //                 label.textContent = 'Light Mode';
-    //             } else {
-    //                 icon.className = 'hgi hgi-stroke hgi-moon text-white';
-    //                 label.textContent = 'Dark Mode';
-    //             }
-    //         };
-    //     }
-    // </script>
+        //     // Keep only component-specific logic if needed
+        //     const btn = document.getElementById('darkModeToggle');
+        //     if (btn) {
+        //         btn.onclick = () => {
+        //             const label = document.getElementById('darkModeLabel');
+        //             const icon = document.getElementById('darkModeIcon');
+        //             if (label.textContent === 'Dark Mode') {
+        //                 icon.className = 'hgi hgi-stroke hgi-sun-01 text-white';
+        //                 label.textContent = 'Light Mode';
+        //             } else {
+        //                 icon.className = 'hgi hgi-stroke hgi-moon text-white';
+        //                 label.textContent = 'Dark Mode';
+        //             }
+        //         };
+        //     }
+        // 
+    </script>
 </body>
 
 </html>

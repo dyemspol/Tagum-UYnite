@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Reaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\On;
 
 class PostCard extends Component
 {
@@ -14,8 +15,8 @@ class PostCard extends Component
     public $likes = 0;
     public $dislikes = 0;
     public $userReaction = null;
-    
-    
+    public $commentCounts = 0;
+
 
 
     public function render()
@@ -28,7 +29,7 @@ class PostCard extends Component
         Log::info('yaoyao');
         $this->loadReactionCounts();
 
-          if(Auth::check()){
+        if (Auth::check()) {
             $reaction = Reaction::where('report_id', $this->post->id)->where('user_id', Auth::id())->first();
             $this->userReaction = $reaction ? $reaction->reaction_type : null;
         }
@@ -38,9 +39,7 @@ class PostCard extends Component
         $this->post->load('reactions');
         $this->likes = $this->post->reactions->where('reaction_type', 'like')->count();
         $this->dislikes = $this->post->reactions->where('reaction_type', 'dislike')->count();
-        
-
-      
+        $this->commentCounts = $this->post->comments->count();
     }
 
     public function toggleReaction($type)
@@ -48,7 +47,7 @@ class PostCard extends Component
         Log::info('kaabot napod dere');
         $user = Auth::user();
         $reaction = Reaction::where('report_id', $this->post->id)->where('user_id', $user->id)->first();
-        
+
         if ($reaction) {
             if ($reaction->reaction_type === $type) {
                 $reaction->delete();
@@ -58,7 +57,7 @@ class PostCard extends Component
                 $this->userReaction = $type;
             }
         } else {
-            
+
             Reaction::create([
                 'report_id' => $this->post->id,
                 'user_id' => $user->id,
@@ -68,5 +67,10 @@ class PostCard extends Component
         }
         $this->loadReactionCounts();
     }
-    
+    #[On('closeCommentModal')]
+    public function closeCommentModal($postId)
+    {
+        $this->post->load('comments');
+        $this->loadReactionCounts();
+    }
 }

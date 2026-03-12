@@ -97,21 +97,23 @@ class Issuetracker extends Component
     {
         $this->selectedReport = null;
     }
-    public function takedown($takedownReportId, EmployeePost $EmployeePost)
+    public function takedown()
     {
-        $report = Report::find($takedownReportId);
-        $takedownReport = $EmployeePost->takedown($report->id, $this->takedownReason);
-
-        if ($takedownReport) {
-            $this->selectedReport = null;
-            $this->takedownReason = '';
-            session()->flash('success', 'Report taken down successfully.');
-            $this->LOADREPORTS();
-        } else {
-            session()->flash('error', 'Failed to take down report.');
+        if (empty($this->takedownReason)) {
+            session()->flash('error', 'Please select a takedown reason.');
+            return;
         }
+
+        $this->selectedReport->post_status = 'removed';
+        $this->selectedReport->rejection_reason = $this->takedownReason;
+        $this->selectedReport->save();
+
+        $this->selectedReport = null;
+        $this->takedownReason = '';
+        session()->flash('success', 'Report taken down successfully.');
+        $this->LOADREPORTS();
     }
-    public function resolved($resolvedReportId, EmployeePost $EmployeePost)
+    public function resolved(EmployeePost $EmployeePost, $resolvedReportId)
     {
         $report = Report::find($resolvedReportId);
         $resolvedReport = $EmployeePost->resolved($report->id);

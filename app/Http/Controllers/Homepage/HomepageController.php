@@ -16,8 +16,7 @@ use App\Services\CloudinaryServices;
 use App\Services\UserVerification;
 use Illuminate\Support\Facades\Log;
 use App\Models\VerifcationStatus;
-
-
+use App\Services\PostServices;
 
 class HomepageController extends Controller
 {
@@ -32,19 +31,20 @@ class HomepageController extends Controller
 
     public function index()
     {
-
+        $reports = Report::with('user', 'postImages')->where('post_status', '!=', 'removed')->where('report_status', 'resolved')->latest()->take(10)->get();
 
         return view('page.HomePage', [
             'isProfilePage' => false,
-
+            'reports' => $reports,
         ]);
     }
 
     public function latestpost()
     {
-
+        $reports = Report::with('user', 'postImages')->where('post_status', '!=', 'removed')->where('report_status', 'resolved')->latest()->take(10)->get();
         return view('page.latestPage', [
             'isProfilePage' => false,
+            'reports' => $reports,
 
         ]);
     }
@@ -60,7 +60,7 @@ class HomepageController extends Controller
     {
 
         $user = Auth::user();
-        $post = Report::where('user_id', $user->id)->get();
+        $post = Report::with('user', 'postImages')->where('user_id', $user->id)->get();
         $barangays = Baranggay::all();
         $verificationStatus = VerifcationStatus::where('user_id', $user->id)->where('status', 'pending')->first();
 
@@ -69,10 +69,12 @@ class HomepageController extends Controller
 
     public function popularpost()
     {
+        $reports = Report::with('user', 'postImages')->where('post_status', '!=', 'removed')->where('report_status', 'resolved')->latest()->take(10)->get();
 
 
         return view('page.popularPage', [
             'isProfilePage' => false,
+            'reports' => $reports,
 
         ]);
     }

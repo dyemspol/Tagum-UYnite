@@ -4,7 +4,7 @@
 
 
         <button id="commentModalX" class="absolute top-3 right-3 text-white/70 light:text-black/50 hover:text-white light:hover:text-black text-2xl leading-none transition-colors z-30 p-2 bg-black/20 light:bg-black/5 rounded-full w-8 h-8 flex items-center justify-center"
-            wire:click="$set('commentModal', false)">
+            wire:click="closeCommentModal">
             &times;
         </button>
 
@@ -52,8 +52,8 @@
                 <!-- Post Media (Swiper Carousel) -->
                 @if ($post->postImages && $post->postImages->count() > 0)
                 <div class="w-full mb-2"
-                     x-data
-                     x-init="$nextTick(() => {
+                    x-data
+                    x-init="$nextTick(() => {
                          const el = $el.querySelector('.swiper');
                          if (el) {
                              if (el.swiper) { el.swiper.destroy(true, true); }
