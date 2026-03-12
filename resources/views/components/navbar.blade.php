@@ -2,8 +2,12 @@
             <div class="flex h-16 justify-between w-full items-center mx-auto sm:px-10 py-2 shadow-md px-5">
                 <div class="flex justify-center items-center">
                     <div id="menuicon" class="lg:hidden cursor-pointer"><i class="fa-solid fa-bars text-white light:text-gray-800 text-xl"></i></div>
-                    <a href="/"> <div class="w-11 h-auto lg:block hidden"><img class="w-full h-full" src="{{ asset('img/LOGO.png') }}"
-                            alt="logo">
+                    <a href="/"> <div class="w-11 h-auto lg:block hidden">
+                        <img id="navLogo" class="w-full h-full" 
+                             src="{{ asset('img/LOGO.png') }}"
+                             data-dark="{{ asset('img/LOGO.png') }}"
+                             data-light="{{ asset('img/LOGO_BLACK.png') }}"
+                             alt="logo">
                     </div></a>
                 </div>
                 <div class="relative flex-1 sm:flex-none sm:w-[30rem] mx-3 sm:mx-0 flex items-center">
