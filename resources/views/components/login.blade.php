@@ -4,7 +4,8 @@
         <button wire:click="closeLoginModal" class="float-right text-sm text-2xl font-light cursor-pointer text-white light:text-gray-900 transition-colors">✕</button>
         
         <div class="w-15 h-auto mx-auto">
-            <img src="{{ asset('img/LOGO.png') }}" alt="">
+            <img src="{{ asset('img/LOGO.png') }}" alt="" class="light:hidden">
+            <img src="{{ asset('img/LOGO_BLACK.png') }}" alt="" class="hidden light:block">
         </div>
         <div class="text-center my-2">
             <h2 class="text-white light:text-gray-900 text-lg font-medium transition-colors">Welcome Back!</h2>
