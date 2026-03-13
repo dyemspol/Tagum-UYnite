@@ -73,4 +73,12 @@ class PostCard extends Component
         $this->post->load('comments');
         $this->loadReactionCounts();
     }
+    public function deletePost()
+    {
+        $this->post->update([
+            'post_status' => 'removed'
+        ]);
+
+        return redirect()->route('profile')->with('success', 'Post has been taken down.');
+    }
 }

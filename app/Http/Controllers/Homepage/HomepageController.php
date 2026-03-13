@@ -60,11 +60,13 @@ class HomepageController extends Controller
     {
 
         $user = Auth::user();
-        $post = Report::with('user', 'postImages')->where('user_id', $user->id)->get();
+        $Allpost = Report::with('user', 'postImages')->where('post_status', '!=', 'removed')->where('user_id', $user->id)->get();
+        $takendown = Report::with('user', 'postImages')->where('post_status', 'removed')->where('user_id', $user->id)->latest()->take(10)->get();
+
         $barangays = Baranggay::all();
         $verificationStatus = VerifcationStatus::where('user_id', $user->id)->where('status', 'pending')->first();
 
-        return view('page.profilePage', compact('user', 'post', 'barangays', 'verificationStatus'));
+        return view('page.profilePage', compact('user', 'Allpost', 'barangays', 'verificationStatus', 'takendown'));
     }
 
     public function popularpost()

@@ -35,22 +35,13 @@ $isProfileRoute = request()->routeIs('profile');
                 </p>
                 @endif
                 @if($isProfilePage || $isProfileRoute)
+                @if($post->post_status != 'removed')
                 <i wire:click="deletePost({{ $post->id }})" wire:confirm="Are you sure you want to delete this post?" class="hgi hgi-stroke hgi-delete-01 text-xl text-[#31A871] hover:text-red-300 cursor-pointer"></i>
+                @endif
                 @endif
             </div>
         </div>
 
-        @if($post->post_status == 'removed' && $post->takedown_reason)
-        <div class="px-3 mb-2">
-            <div class="bg-red-500/10 border border-red-500/20 rounded-lg p-2 flex items-start gap-2">
-                <i class="fa-solid fa-circle-info text-red-500 mt-0.5 text-xs"></i>
-                <div>
-                    <p class="text-[10px] text-red-500 font-bold uppercase tracking-wider">Takedown Reason</p>
-                    <p class="text-[11px] text-gray-300 light:text-gray-700">{{ $post->takedown_reason }}</p>
-                </div>
-            </div>
-        </div>
-        @endif
 
         <div class="px-3 pb-2">
             <h3 class="text-white light:text-gray-900 font-bold text-sm mb-1">{{ $post->title }}</h3>
@@ -61,7 +52,7 @@ $isProfileRoute = request()->routeIs('profile');
 
         <!-- Swiper Carousel -->
         @if ($post->postImages && $post->postImages->count() > 0)
-        <div x-data
+        <div wire:ignore x-data
             x-init="$nextTick(() => {
                      const el = $el.querySelector('.swiper');
                      if (el) {
@@ -139,6 +130,7 @@ $isProfileRoute = request()->routeIs('profile');
         </div>
         @endguest
         @auth
+        @if($post->post_status != 'removed')
         <div class="my-2 pl-3 flex space-x-1 items-center" x-data="{
             reaction: @js($userReaction),
             likes: @js($likes),
@@ -163,6 +155,7 @@ $isProfileRoute = request()->routeIs('profile');
                 }
             }
         }">
+            @if(auth()->user()->is_verified == 1)
             <button @click="update('like'); $wire.toggleReaction('like')"
                 class="flex space-x-0.5 items-center rounded-xl px-2 py-1 cursor-pointer transition-all duration-150"
                 :class="reaction === 'like' ? 'bg-[#31A871] bg-opacity-20' : 'bg-[#354a5c00] hover:bg-[#354a5c] light:hover:bg-gray-100'">
@@ -200,7 +193,20 @@ $isProfileRoute = request()->routeIs('profile');
                 </svg>
                 <span class="text-white light:text-gray-600 text-sm">{{ $post->comments->count() }}</span>
             </button>
+            @else
+            <button type="button"
+                id="commentModalBtn"
+                onclick="document.getElementById('loginModal').classList.remove('hidden'); document.getElementById('loginModal').classList.add('flex');"
+                class="flex cursor-pointer items-center space-x-1 text-[#31A871] hover:text-white transition-colors px-2 py-1 rounded-xl">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M7 10h10M7 14h5m-9 3.5V6.8c0-1.01.82-1.8 1.84-1.8h12.32C18.18 5 19 5.79 19 6.8v8.4c0 1.01-.82 1.8-1.84 1.8H9.2L5.5 17.5Z" />
+                </svg>
+                <span class="text-white light:text-gray-600 text-sm">{{ $post->comments->count() }}</span>
+            </button>
+            @endauth
         </div>
+        @endif
         @endauth
 
     </div>

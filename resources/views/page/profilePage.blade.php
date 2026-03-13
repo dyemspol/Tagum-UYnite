@@ -118,27 +118,27 @@
                 </div>
                 <hr class="mb-7 opacity-60 z-10 ">
                 <div id="postsSection" x-show="activeTab === 'posts'" class=" space-y-3  mx-auto w-full">
-                    @forelse($user->reports as $post)
+                    @forelse($Allpost as $post)
                     <livewire:post-card :post="$post" :key="$post->id" />
                     @empty
                     <div class="text-white light:text-gray-500 text-center opacity-50 py-10 transition-colors"> You can't post if you are not verified..</div>
                     @endforelse
                 </div>
 
-            
+
 
                 <div id="trackIssueSection" x-show="activeTab === 'track'" class="flex flex-col justify-center"
                     style="display: none;">
-                    @forelse($user->reports as $post)
+                    @forelse($Allpost as $post)
                     <div class="bg-[#0f1f2f] light:bg-white border border-[#1e3246] light:border-gray-200 px-3 py-3 mb-2 rounded-lg w-full max-w-[50em] shadow-sm transition-colors">
                         <div class="flex items-center justify-between gap-3 mb-2">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10">
                                     <img class="w-full h-full rounded-full object-cover"
-                                        src="{{ $user->profile_photo ? $user->profile_photo : asset('img/noprofile.jpg') }}" alt="profile">
+                                        src="{{ $post->user->profile_photo ? $post->user->profile_photo : asset('img/noprofile.jpg') }}" alt="profile">
                                 </div>
                                 <div class="leading-tight">
-                                    <p class="text-white light:text-gray-900 text-sm transition-colors">{{ $user->first_name }} {{ $user->last_name }}</p>
+                                    <p class="text-white light:text-gray-900 text-sm transition-colors">{{ $post->user->first_name }} {{ $post->user->last_name }}</p>
                                     <p class="text-xs text-[#9fb1c5] light:text-gray-500 transition-colors">
                                         {{ $post->created_at->format('F j, Y') }} <span
                                             class="mx-1">•</span>
@@ -165,7 +165,11 @@
 
                 <div id="deletedSection" x-show="activeTab === 'deleted'" class="flex flex-col justify-center"
                     style="display: none;">
-                    <div class="text-white light:text-gray-500 text-center opacity-50 py-10 transition-colors">No deleted posts to show.</div>
+                    @forelse($takendown as $post)
+                    <livewire:post-card :post="$post" :key="$post->id" />
+                    @empty
+                    <div class="text-white light:text-gray-500 text-center opacity-50 py-10 transition-colors"> No posts yet.</div>
+                    @endforelse
                 </div>
 
             </div>
