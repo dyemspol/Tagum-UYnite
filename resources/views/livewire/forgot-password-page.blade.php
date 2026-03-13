@@ -36,9 +36,9 @@
             </div>
 
             @if (session()->has('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-3 text-sm">
-                    {{ session('success') }}
-                </div>
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-3 text-sm">
+                {{ session('success') }}
+            </div>
             @endif
 
             <form wire:submit.prevent="sendResetLink" class="space-y-3 mt-3">
@@ -49,25 +49,26 @@
                     type="email"
                     placeholder="Email Address"
                     wire:model="email"
-                    wire:focus="clearFieldError('email')"
-                >
+                    wire:focus="clearFieldError('email')">
 
                 @error('email')
-                    <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
                 @enderror
 
                 @if ($showError && !$errors->has('email'))
-                    <p class="text-red-400 text-xs mt-1">
-                        Please enter a valid email address.
-                    </p>
+                <p class="text-red-400 text-xs mt-1">
+                    Please enter a valid email address.
+                </p>
                 @endif
 
                 <!-- BUTTON -->
-                <input
+                <button
                     class="bg-[#31A871] hover:bg-[#2bc57d] cursor-pointer rounded-sm w-full text-white font-normal py-1 px-1 mt-3"
                     type="submit"
-                    value="SEND RESET LINK"
-                >
+                    wire:loading.attr="disabled">
+                    <span wire:loading.remove>SEND RESET LINK</span>
+                    <span wire:loading>SENDING...</span>
+                </button>
 
             </form>
 
@@ -79,4 +80,3 @@
         </div>
     </div>
 </div>
-
