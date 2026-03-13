@@ -70,8 +70,11 @@
                         <p class="text-white light:text-gray-900 text-3xl transition-colors">{{ $user->first_name }} {{ $user->last_name }}</p>
                         <div class="flex gap-2 items-center mt-1">
                             <p class="text-white light:text-gray-600 text-sm opacity-60 transition-colors">{{ $user->reports->count() }} Total Post</p>
-                            <button @click="$dispatch('open-edit-profile')"
-                                class="px-3 py-1 border border-white light:border-gray-400 text-white light:text-gray-700 text-xs rounded hover:opacity-80 transition">
+
+                            <button
+                                @if($user->is_verified) @click="$dispatch('open-edit-profile')" @endif
+                                class="px-3 py-1 border border-white light:border-gray-400 text-white light:text-gray-700 text-xs rounded transition flex {{!$user->is_verified ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-80'}}"
+                                {{!$user->is_verified ? 'disabled title="Verification Required"' : ''}}>
                                 Edit
                             </button>
                             <div>
