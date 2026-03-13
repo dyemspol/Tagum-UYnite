@@ -30,7 +30,7 @@
           class="w-full mt-1 p-2.5 min-h-[42px] rounded-lg bg-white/5 light:bg-transparent border border-white/20 light:border-gray-300 text-white light:text-gray-900 outline-none focus:ring-2 focus:ring-[#00d4aa] focus:border-transparent transition-colors">
           <option value="" class="text-gray-800">Select Barangay</option>
           @foreach($barangays as $barangay)
-          <option value="{{ $barangay->id }}" class="text-gray-800">{{ $barangay->barangay_name }}</option>
+          <option value="{{ $barangay->id }}" class="text-white">{{ $barangay->barangay_name }}</option>
           @endforeach
         </select>
         @error('barangay_id')<p class="text-red-400 text-xs mt-1">{{ $message }}</p>@enderror
