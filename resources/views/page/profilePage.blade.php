@@ -110,6 +110,11 @@
                             'text-white light:text-gray-500 opacity-60 hover:opacity-100'">
                         Track issue
                     </p>
+                    <p class="cursor-pointer pb-1 transition-all duration-200" @click="activeTab = 'deleted'"
+                        :class="activeTab === 'deleted' ? 'text-[#31A871] border-b-2 border-[#31A871] opacity-100' :
+                            'text-white light:text-gray-500 opacity-60 hover:opacity-100'">
+                        Deleted
+                    </p>
                 </div>
                 <hr class="mb-7 opacity-60 z-10 ">
                 <div id="postsSection" x-show="activeTab === 'posts'" class=" space-y-3  mx-auto w-full">
@@ -120,7 +125,7 @@
                     @endforelse
                 </div>
 
-
+            
 
                 <div id="trackIssueSection" x-show="activeTab === 'track'" class="flex flex-col justify-center"
                     style="display: none;">
@@ -156,6 +161,11 @@
                     @empty
                     <div class="text-white light:text-gray-500 text-center opacity-50 py-10 transition-colors">No posts yet.</div>
                     @endforelse
+                </div>
+
+                <div id="deletedSection" x-show="activeTab === 'deleted'" class="flex flex-col justify-center"
+                    style="display: none;">
+                    <div class="text-white light:text-gray-500 text-center opacity-50 py-10 transition-colors">No deleted posts to show.</div>
                 </div>
 
             </div>
