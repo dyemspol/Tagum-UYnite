@@ -43,7 +43,31 @@
                     <td class="px-4 py-4 light:text-gray-900 transition-colors">{{ $user->email }}</td>
                     <td class="px-4 py-4 light:text-gray-900 transition-colors">{{ $user->address }}</td>
                     <td class="px-4 py-4">
-                        <span class="text-green-400 font-semibold transition-colors">{{ $user->verificationStatus->status }}</span>
+                        @php
+                            $status = strtolower($user->verificationStatus->status);
+                            $statusConfig = match(true) {
+                                in_array($status, ['verified', 'approved']) => [
+                                    'badge' => 'bg-green-500/10 text-green-400 border-green-500/20 light:bg-green-100 light:text-green-700 light:border-green-200',
+                                    'dot' => 'bg-green-400'
+                                ],
+                                $status === 'pending' => [
+                                    'badge' => 'bg-amber-500/10 text-amber-500 border-amber-500/20 light:bg-amber-100 light:text-amber-700 light:border-amber-200',
+                                    'dot' => 'bg-amber-500'
+                                ],
+                                in_array($status, ['rejected', 'declined']) => [
+                                    'badge' => 'bg-red-500/10 text-red-500 border-red-500/20 light:bg-red-100 light:text-red-700 light:border-red-200',
+                                    'dot' => 'bg-red-400'
+                                ],
+                                default => [
+                                    'badge' => 'bg-blue-500/10 text-blue-400 border-blue-500/20 light:bg-blue-100 light:text-blue-700 light:border-blue-200',
+                                    'dot' => 'bg-blue-400'
+                                ],
+                            };
+                        @endphp
+                        <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border transition-all duration-300 {{ $statusConfig['badge'] }}">
+                            <span class="w-1.5 h-1.5 rounded-full mr-2 {{ $statusConfig['dot'] }}"></span>
+                            {{ $user->verificationStatus->status }}
+                        </div>
                     </td>
                     <td wire:click="showUser({{ $user->id }})" class="px-4 py-4 flex gap-2 items-center">
                         <i class="hgi hgi-stroke hgi-eye text-2xl text-[#00d4aa] hover:text-[#00e6b8] cursor-pointer transition-colors"></i>
