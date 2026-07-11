@@ -66,7 +66,7 @@
                         @endphp
                         <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border transition-all duration-300 {{ $statusConfig['badge'] }}">
                             <span class="w-1.5 h-1.5 rounded-full mr-2 {{ $statusConfig['dot'] }}"></span>
-                            {{ $user->verificationStatus->status }}
+                            {{ ucfirst($user->verificationStatus->status) }}
                         </div>
                     </td>
                     <td wire:click="showUser({{ $user->id }})" class="px-4 py-4 flex gap-2 items-center">

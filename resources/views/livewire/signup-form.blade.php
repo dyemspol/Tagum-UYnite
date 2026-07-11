@@ -34,7 +34,7 @@
                 @error('email') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
                 <input class="bg-transparent border-[0.5px] border-black rounded-sm w-full text-black py-2 px-2 text-sm" type="text" placeholder="Username" wire:model="username" required>
                 @error('username') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
-                <input class="bg-transparent border-[0.5px] border-black rounded-sm w-full text-black py-2 px-2 text-sm" type="password" placeholder="Password" wire:model="password" required>
+                <input class="bg-transparent border-[0.5px] border-black rounded-sm w-full text-black py-2 px-2 text-sm" type="password" placeholder="Password (at least 8 characters)" wire:model="password" required>
                 <input class="bg-transparent border-[0.5px] border-black rounded-sm w-full text-black py-2 px-2 text-sm" type="password" placeholder="Confirm Password" wire:model="confirm_password" required>
                 <input class="bg-none  bg-[#31A871] hover:bg-[#2bc57d] cursor-pointer rounded-sm w-full text-white font-normal py-1 px-1 mt-3" type="submit" value="Register">
                 @if($showError)

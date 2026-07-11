@@ -141,9 +141,9 @@
                 <div>
                     <label class="text-[10px] text-gray-500 light:text-gray-600 font-bold uppercase mb-2 block tracking-widest">Mark Status</label>
                     <select wire:model="statusUpdate" class="w-full bg-[#12151e] light:bg-white border border-[#2a2d3a] light:border-gray-300 rounded-xl p-3 text-sm text-white light:text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#00d4aa]/30 transition-all">
-                        <option value="pending">Pending</option>
-                        <option value="in_review">Ongoing</option>
-                        <option value="resolved">Resolved</option>
+                        <option class="text-white" value="pending">Pending</option>
+                        <option class="text-white" value="in_review">Ongoing</option>
+                        <option class="text-white" value="resolved">Resolved</option>
                     </select>
                 </div>
 
@@ -156,13 +156,13 @@
                         <select
                             wire:model="takedownReason"
                             class="w-full bg-[#12151e] light:bg-white border border-[#2a2d3a] light:border-gray-300 rounded-xl p-3 text-[11px] text-white light:text-gray-800 focus:outline-none focus:ring-1 focus:ring-red-500/50 transition-all custom-select">
-                            <option value="">Select a reason...</option>
-                            <option value="Inappropriate Content">Inappropriate Content</option>
-                            <option value="False Information">False Information</option>
-                            <option value="Duplicate Report">Duplicate Report</option>
-                            <option value="Spam">Spam</option>
-                            <option value="Violation of Community Guidelines">Violation of Community Guidelines</option>
-                            <option value="Resolved outside the platform">Resolved outside the platform</option>
+                            <option class="text-white" value="">Select a reason...</option>
+                            <option class="text-white" value="Inappropriate Content">Inappropriate Content</option>
+                            <option class="text-white" value="False Information">False Information</option>
+                            <option class="text-white" value="Duplicate Report">Duplicate Report</option>
+                            <option class="text-white" value="Spam">Spam</option>
+                            <option class="text-white" value="Violation of Community Guidelines">Violation of Community Guidelines</option>
+                            <option class="text-white" value="Resolved outside the platform">Resolved outside the platform</option>
                         </select>
                         <div class="flex gap-2">
                             <button wire:click="takedown" class="w-full py-2.5 rounded-xl border border-red-500/30 text-red-500 text-[10px] font-bold hover:bg-red-500/10 transition-all">

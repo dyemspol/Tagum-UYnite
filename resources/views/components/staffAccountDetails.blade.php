@@ -44,10 +44,10 @@
             <div class="relative">
                 <div class="w-20 h-20 rounded-full bg-[#1a1d29] light:bg-white border-2 border-[#00d4aa]/40 flex items-center justify-center overflow-hidden transition-colors">
                     <template x-if="selectedStaff?.profile_photo">
-                        <img :src="'/storage/' + selectedStaff.profile_photo" alt="Profile" class="w-full h-full object-cover">
+                        <img :src="selectedStaff.profile_photo" alt="Profile" class="w-full h-full object-cover">
                     </template>
                     <template x-if="!selectedStaff?.profile_photo">
-                        <i class="fa-solid fa-user text-[#00d4aa] text-3xl"></i>
+                        <img src="{{ asset('img/noprofile.jpg') }}" alt="Default Profile" class="w-full h-full object-cover">
                     </template>
                 </div>
             </div>

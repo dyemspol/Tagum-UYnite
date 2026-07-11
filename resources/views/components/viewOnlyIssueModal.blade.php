@@ -93,74 +93,117 @@
             </div>
         </div>
 
-        <!-- RIGHT PANE: POST COMMENTS -->
-        <div class="flex-1 bg-[#12151e]/50 light:bg-gray-100 p-8 flex flex-col max-h-[90vh] transition-colors">
-            <div class="flex items-center justify-between mb-8">
+        <!-- RIGHT PANE: COMMENTS + PASS ISSUE -->
+        <div class="flex-1 bg-[#12151e]/50 light:bg-gray-100 p-8 flex flex-col max-h-[90vh] transition-colors overflow-y-auto hide-scrollbar">
+            <div class="flex items-center justify-between mb-6">
                 <h3 class="text-lg font-bold text-white light:text-gray-900 flex items-center gap-2 transition-colors">
                     <i class="fa-solid fa-comments text-[#00d4aa] text-sm"></i>
                     Post Comments
                 </h3>
-
             </div>
 
             <!-- ACTUAL COMMENTS LIST -->
-            <div class="flex-1 overflow-y-auto space-y-4 mb-8 hide-scrollbar pr-1">
+            <div class="space-y-3 mb-6 max-h-[240px] overflow-y-auto hide-scrollbar pr-1">
                 @forelse($selectedReport->comments as $comment)
                 <div class="p-4 bg-[#1a1d29] light:bg-white rounded-2xl border border-[#2a2d3a] light:border-gray-200 shadow-sm transition-colors">
                     <div class="flex justify-between items-center mb-1">
                         <span class="text-xs font-bold text-white light:text-gray-900 transition-colors">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</span>
                         <span class="text-[10px] text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
                     </div>
-                    <p class="text-[11px] text-gray-300 light:text-gray-700 leading-relaxed transition-colors">{{ $comment->comment_text }}</p>
+                    <p class="text-[11px] {{ str_starts_with($comment->comment_text, '[Passed to Department]') ? 'text-amber-400' : 'text-gray-300 light:text-gray-700' }} leading-relaxed transition-colors">
+                        @if(str_starts_with($comment->comment_text, '[Passed to Department]'))
+                            <i class="fa-solid fa-share-from-square mr-1"></i>
+                        @endif
+                        {{ $comment->comment_text }}
+                    </p>
                 </div>
                 @empty
-                <div class="flex flex-col items-center justify-center h-full opacity-20 light:opacity-50 transition-opacity">
+                <div class="flex flex-col items-center justify-center py-6 opacity-20 light:opacity-50 transition-opacity">
                     <i class="fa-solid fa-comment-slash text-4xl mb-2 text-gray-400"></i>
                     <p class="text-[10px] font-bold uppercase tracking-widest text-center light:text-gray-600 transition-colors">No comments yet</p>
                 </div>
                 @endforelse
             </div>
 
-            <!-- COMMENT INPUT (SIMPLE LAYOUT) -->
-            <!-- <div class="mb-6">
-                <div class="relative group">
-                    <textarea
-                        wire:model="staffComment"
-                        placeholder="Write a staff update..."
-                        class="w-full bg-[#1a1d29] border border-[#2a2d3a] rounded-2xl p-4 pr-12 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#00d4aa] min-h-[60px] transition-all resize-none shadow-inner"></textarea>
-                    <button
-                        wire:click="addStaffComment"
-                        class="absolute bottom-6 right-3 w-8 h-8 bg-[#00d4aa] rounded-xl flex items-center justify-center text-[#0f1117] hover:scale-110 active:scale-95 transition-all shadow-lg">
-                        <i class="fa-solid fa-paper-plane text-xs"></i>
-                    </button>
+            <!-- PASS ISSUE PANEL -->
+            <div class="mt-auto">
+                <!-- Flash Message -->
+                @if(session()->has('success'))
+                <div class="mb-4 px-4 py-2.5 bg-emerald-500/15 border border-emerald-500/30 rounded-xl flex items-center gap-2">
+                    <i class="fa-solid fa-circle-check text-emerald-400 text-xs"></i>
+                    <span class="text-emerald-400 text-xs font-semibold">{{ session('success') }}</span>
                 </div>
-            </div> -->
+                @endif
 
-            <!-- COMPACT CONTROLS -->
-            <!-- <div class="space-y-4 bg-[#1a1d29] p-6 rounded-3xl border border-[#2a2d3a] shadow-2xl">
-                <div>
-                    <label class="text-[10px] text-gray-500 font-bold uppercase mb-2 block tracking-widest">Mark Status</label>
-                    <select wire:model="statusUpdate" class="w-full bg-[#12151e] border border-[#2a2d3a] rounded-xl p-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#00d4aa]/30 transition-all">
-                        <option value="pending">Pending</option>
-                        <option value="in_review">Ongoing</option>
-                        <option value="resolved">Resolved</option>
-                    </select>
-                </div>
+                <div class="bg-[#1a1d29] light:bg-[#f1f5f9] p-6 rounded-3xl border border-amber-500/20 shadow-2xl space-y-4 relative overflow-hidden">
+                    <!-- Accent Glow -->
+                    <div class="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-amber-500/60 via-orange-400/40 to-transparent rounded-t-3xl"></div>
 
-                <div class="space-y-2">
-                    <button wire:click="updateStatus" class="w-full bg-[#00d4aa] py-3 rounded-xl text-[#0f1117] font-bold hover:bg-[#00e6b8] transition-all transform active:scale-95 shadow-lg shadow-[#00d4aa]/10">
-                        Update Report
-                    </button>
-                    <div class="flex gap-2">
-                        <button wire:click="takedown({{ $selectedReport->id }})" class="flex-1 py-2.5 rounded-xl border border-red-500/30 text-red-500 text-[10px] font-bold hover:bg-red-500/10 transition-all">
-                            Take Down
-                        </button>
-                        <button wire:click="closeIssue" class="flex-1 py-2.5 rounded-xl border border-[#2a2d3a] text-gray-500 text-[10px] font-bold hover:bg-[#252836] hover:text-white transition-all">
-                            Cancel
-                        </button>
+                    <!-- Header -->
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-500/20 flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-share-from-square text-amber-400 text-sm"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-white light:text-gray-900 transition-colors">Pass Issue</p>
+                            <p class="text-[10px] text-gray-500 light:text-gray-400 transition-colors">Forward this report to another department</p>
+                        </div>
                     </div>
+
+                    <!-- Department Selector -->
+                    <div>
+                        <label class="text-[10px] text-gray-500 light:text-gray-500 font-bold uppercase tracking-widest mb-1.5 block">
+                            Select Department
+                        </label>
+                        <select
+                            wire:model="passToDepId"
+                            class="w-full bg-[#12151e] light:bg-white border border-[#2a2d3a] light:border-gray-300 rounded-xl p-3 text-sm text-white light:text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500/30 transition-all appearance-none">
+                            <option value="">-- Choose department --</option>
+                            @foreach($departments as $dept)
+                            <option value="{{ $dept->id }}">{{ $dept->department_name }}</option>
+                            @endforeach
+                        </select>
+                        @error('passToDepId')
+                        <p class="text-red-400 text-[10px] mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Reason Textarea -->
+                    <div>
+                        <label class="text-[10px] text-gray-500 light:text-gray-500 font-bold uppercase tracking-widest mb-1.5 block">
+                            Reason for Passing
+                        </label>
+                        <textarea
+                            wire:model="passReason"
+                            rows="3"
+                            placeholder="e.g. This issue falls under the jurisdiction of the Roads Department..."
+                            class="w-full bg-[#12151e] light:bg-white border border-[#2a2d3a] light:border-gray-300 rounded-xl p-3 text-xs text-white light:text-gray-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500/30 transition-all resize-none"></textarea>
+                        @error('passReason')
+                        <p class="text-red-400 text-[10px] mt-1 font-medium">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Confirm Button -->
+                    <button
+                        wire:click="passIssue"
+                        wire:loading.attr="disabled"
+                        class="w-full py-3 rounded-xl font-bold text-sm transition-all duration-200 active:scale-95 shadow-lg
+                               bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400
+                               text-[#0f1117] shadow-amber-500/20 flex items-center justify-center gap-2 disabled:opacity-60">
+                        <span wire:loading.remove wire:target="passIssue">
+                            <i class="fa-solid fa-share-from-square mr-1"></i>
+                            Confirm & Pass Issue
+                        </span>
+                        <span wire:loading wire:target="passIssue" class="flex items-center gap-2">
+                            <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                            </svg>
+                            Passing...
+                        </span>
+                    </button>
                 </div>
-            </div> -->
+            </div>
         </div>
 
         <!-- FULLSCREEN VIEWER -->

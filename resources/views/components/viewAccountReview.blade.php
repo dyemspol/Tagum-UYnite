@@ -34,8 +34,17 @@
 
         <div>
           <p class="text-gray-400 text-xs uppercase font-bold tracking-wider">Status</p>
-          <span id="modalStatus" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/10 text-green-400">
-             {{ $selectedUser->verificationStatus->status }}
+          @php
+            $status = strtolower($selectedUser->verificationStatus->status ?? 'pending');
+            $statusClasses = match($status) {
+                'pending' => 'bg-amber-500/10 text-amber-400',
+                'approved', 'verified' => 'bg-green-500/10 text-green-400',
+                'rejected' => 'bg-red-500/10 text-red-400',
+                default => 'bg-gray-500/10 text-gray-400',
+            };
+          @endphp
+          <span id="modalStatus" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $statusClasses }}">
+             {{ ucfirst($status) }}
           </span>
         </div>
 

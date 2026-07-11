@@ -3,6 +3,7 @@
 namespace App\Livewire\Employee;
 
 use App\Models\Report;
+use App\Models\Department;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -18,6 +19,9 @@ class Repartsmanagement extends Component
     public $staffComment = '';
     public $statusUpdate = '';
     public $takedownReason = '';
+    public $departments = [];
+    public $passToDepId = '';
+    public $passReason = '';
 
     public function render()
     {
@@ -27,6 +31,13 @@ class Repartsmanagement extends Component
     {
         $this->loadReports();
         $this->loadKPI();
+        $this->loadDepartments();
+    }
+
+    public function loadDepartments()
+    {
+        $user = Auth::user();
+        $this->departments = Department::where('id', '!=', $user->department_id)->get();
     }
     public function filterReports($status)
     {
@@ -62,6 +73,37 @@ class Repartsmanagement extends Component
     {
         $this->selectedReport = null;
         $this->staffComment = '';
+        $this->passToDepId = '';
+        $this->passReason = '';
+    }
+
+    public function passIssue()
+    {
+        $this->validate([
+            'passToDepId' => 'required|exists:departments,id',
+            'passReason'  => 'required|string|max:500',
+        ], [
+            'passToDepId.required' => 'Please select a department to pass this issue to.',
+            'passReason.required'  => 'Please provide a reason for passing this issue.',
+        ]);
+
+        $this->selectedReport->update([
+            'department_id' => $this->passToDepId,
+        ]);
+
+        // Log a comment about the pass action
+        \App\Models\Comment::create([
+            'report_id'    => $this->selectedReport->id,
+            'user_id'      => Auth::id(),
+            'comment_text' => '[Passed to Department] ' . $this->passReason,
+        ]);
+
+        $this->selectedReport = null;
+        $this->passToDepId = '';
+        $this->passReason = '';
+        $this->loadReports();
+        $this->loadKPI();
+        session()->flash('success', 'Issue has been passed to the selected department successfully.');
     }
 
     public function addStaffComment()
