@@ -15,6 +15,7 @@ export default defineConfig({
                 "resources/js/postPreview.js",
                 "resources/js/autocompleteLocation.js",
                 "resources/js/Homepage.js",
+                "resources/js/auth/login.js",
             ],
             refresh: true, // hot reload
         }),

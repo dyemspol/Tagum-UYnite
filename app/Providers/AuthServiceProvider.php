@@ -9,10 +9,11 @@ use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as Provider;
 // FIX: Use the Gate Facade from Illuminate\Support\Facades\Gate
 use Illuminate\Support\Facades\Gate;
+
 class AuthServiceProvider extends Provider
 {
     protected $policies = [
-    Reaction::class => ReactionPolicy::class,
+        Reaction::class => ReactionPolicy::class,
     ];
     public function register(): void
     {
